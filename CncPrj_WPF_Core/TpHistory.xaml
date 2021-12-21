@@ -59,8 +59,8 @@
                 </Style>
             </TabControl.Resources>
             <TabItem Header="DAILY" Width="184" Height="48" FontSize="15" FontWeight="Bold" Foreground="White">
-                <DataGrid Name="dailyGrid" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="dailyGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
-                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False">
+                <DataGrid Name="dailyGrid" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="dailyGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden"
+                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" HeadersVisibility="Column">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date" Width="*"/>
                         <DataGridTextColumn Binding="{Binding Path=Count}" Header="Count" Width="*" />
@@ -101,8 +101,8 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="WEEKLY" Width="184" Height="48" FontSize="15" FontWeight="Bold" Foreground="White">
-                <DataGrid Name="weeklyGrid" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="weeklyGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
-                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False">
+                <DataGrid Name="weeklyGrid" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="weeklyGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden"
+                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" HeadersVisibility="Column" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date" Width="*"/>
                         <DataGridTextColumn Binding="{Binding Path=Count}" Header="Count" Width="*" />
@@ -145,8 +145,8 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="MONTHLY" Width="184" Height="48" FontSize="15" FontWeight="Bold" Foreground="White">
-                <DataGrid Name="monthlyGrid" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="monthlyGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
-                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False">
+                <DataGrid Name="monthlyGrid" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="monthlyGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden"
+                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" HeadersVisibility="Column" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date" Width="*"/>
                         <DataGridTextColumn Binding="{Binding Path=Count}" Header="Count" Width="*" />
@@ -199,7 +199,7 @@
                     <DatePicker x:Name="endDatePick" Grid.Row="0" Margin="514,24,75,38" BorderThickness="0" Background="#FF1E1E1E" Foreground="#FF1E1E1E" SelectedDateChanged="endDatePick_SelectedDateChanged" />
                     <Button Margin="661,25,10,37" Content="search" BorderThickness="0" Background="SeaGreen" Foreground="White" FontStretch="Medium" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="phSearchBtn_Click"></Button>
 
-                    <DataGrid Name="searchGrid" Grid.Row="1" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="searchGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                    <DataGrid Name="searchGrid" Grid.Row="1" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="searchGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden" HeadersVisibility="Column" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date" Width="360"/>
                             <DataGridTextColumn Binding="{Binding Path=Count}" Header="Count" Width="360" />

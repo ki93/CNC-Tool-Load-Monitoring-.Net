@@ -59,7 +59,7 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <TextBlock x:Name="userId" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="238,11,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="92" Text="ddd"/>
+        <TextBlock x:Name="userId" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="238,11,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="92" Text="ddsfwefwfwef"/>
         <TextBlock x:Name="currentTime" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="335,11,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234" />
         <TextBlock x:Name="currentLocation" FontSize="17" Grid.Column="0" Grid.Row="1" FontWeight="Medium" Foreground="#d6d6d6"  Text="Workshop1 | Line1 | Operation1" Margin="20 16 0 0" />
 
