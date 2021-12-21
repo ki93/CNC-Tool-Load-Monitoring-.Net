@@ -347,8 +347,8 @@
 
 
         <Rectangle Grid.Row="5" Grid.ColumnSpan="2" Margin="20,5,20,20" Style="{DynamicResource blackPanel}"/>
-        <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" Margin="470,25,130,280" BorderThickness="0" Background="Transparent" Click="DataGridSortEvt" Cursor="Hand">
-            <Image Width="35">
+        <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="40" Height="40" Click="ProductInfoListSortEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,130,0">
+            <Image Width="30" Height="30" >
                 <Image.Style>
                     <Style TargetType="Image">
                         <Setter Property="Source" Value="Img/sortBtn.png"/>
@@ -362,7 +362,6 @@
             </Image>
             <Button.Resources>
                 <Style TargetType="Button">
-                    <Setter Property="Background" Value="Transparent" />
                     <Setter Property="Cursor" Value="Hand" />
                     <Setter Property="Template">
                         <Setter.Value>
@@ -373,17 +372,107 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="LightGray" Offset="1.0"/>
+                                <GradientStop Color="White" Offset="0.0"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
         </Button>
+        <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="40" Height="40" Click="ProductInfoListSearchEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,80,0">
+            <Image Width="30" Height="30" >
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Img/calendarImg_black.png"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/calendarImg_m.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="LightGray" Offset="1.0"/>
+                                <GradientStop Color="White" Offset="0.0"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="40" Height="40" Click="ProductInfoListSearchEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,30,0">
+            <Image Width="30" Height="30" >
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Img/refreshBtn_black.png"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/refreshBtn_m.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="LightGray" Offset="1.0"/>
+                                <GradientStop Color="White" Offset="0.0"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
         <DataGrid Grid.Row="5" Grid.ColumnSpan="2" x:Name="ProcessGrid" Background="#1e1e1e" BorderBrush="{x:Null}" AutoGenerateColumns="False" IsReadOnly="True" VerticalScrollBarVisibility="Visible" Margin="30,10,30,30" HeadersVisibility="Column"  
                   CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" GridLinesVisibility="Horizontal" Loaded="processTable_Loaded" SelectionMode="Single" >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=opcode}" Header="OpCode" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Path=sn}" Header="Serial Number" Width="*" />
-                <DataGridTextColumn Binding="{Binding Path=startTime}" Header="Start Time" Width="*" />
-                <DataGridTextColumn Binding="{Binding Path=endTime}" Header="End Time" Width="*" />
-                <DataGridTextColumn Binding="{Binding Path=issue}" Header="Quality Issue" Width="*" />
+                <DataGridTextColumn Binding="{Binding Path=opcode}" Header="OpCode" Width="0.5*"/>
+                <DataGridTextColumn Binding="{Binding Path=sn}" Header="Serial Number" Width="1*" />
+                <DataGridTextColumn Binding="{Binding Path=startTime}" Header="Start Time" Width="1*" />
+                <DataGridTextColumn Binding="{Binding Path=endTime}" Header="End Time" Width="1*" />
+                <DataGridTextColumn Binding="{Binding Path=issue}" Header="Quality Issue" Width="1.5*" />
             </DataGrid.Columns>
 
             <DataGrid.RowStyle>

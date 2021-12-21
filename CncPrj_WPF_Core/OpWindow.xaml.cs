@@ -57,7 +57,7 @@ namespace CncPrj_WPF_Core
             processTable = new DataTable();
             InputCycleTimeAverage();
             InputRealTimeCount();
-            new JudgeQuality(ref opwindow).InitJudgeQualityImage();         
+            new JudgeQuality(ref opwindow).InitJudgeQualityImage();
         }
 
         public OpWindow(ref Login login)
@@ -524,8 +524,8 @@ namespace CncPrj_WPF_Core
             realTimeLoadSpindleSciChartSurface.Margin = new Thickness(30, 10, 30, 10);
             realTimeMaeSciChartSurface.Margin = new Thickness(30, 10, 30, 23);
         }
-        //dataGrid Sort
-        private void DataGridSortEvt(object sender, RoutedEventArgs e)
+        //제품 정보 dataGrid Sort
+        private void ProductInfoListSortEvt(object sender, RoutedEventArgs e)
         {
             if (gridVisibility)
             {
@@ -537,6 +537,17 @@ namespace CncPrj_WPF_Core
                 gridVisibility = true;
                 App.Current.Resources["RowVisibility"] = Visibility.Visible;
             }
+        }
+        //dataGrid Search
+        private void ProductInfoListSearchEvt(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        //dataGrid Refresh
+        private void ProductInfoListRefreshEvt(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
