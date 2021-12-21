@@ -1,0 +1,81 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Img\calendarImg.png" />
+    <None Remove="Img\closeBtn.png" />
+    <None Remove="Img\error.png" />
+    <None Remove="Img\expansion.png" />
+    <None Remove="Img\expansion_m.png" />
+    <None Remove="Img\info.png" />
+    <None Remove="Img\information.png" />
+    <None Remove="Img\loginBack.png" />
+    <None Remove="Img\logo.png" />
+    <None Remove="Img\logout.png" />
+    <None Remove="Img\logout_m.png" />
+    <None Remove="Img\refreshBtn.png" />
+    <None Remove="Img\sortBtn.png" />
+    <None Remove="Img\sortBtn_m.png" />
+    <None Remove="Img\warn.png" />
+    <None Remove="Img\warning.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Abp" Version="6.5.0" />
+    <PackageReference Include="HNInc.Communication.Library" Version="0.0.1.5" />
+    <PackageReference Include="SciChart" Version="6.4.0.13629" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SciChart.Charting">
+      <HintPath>..\..\..\..\..\studyC#\WpfApp1\WpfControlLibrary1\WpfControlLibrary1\bin\Debug\SciChart.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="SciChart.Charting.DrawingTools">
+      <HintPath>..\..\..\..\..\studyC#\WpfApp1\WpfControlLibrary1\WpfControlLibrary1\bin\Debug\SciChart.Charting.DrawingTools.dll</HintPath>
+    </Reference>
+    <Reference Include="SciChart.Charting3D">
+      <HintPath>..\..\..\..\..\studyC#\WpfApp1\WpfControlLibrary1\WpfControlLibrary1\bin\Debug\SciChart.Charting3D.dll</HintPath>
+    </Reference>
+    <Reference Include="SciChart.Core">
+      <HintPath>..\..\..\..\..\studyC#\WpfApp1\WpfControlLibrary1\WpfControlLibrary1\bin\Debug\SciChart.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SciChart.Data">
+      <HintPath>..\..\..\..\..\studyC#\WpfApp1\WpfControlLibrary1\WpfControlLibrary1\bin\Debug\SciChart.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="SciChart.Drawing">
+      <HintPath>..\..\..\..\..\studyC#\WpfApp1\WpfControlLibrary1\WpfControlLibrary1\bin\Debug\SciChart.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="SciChart.Drawing.DirectX">
+      <HintPath>..\..\..\..\..\studyC#\WpfApp1\WpfControlLibrary1\WpfControlLibrary1\bin\Debug\SciChart.Drawing.DirectX.dll</HintPath>
+    </Reference>
+    <Reference Include="SciChart.Examples.ExternalDependencies">
+      <HintPath>..\..\..\..\..\studyC#\WpfApp1\WpfControlLibrary1\WpfControlLibrary1\bin\Debug\SciChart.Examples.ExternalDependencies.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Img\calendarImg.png" />
+    <Resource Include="Img\closeBtn.png" />
+    <Resource Include="Img\error.png" />
+    <Resource Include="Img\expansion.png" />
+    <Resource Include="Img\expansion_m.png" />
+    <Resource Include="Img\info.png" />
+    <Resource Include="Img\information.png" />
+    <Resource Include="Img\loginBack.png" />
+    <Resource Include="Img\logo.png" />
+    <Resource Include="Img\logout.png" />
+    <Resource Include="Img\logout_m.png" />
+    <Resource Include="Img\refreshBtn.png" />
+    <Resource Include="Img\sortBtn.png" />
+    <Resource Include="Img\sortBtn_m.png" />
+    <Resource Include="Img\warn.png" />
+    <Resource Include="Img\warning.png" />
+  </ItemGroup>
+
+</Project>

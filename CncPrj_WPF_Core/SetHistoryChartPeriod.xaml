@@ -1,0 +1,99 @@
+﻿<Window x:Class="CncPrj_WPF_Core.SetHistoryChartPeriod"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CncPrj_WPF_Core"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Title="SetHistoryChartPeriod" Height="500" Width="800" Background="#FF111217"
+        Left="500"
+        Top="250">
+    <Grid>
+        <Grid.RowDefinitions>
+            <!--Row-->
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.2*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Foreground="#38e09a" FontSize="27" FontWeight="Bold" HorizontalAlignment="Center" Width="359" VerticalAlignment="Top" RenderTransformOrigin="0.514,0.346" Height="35" Margin="0,16,0,0">Setting the Time Range</TextBlock>
+        <Button  Grid.Row="0" Grid.Column="1" Background="#FF111217" BorderThickness="0" Click="ClosehistorySettingWindow" Margin="342,18,0,17">
+            <Image Source="Img/closeBtn.png" Height="26" Width="34"/>
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Resources>
+
+        </Button>
+        <TextBlock Grid.Column="0" FontSize="23" Foreground="white" FontWeight="Bold" Margin="20,71,108,315" Grid.RowSpan="2"> Absolute Time Range</TextBlock>
+        <TextBlock Grid.Column="1" FontSize="23" Foreground="white" FontWeight="Bold" Margin="20,71,108,315" Grid.RowSpan="2"> Relative Time Range</TextBlock>
+
+        <TextBlock Grid.Column="0" FontSize="23" Text="Start Date" Foreground="LightGray" FontWeight="Bold" Margin="21,54,243,265" Grid.Row="1"/>
+        <DatePicker x:Name="HitoryStartDatePick" Margin="20,96,62,211" Grid.Row="1" Grid.Column="0"  BorderThickness="0" FontSize="20" SelectedDateChanged="HitoryStartDatePick_SelectedDateChanged" Cursor="Hand">
+            <DatePicker.Resources>
+                <Style TargetType="DatePicker">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <TextBlock Grid.Column="0" FontSize="23" Text="End Date" Foreground="LightGray" FontWeight="Bold" Margin="21,174,243,145" Grid.Row="1"/>
+        <DatePicker x:Name="HitoryEndDatePick" Margin="20,216,62,91" Grid.Row="1" Grid.Column="0"  BorderThickness="0" FontSize="20" SelectedDateChanged="HitoryEndDatePick_SelectedDateChanged">
+            <DatePicker.Resources>
+                <Style TargetType="DatePicker">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+
+        <Button x:Name="Set5minBtn" Grid.Column="1" Margin="30,54,30,242" Grid.Row="1"  Content="5 Minutes" Style="{DynamicResource historyChartBtn}" Click="SetChartHistoryTimeBtn">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="Set10minBtn" Grid.Column="1" Margin="30,143,30,153" Grid.Row="1" Content="10 Minutes" Style="{DynamicResource historyChartBtn}" Click="SetChartHistoryTimeBtn">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="Set15minBtn" Grid.Column="1" Margin="31,232,29,65" Grid.Row="1" Content="15 Minutes" Style="{DynamicResource historyChartBtn}" Click="SetChartHistoryTimeBtn">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="SubmitSettingChartHistory" Grid.Row="2" Grid.ColumnSpan="2" Margin="310,0,310,22" Background="#2E8B57" Foreground="White" FontSize="25" FontWeight="Bold" Click="SubmitSettingChartHistory_Click">Apply
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+</Window>

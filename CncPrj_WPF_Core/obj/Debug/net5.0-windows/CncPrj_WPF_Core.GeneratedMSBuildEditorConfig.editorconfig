@@ -1,0 +1,10 @@
+is_global = true
+build_property.TargetFramework = net5.0-windows
+build_property.TargetPlatformMinVersion = 7.0
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.PublishSingleFile = 
+build_property.IncludeAllContentForSelfExtract = 
+build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
+build_property.RootNamespace = CncPrj_WPF_Core
+build_property.ProjectDir = C:\Users\rnd01\source\repos\CncPrj_WPF_Core1220_3\CncPrj_WPF_Core\CncPrj_WPF_Core\

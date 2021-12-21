@@ -1,0 +1,443 @@
+﻿<Page x:Class="CncPrj_WPF_Core.OpWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:s="http://schemas.abtsoftware.co.uk/scichart"
+      xmlns:local="clr-namespace:CncPrj_WPF_Core"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="OpWindow">
+
+    <Grid Background="#2b2d30">
+        <Grid.RowDefinitions>
+            <!--Row-->
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.4*"/>
+            <RowDefinition Height="1.3*"/>
+            <!--  * -> 상대비율  -->
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1.3*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <!--Column-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Grid.Row="0" Grid.ColumnSpan="2" Fill="#3c4852"/>
+        <Image Width="60" Source="Img/logo.png" Margin="20,6,0,6" HorizontalAlignment="Left"/>
+        <TextBlock FontSize="30" FontWeight="Bold" Foreground="white"  Text="CNC Tool Load Monitoring" Margin="100,0,0,0" VerticalAlignment="Center" Height="40"  />
+        <Button x:Name="logoutBtn" Grid.Row="0" Grid.Column="1" Canvas.Right="0" Background="#3c4852" Margin="0 10 20 0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="37" Width="37" Click="logoutEvt">
+            <!-- margin 왼쪽 위 오른쪽 아래 -->
+            <Image Width="35">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Img/logout.png"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/logout_m.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <TextBlock x:Name="userId" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="238,11,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="92" Text="ddd"/>
+        <TextBlock x:Name="currentTime" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="335,11,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234" />
+        <TextBlock x:Name="currentLocation" FontSize="17" Grid.Column="0" Grid.Row="1" FontWeight="Medium" Foreground="#d6d6d6"  Text="Workshop1 | Line1 | Operation1" Margin="20 16 0 0" />
+
+        <Border BorderBrush="#797a7c" BorderThickness="2" Margin="20,5,5,5" Grid.Row="2">
+            <StackPanel  Orientation="Horizontal" Grid.Row="2" >
+                <Rectangle x:Name="runState" Style="{DynamicResource redPanel}" Width="312"/>
+                <Rectangle Width="312">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#384236" Offset="1.0"/>
+                            <GradientStop Color="#465942" Offset="0.0"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Rectangle Style="{DynamicResource greenPanel}" Width="312"/>
+                <Rectangle x:Name="maeState" Style="{DynamicResource greenPanel}" Width="317"/>
+            </StackPanel>
+        </Border>
+        <Label Content="Running Status" Margin="55,16,0,0"  Style="{DynamicResource panelTitle}" HorizontalAlignment="Left" Grid.Row="2"/>
+        <Label x:Name="opsituationState" Content="Stop" Margin="50,46,0,0" Style="{DynamicResource panelContent}" HorizontalAlignment="Left" Grid.Row="2"/>
+
+        <Label Content="Daily Production" Margin="369,16,0,0"  Style="{DynamicResource panelTitle}" HorizontalAlignment="Left" Grid.Row="2"/>
+        <Button Grid.Column="0" Grid.Row="2" Margin="553,20,695,99" RenderTransformOrigin="0.390,0.600" Background="Transparent" BorderThickness="0" Click="tpHistoryEvt">
+            <Image Source="Img/info.png" Width="17" Height="17"></Image>
+        </Button>
+        <Label x:Name="totalproductVal" Content="-" Margin="364,46,0,0" Style="{DynamicResource panelContent}" HorizontalAlignment="Left" Grid.Row="2"/>
+
+        <Label Content="Cycle Time" Margin="687,16,0,0"  Style="{DynamicResource panelTitle}" HorizontalAlignment="Left" Grid.Row="2"/>
+        <Button Grid.Column="0" Grid.Row="2" Margin="854,20,394,99" RenderTransformOrigin="0.390,0.600" Background="Transparent" BorderThickness="0" Click="ctHistory">
+            <Image Source="Img/info.png"  Width="17" Height="17"></Image>
+        </Button>
+        <Label x:Name="cycleTimeVal" Content="-" Margin="682,46,0,0" Style="{DynamicResource panelContent}" HorizontalAlignment="Left" Grid.Row="2"/>
+        <Label Content="MAE(s)" Margin="997,16,0,0"  Style="{DynamicResource panelTitle}" HorizontalAlignment="Left" Grid.Row="2"/>
+        <Label Name="loss1sVal" Content="-" Margin="992,46,0,0" Style="{DynamicResource panelContent}" HorizontalAlignment="Left" Grid.Row="2" FontSize="30"/>
+
+        <Rectangle Grid.Row="3" Grid.RowSpan="2" Grid.Column="1" Margin="5,5,20,5" Style="{DynamicResource blackPanel}"/>
+        <!--<Rectangle Grid.Row="3" Grid.Column="1" Fill="#FF424141" Margin="15,19,30,256"/>-->
+        <Button x:Name="setPeriodBtn" Grid.Row="3" Grid.Column="1" Margin="15,10,258,261" Background="#1e1e1e" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" Content="Last 15 minutes" FontSize="20" FontWeight="Bold" Click="setPeriodBtn_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Image Grid.Row="3" Grid.Column="1" Source="Img/calendarImg.png" Margin="21,20,577,272"/>
+        <!--<Rectangle Grid.Row="3" Grid.Column="1" Fill="#1e1e1e" Margin="15,10,258,261" RadiusX="5" RadiusY="5"></Rectangle>
+        <Image Grid.Row="3" Grid.Column="1" Source="Img/calendarImg.png" Margin="28,31,591,282" Panel.ZIndex="2"/>
+        <Label Grid.Row="3" Grid.Column="1" Content="2021-10-10 ~ 2021-10-11" Foreground="white" Margin="60,22,258,274" FontWeight="Bold" FontSize="20" Panel.ZIndex="2"/>-->
+        <ComboBox x:Name="historyChartGroupByValue" Grid.Row="3" Grid.Column="1"  Margin="387,10,188,261" FontSize="20" Height="63" FontWeight="Bold" VerticalContentAlignment="Center" VerticalAlignment="Center" Background="#1e1e1e" SelectionChanged="historyChartGroupByValue_SelectionChanged" SelectedValuePath="Content" Cursor="Hand">
+            <ComboBox.ItemContainerStyle>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="Background" Value="#1e1e1e"/>
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="BorderBrush" Value="#1e1e1e"/>
+                    <Setter Property="Foreground" Value="white"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" Value="#1e1e1e" />
+                            <Setter Property="Foreground" Value="SkyBlue"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.ItemContainerStyle>
+
+            <ComboBox.Style>
+                <Style TargetType="ComboBox">
+                    <Setter Property="Cursor" Value="Hand" />
+                    <!--백그라운드가 안먹힘-->
+                    <Setter Property="Background" Value="blue"/>
+                    <Setter Property="Foreground" Value="#1e1e1e"/>
+                </Style>
+            </ComboBox.Style>
+
+            <ComboBoxItem Content="1s" x:Name="combo1s"/>
+            <ComboBoxItem Content="2s" x:Name="combo2s"/>
+            <ComboBoxItem Content="3s" x:Name="combo3s" IsSelected="True" />
+            <ComboBoxItem Content="4s" x:Name="combo4s"/>
+            <ComboBoxItem Content="5s" x:Name="combo5s"/>
+            <ComboBoxItem Content="6s" x:Name="combo6s"/>
+            <ComboBoxItem Content="7s" x:Name="combo7s"/>
+            <ComboBoxItem Content="8s" x:Name="combo8s"/>
+            <ComboBoxItem Content="9s" x:Name="combo9s"/>
+            <ComboBoxItem Content="10s" x:Name="combo10s"/>
+        </ComboBox>
+        <Button Grid.Row="3" Grid.Column="1" Margin="457,10,118,261" Background="#1e1e1e" Foreground="White" BorderBrush="{x:Null}" Click="RefreshHistoryChart">
+            <Image Source="Img/refreshBtn.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="33"></Image>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button Grid.Row="3" Grid.Column="1" Margin="527,10,30,261" Foreground="White" BorderBrush="{x:Null}" Content="Expansion" FontSize="15" FontWeight="Bold" Click="ChartExpansion">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </Button.Resources>
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#1d2126" Offset="1.0"/>
+                    <GradientStop Color="#3C4852" Offset="0.0"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+
+        <Label x:Name="historyChartLoadMsg" Content="Loading Data..." FontSize="50" FontWeight="Bold" Foreground="White" Grid.Row="3" Grid.Column="1" Margin="15,82,30,23" Panel.ZIndex="10" Grid.RowSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="Black" Opacity="0.75" Visibility="Hidden"/>
+        <s:SciChartSurface x:Name="pastTimeLoadSpindleSciChartSurface" Grid.Row="3" Grid.Column="1" Margin="15,85,30,10">
+            <s:SciChartSurface.RenderableSeries >
+                <s:FastLineRenderableSeries x:Name="PastLoadLineSeries" Stroke="#FF4083B7" StrokeThickness = "2" />
+                <s:FastLineRenderableSeries x:Name="PastPredictLoadLineSeries" Stroke="#ff9036"  StrokeThickness = "2" />
+            </s:SciChartSurface.RenderableSeries>
+
+            <!--  Create an X Axis  -->
+            <s:SciChartSurface.XAxis>
+                <s:DateTimeAxis TextFormatting="MM-dd" SubDayTextFormatting="HH:mm:ss" AutoRange="Always"/>
+            </s:SciChartSurface.XAxis>
+            <!--  Create a Y Axis  -->
+            <s:SciChartSurface.YAxis>
+                <s:NumericAxis AxisAlignment="Left" VisibleRange="0,1" AutoRange="Never"/>
+            </s:SciChartSurface.YAxis>
+            <!--  Specify interactivity modifiers  -->
+            <s:SciChartSurface.ChartModifier>
+                <s:ModifierGroup s:MouseManager.MouseEventGroup="HistoryChartGroup">
+                    <s:RubberBandXyZoomModifier ExecuteOn="MouseLeftButton"
+                                                 RubberBandFill="#33FFFFFF" RubberBandStroke="#AAFFFFFF"
+                                                 RubberBandStrokeDashArray="2 2" ReceiveHandledEvents="True"/>
+                    <s:YAxisDragModifier DragMode="Scale"/>
+                    <s:XAxisDragModifier DragMode="Pan"/>
+                    <s:MouseWheelZoomModifier/>
+                    <s:ZoomExtentsModifier ExecuteOn="MouseDoubleClick" />
+                    <s:LegendModifier ShowLegend="True" Orientation="Horizontal"
+                                       VerticalAlignment="Top"                                     
+                                       HorizontalAlignment="Left"
+                                       LegendPlacement="Inside" />
+                    <s:RolloverModifier ExecuteOn="MouseMove" ShowTooltipOn="MouseHover"/>
+                </s:ModifierGroup>
+            </s:SciChartSurface.ChartModifier>
+        </s:SciChartSurface>
+        <s:SciChartSurface x:Name="pastTimeMaeSciChartSurface" Grid.Row="4" Grid.Column="1" Margin="15,10,30,24"  >
+            <s:SciChartSurface.RenderableSeries>
+                <s:FastLineRenderableSeries x:Name="PastMaeLineSeries" Stroke="GreenYellow" StrokeThickness = "2" />
+            </s:SciChartSurface.RenderableSeries>
+
+            <!--  Create an X Axis  -->
+            <s:SciChartSurface.XAxis>
+                <s:DateTimeAxis TextFormatting="MM-dd" SubDayTextFormatting="HH:mm:ss" AutoRange="Always" VisibleRange="{Binding ElementName=pastTimeLoadSpindleSciChartSurface, Path=XAxis.VisibleRange, Mode=TwoWay}"/>
+            </s:SciChartSurface.XAxis>
+            <!--  Create a Y Axis  -->
+            <s:SciChartSurface.YAxis>
+                <s:NumericAxis AxisAlignment="Left" VisibleRange="0,1" AutoRange="Never"/>
+            </s:SciChartSurface.YAxis>
+            <!--  Specify interactivity modifiers  -->
+            <s:SciChartSurface.ChartModifier>
+                <s:ModifierGroup s:MouseManager.MouseEventGroup="HistoryChartGroup">
+                    <s:RubberBandXyZoomModifier ExecuteOn="MouseLeftButton"
+                                                 RubberBandFill="#33FFFFFF" RubberBandStroke="#AAFFFFFF"
+                                                 RubberBandStrokeDashArray="2 2" ReceiveHandledEvents="True"/>
+                    <s:YAxisDragModifier DragMode="Scale"/>
+                    <s:XAxisDragModifier DragMode="Pan"/>
+                    <s:MouseWheelZoomModifier/>
+                    <s:ZoomExtentsModifier ExecuteOn="MouseDoubleClick" />
+                    <s:LegendModifier ShowLegend="True" Orientation="Horizontal"
+                                       VerticalAlignment="Top"                                     
+                                       HorizontalAlignment="Left"
+                                       LegendPlacement="Inside" />
+                    <s:RolloverModifier ExecuteOn="MouseMove" ShowTooltipOn="MouseHover"/>
+                </s:ModifierGroup>
+            </s:SciChartSurface.ChartModifier>
+        </s:SciChartSurface>
+
+        <Rectangle Grid.Row="2" Grid.Column="1" Margin="5 5 20 5" Style="{DynamicResource blackPanel}"/>
+        <!--<Button Grid.Row="2" Grid.Column="1" Margin="532,10,30,106" Background="#FF3C4852" Foreground="White" BorderBrush="{x:Null}" Content="Expansion" FontSize="14" FontWeight="Bold" Click="FFTImgExpansion" Panel.ZIndex="5">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>-->
+        <Label x:Name="productSN"  Grid.Row="2" Grid.Column="1" Content="A202112071030202" Foreground="#fff" FontSize="18" FontWeight="Bold" Margin="225,9,225,100" HorizontalContentAlignment="center" Panel.ZIndex="5" />
+        <Image Grid.Row="2" Grid.Column="1" Panel.ZIndex="5" Margin="548,29,58,91">
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Setter Property="Source" Value="Img/expansion.png"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Source" Value="Img/expansion_m.png"/>
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+        <Button Grid.Row="2" Grid.Column="1" Margin="66,36,66,39" Background="Transparent" Panel.ZIndex="10" MouseDoubleClick="FFTImgExpansion" BorderThickness="0">
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Image x:Name="productQualityImg" Grid.Row="2" Grid.Column="1" Source="Img/logo.png" Height="73" VerticalAlignment="Top" Margin="66,36,66,0"/>
+        <Label x:Name="productResult" Grid.Row="2" Grid.Column="1" Content="Normal" Foreground="#fff" FontSize="17" FontWeight="Bold" Margin="192,100,194,10" HorizontalContentAlignment="Center" Panel.ZIndex="5"/>
+
+        <Rectangle x:Name="Graph_Back" Grid.Row="3" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,5,20,5" Style="{DynamicResource blackPanel}"/>
+        <Button x:Name="historyChartOpenBtn"  Grid.Row="3" Panel.ZIndex="10" Margin="568,170,9,96" Grid.Column="1" Click="historyChartOpen" Content="Open"/>
+        <Button x:Name="historyChartCloseBtn"  Grid.Row="3" Panel.ZIndex="10" Margin="1278,170,579,96" Click="historyChartClose" Content="Close" Grid.ColumnSpan="2" Visibility="Hidden"/>
+
+        <s:SciChartSurface x:Name="realTimeLoadSpindleSciChartSurface" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Margin="30,10,30,10"  >
+            <s:SciChartSurface.RenderableSeries >
+                <s:FastLineRenderableSeries x:Name="RealLoadLineSeries" Stroke="#FF4083B7" StrokeThickness = "2" />
+                <s:FastLineRenderableSeries x:Name="PredictLoadLineSeries" Stroke="#ff9036"  StrokeThickness = "2" />
+            </s:SciChartSurface.RenderableSeries>
+
+            <!--  Create an X Axis  -->
+            <s:SciChartSurface.XAxis>
+                <s:DateTimeAxis SubDayTextFormatting = "HH:mm" />
+            </s:SciChartSurface.XAxis>
+            <!--  Create a Y Axis  -->
+            <s:SciChartSurface.YAxis>
+                <s:NumericAxis  AxisAlignment="Left" VisibleRange="0,1" AutoRange="Never"/>
+            </s:SciChartSurface.YAxis>
+            <!--  Specify interactivity modifiers  -->
+            <s:SciChartSurface.ChartModifier>
+                <s:ModifierGroup s:MouseManager.MouseEventGroup="RealTimeChartGroup">
+                    <s:RubberBandXyZoomModifier ExecuteOn="MouseLeftButton"
+                                                 RubberBandFill="#33FFFFFF" RubberBandStroke="#AAFFFFFF"
+                                                 RubberBandStrokeDashArray="2 2" ReceiveHandledEvents="True"/>
+                    <s:YAxisDragModifier DragMode="Scale"/>
+                    <s:XAxisDragModifier DragMode="Pan"/>
+                    <s:MouseWheelZoomModifier/>
+                    <s:ZoomExtentsModifier ExecuteOn="MouseDoubleClick" />
+                    <s:LegendModifier ShowLegend="True" Orientation="Horizontal"
+                                       VerticalAlignment="Top"                                     
+                                       HorizontalAlignment="Left"
+                                       LegendPlacement="Inside" />
+                    <s:RolloverModifier ExecuteOn="MouseMove" ShowTooltipOn="MouseHover"/>
+                </s:ModifierGroup>
+            </s:SciChartSurface.ChartModifier>
+        </s:SciChartSurface>
+        <s:SciChartSurface x:Name="realTimeMaeSciChartSurface" Grid.Row="4" Margin="30,10,30,23" Grid.ColumnSpan="2" >
+            <s:SciChartSurface.RenderableSeries>
+                <s:FastLineRenderableSeries x:Name="RealMaeLineSeries" Stroke="GreenYellow" StrokeThickness = "2" />
+            </s:SciChartSurface.RenderableSeries>
+
+            <!--  Create an X Axis  -->
+            <s:SciChartSurface.XAxis>
+                <s:DateTimeAxis VisibleRange="{Binding ElementName=realTimeLoadSpindleSciChartSurface, Path=XAxis.VisibleRange, Mode=TwoWay}" AutoRange="Never" SubDayTextFormatting = "HH:mm"/>
+            </s:SciChartSurface.XAxis>
+            <!--  Create a Y Axis  -->
+            <s:SciChartSurface.YAxis>
+                <s:NumericAxis AxisAlignment="Left" VisibleRange="0,1" AutoRange="Never"/>
+            </s:SciChartSurface.YAxis>
+            <!--  Specify interactivity modifiers  -->
+            <s:SciChartSurface.ChartModifier>
+                <s:ModifierGroup s:MouseManager.MouseEventGroup="RealTimeChartGroup">
+                    <s:RubberBandXyZoomModifier ExecuteOn="MouseLeftButton"
+                                                 RubberBandFill="#33FFFFFF" RubberBandStroke="#AAFFFFFF"
+                                                 RubberBandStrokeDashArray="2 2" ReceiveHandledEvents="True"/>
+                    <s:YAxisDragModifier DragMode="Scale"/>
+                    <s:XAxisDragModifier DragMode="Pan"/>
+                    <s:MouseWheelZoomModifier/>
+                    <s:ZoomExtentsModifier ExecuteOn="MouseDoubleClick" />
+                    <s:LegendModifier ShowLegend="True" Orientation="Horizontal"
+                                       VerticalAlignment="Top"                                     
+                                       HorizontalAlignment="Left"
+                                       LegendPlacement="Inside" />
+                    <s:RolloverModifier ExecuteOn="MouseMove" ShowTooltipOn="MouseHover"/>
+                </s:ModifierGroup>
+            </s:SciChartSurface.ChartModifier>
+        </s:SciChartSurface>
+
+
+        <Rectangle Grid.Row="5" Grid.ColumnSpan="2" Margin="20,5,20,20" Style="{DynamicResource blackPanel}"/>
+        <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" Margin="470,25,130,280" BorderThickness="0" Background="Transparent" Click="DataGridSortEvt" Cursor="Hand">
+            <Image Width="35">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Img/sortBtn.png"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/sortBtn_m.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <DataGrid Grid.Row="5" Grid.ColumnSpan="2" x:Name="ProcessGrid" Background="#1e1e1e" BorderBrush="{x:Null}" AutoGenerateColumns="False" IsReadOnly="True" VerticalScrollBarVisibility="Visible" Margin="30,10,30,30" HeadersVisibility="Column"  
+                  CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" GridLinesVisibility="Horizontal" Loaded="processTable_Loaded" SelectionMode="Single" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=opcode}" Header="OpCode" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path=sn}" Header="Serial Number" Width="*" />
+                <DataGridTextColumn Binding="{Binding Path=startTime}" Header="Start Time" Width="*" />
+                <DataGridTextColumn Binding="{Binding Path=endTime}" Header="End Time" Width="*" />
+                <DataGridTextColumn Binding="{Binding Path=issue}" Header="Quality Issue" Width="*" />
+            </DataGrid.Columns>
+
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="#1e1e1e" />
+                    <Setter Property="Foreground" Value="#fff" />
+                    <Setter Property="FontSize" Value="15" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <EventSetter Event="MouseDoubleClick" Handler="ProcessGrid_MouseDoubleClick"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#7a7a7a" />
+                            <Setter Property="Foreground" Value="#fff" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#1e1e1e" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Path=issue}" Value="Normal">
+                            <Setter Property="Visibility" Value="{DynamicResource RowVisibility}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#000000" Offset="1.0"/>
+                                <GradientStop Color="#1e1e1e" Offset="0.0"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="#ababab" />
+                    <Setter Property="FontSize" Value="17" />
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+                    <Setter Property="TextBlock.Focusable" Value="False"></Setter>
+                </Style>
+            </DataGrid.CellStyle>
+
+        </DataGrid>
+
+
+
+    </Grid>
+
+</Page>
