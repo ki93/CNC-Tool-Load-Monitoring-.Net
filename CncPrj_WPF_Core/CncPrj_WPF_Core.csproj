@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+    <Page Remove="bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Img\calendarImg.png" />
     <None Remove="Img\closeBtn.png" />
     <None Remove="Img\error.png" />
@@ -14,10 +21,12 @@
     <None Remove="Img\expansion_m.png" />
     <None Remove="Img\info.png" />
     <None Remove="Img\information.png" />
+    <None Remove="Img\loading2.gif" />
     <None Remove="Img\loginBack.png" />
     <None Remove="Img\logo.png" />
     <None Remove="Img\logout.png" />
     <None Remove="Img\logout_m.png" />
+    <None Remove="Img\no-image.png" />
     <None Remove="Img\refreshBtn.png" />
     <None Remove="Img\sortBtn.png" />
     <None Remove="Img\sortBtn_m.png" />
@@ -27,7 +36,7 @@
 
   <ItemGroup>
     <PackageReference Include="Abp" Version="6.5.0" />
-    <PackageReference Include="HNInc.Communication.Library" Version="0.0.1.5" />
+    <PackageReference Include="HNInc.Communication.Library" Version="0.0.1.6" />
     <PackageReference Include="SciChart" Version="6.4.0.13629" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
@@ -67,15 +76,44 @@
     <Resource Include="Img\expansion_m.png" />
     <Resource Include="Img\info.png" />
     <Resource Include="Img\information.png" />
+    <Resource Include="Img\loading2.gif" />
     <Resource Include="Img\loginBack.png" />
     <Resource Include="Img\logo.png" />
     <Resource Include="Img\logout.png" />
     <Resource Include="Img\logout_m.png" />
+    <Resource Include="Img\no-image.png" />
     <Resource Include="Img\refreshBtn.png" />
     <Resource Include="Img\sortBtn.png" />
     <Resource Include="Img\sortBtn_m.png" />
     <Resource Include="Img\warn.png" />
     <Resource Include="Img\warning.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

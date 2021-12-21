@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -24,46 +25,37 @@ namespace CncPrj_WPF_Core
 
         public void InitJudgeQualityImage()
         {
-            string recentImageInformationPath = Path.Combine(_currentPath, @"RecentImageName\");
-            string fileName = "RecentImageName.txt";
-            string recentImageInformationFilePath = Path.Combine(recentImageInformationPath, fileName);
+            HttpQualityInformaiton httpQualityInformaiton = HNHttp.GetQualityInformaiton();
             //최신 image 정보
             string productSerialNumber = null;
             string productPredictResult = null;
-            string imagePath = Path.Combine(_currentPath, @"Image\");
             string imageFilePath = null;
-
-            if (!Directory.Exists(recentImageInformationPath))
+            string imagePath = Path.Combine(_currentPath, @"Image\");
+            if (httpQualityInformaiton._requestResult.Equals("Success"))
             {
-                Directory.CreateDirectory(recentImageInformationPath);
-            }
-            if (!File.Exists(recentImageInformationFilePath))
-            {
-                FileStream fileStream = File.Create(recentImageInformationFilePath);
-                fileStream.Close();
-                imageFilePath = Path.Combine(imagePath, "no-image.png");
-                productSerialNumber = "No Data";
-                productPredictResult = "No Data";
-            }
-            string imageInformation = File.ReadAllText(recentImageInformationFilePath);
-            if (imageInformation.Length != 0)
-            {
-                string[] imageInformations = imageInformation.Split(",");
-                productSerialNumber = imageInformations[1];
-                productPredictResult = $"{imageInformations[2]}, {imageInformations[3]}%";
-                imageFilePath = Path.Combine(_currentPath, imageInformations[0]);
-                if (imageInformations[4].Equals("success"))
+                if (!Directory.Exists(imagePath))
                 {
-                    imageFilePath = Path.Combine(imagePath, imageInformations[0]);
+                    Directory.CreateDirectory(imagePath);
                 }
-                else
+                imageFilePath = Path.Combine(imagePath, httpQualityInformaiton._fileName);
+                if (!File.Exists(imageFilePath))
                 {
-                    imageFilePath = Path.Combine(imagePath, "no-image.png");
+                    //image 저장 관련
+                    using (MemoryStream memoryStream = new MemoryStream(httpQualityInformaiton._imageBytes))
+                    {
+                        using (System.Drawing.Image image = System.Drawing.Image.FromStream(memoryStream))
+                        {
+                            imageFilePath = Path.Combine(imagePath, httpQualityInformaiton._fileName);
+                            image.Save(imageFilePath);
+                        };
+                    };
                 }
+                productSerialNumber = httpQualityInformaiton._serialNumber;
+                productPredictResult = $"{httpQualityInformaiton._predict}, {httpQualityInformaiton._accuracy}%";
             }
             else
             {
-                imageFilePath = Path.Combine(imagePath, "no-image.png");
+                imageFilePath = @"/Img/no-image.png";
                 productSerialNumber = "No Data";
                 productPredictResult = "No Data";
             }
@@ -71,7 +63,7 @@ namespace CncPrj_WPF_Core
             {
                 opwindow.productSN.Content = productSerialNumber;
                 opwindow.productResult.Content = productPredictResult;
-                opwindow.productQualityImg.Source = new BitmapImage(new Uri(imageFilePath, UriKind.Absolute));
+                opwindow.productQualityImg.Source = new BitmapImage(new Uri(imageFilePath, UriKind.RelativeOrAbsolute));
                 opwindow.productQualityImg.Stretch = Stretch.Fill;
                 opwindow.InputFFTImg(imageFilePath);
 
@@ -80,14 +72,14 @@ namespace CncPrj_WPF_Core
         //품질 판정 start
         public void InputJudgeQualityStart(string eventName, object data)
         {
-            SocketQualityInformation quality = (SocketQualityInformation)(data);
-            string imagePath = Path.Combine(_currentPath, @"Image\loading2.gif");
+            SocketQualityInformation socketQualityInformation = (SocketQualityInformation)(data);
+            string imagePath = @"/Img/loading2.gif";
 
             opwindow.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
-                opwindow.productSN.Content = quality._serialNumber;
+                opwindow.productSN.Content = socketQualityInformation._serialNumber;
                 opwindow.productResult.Content = "Processing...";
-                ImageBehavior.SetAnimatedSource(opwindow.productQualityImg, new BitmapImage(new Uri(imagePath, UriKind.Absolute)));
+                ImageBehavior.SetAnimatedSource(opwindow.productQualityImg, new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute)));
                 opwindow.productQualityImg.Stretch = Stretch.Uniform;
             }));
         }
@@ -128,8 +120,7 @@ namespace CncPrj_WPF_Core
             {
                 //  Show Dialog로 교체 예정
                 //messageBoxResult = MessageBox.Show(e.Message, "HN Inc", MessageBoxButton.OK, MessageBoxImage.Error);
-                Debug.WriteLine(e.ToString());
-                imageFilePath = Path.Combine(imagePath, "no-image.png");
+                imageFilePath = @"/Img/no-image.png";
                 checkImageSave = false;
                 Task.Run(() =>
                 {
