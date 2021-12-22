@@ -176,7 +176,7 @@ namespace CncPrj_WPF_Core
                     normalBack.GradientStops.Add(new GradientStop(Color.FromRgb(70, 89, 66), 0.0));
 
                     opsituationState.Content = "Running";
-                    opsituationState.Background = normalBack;
+                    //opsituationState.Background = normalBack;
                     runState.Fill = normalBack;
                 }
                 else
@@ -188,7 +188,6 @@ namespace CncPrj_WPF_Core
                     abnormalBack.GradientStops.Add(new GradientStop(Color.FromRgb(196, 22, 42), 0.0));
 
                     opsituationState.Content = "Stop";
-                    opsituationState.Background = abnormalBack;
                     runState.Fill = abnormalBack;
                 }
             }));
@@ -541,7 +540,8 @@ namespace CncPrj_WPF_Core
         //dataGrid Search
         private void ProductInfoListSearchEvt(object sender, RoutedEventArgs e)
         {
-
+            SetProductInfoPeriod info = new SetProductInfoPeriod();
+            info.ShowDialog();
         }
 
         //dataGrid Refresh
@@ -550,4 +550,4 @@ namespace CncPrj_WPF_Core
 
         }
     }
-}
+} 

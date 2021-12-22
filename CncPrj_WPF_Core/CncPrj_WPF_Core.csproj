@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+
     <Compile Remove="bin\**" />
     <EmbeddedResource Remove="bin\**" />
     <None Remove="bin\**" />
@@ -17,6 +18,7 @@
     <None Remove="Img\calendarImg.png" />
     <None Remove="Img\calendarImg_black.png" />
     <None Remove="Img\calendarImg_m.png" />
+    <None Remove="Img\calendar_Up.png" />
     <None Remove="Img\closeBtn.png" />
     <None Remove="Img\error.png" />
     <None Remove="Img\expansion.png" />
@@ -32,10 +34,20 @@
     <None Remove="Img\refreshBtn.png" />
     <None Remove="Img\refreshBtn_black.png" />
     <None Remove="Img\refreshBtn_m.png" />
+    <None Remove="Img\Reset.png" />
+    <None Remove="Img\Reset_Up.png" />
+    <None Remove="Img\Select.png" />
+    <None Remove="Img\Select_Up.png" />
+    <None Remove="Img\Side_Close.png" />
+    <None Remove="Img\Side_Close_Up.png" />
+    <None Remove="Img\Side_Open.png" />
+    <None Remove="Img\Side_Open_Up.png" />
     <None Remove="Img\sortBtn.png" />
     <None Remove="Img\sortBtn_m.png" />
     <None Remove="Img\warn.png" />
     <None Remove="Img\warning.png" />
+    <None Remove="Img\Window_Open.png" />
+    <None Remove="Img\Window_Open_Up.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -73,14 +85,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Img\calendar.png" />
     <Resource Include="Img\calendarImg.png" />
-    <Resource Include="Img\calendarImg_black.png" />
-    <Resource Include="Img\calendarImg_m.png" />
+    <Resource Include="Img\calendar_Up.png" />
     <Resource Include="Img\closeBtn.png" />
     <Resource Include="Img\error.png" />
     <Resource Include="Img\expansion.png" />
     <Resource Include="Img\expansion_m.png" />
-    <Resource Include="Img\info.png" />
     <Resource Include="Img\information.png" />
     <Resource Include="Img\loading2.gif" />
     <Resource Include="Img\loginBack.png" />
@@ -89,12 +100,17 @@
     <Resource Include="Img\logout_m.png" />
     <Resource Include="Img\no-image.png" />
     <Resource Include="Img\refreshBtn.png" />
-    <Resource Include="Img\refreshBtn_black.png" />
-    <Resource Include="Img\refreshBtn_m.png" />
-    <Resource Include="Img\sortBtn.png" />
-    <Resource Include="Img\sortBtn_m.png" />
+    <Resource Include="Img\Reset.png" />
+    <Resource Include="Img\Reset_Up.png" />
+    <Resource Include="Img\Select.png" />
+    <Resource Include="Img\Select_Up.png" />
+    <Resource Include="Img\Side_Close.png" />
+    <Resource Include="Img\Side_Close_Up.png" />
+    <Resource Include="Img\Side_Open.png" />
+    <Resource Include="Img\Side_Open_Up.png" />
     <Resource Include="Img\warn.png" />
-    <Resource Include="Img\warning.png" />
+    <Resource Include="Img\Window_Open.png" />
+    <Resource Include="Img\Window_Open_Up.png" />
   </ItemGroup>
 
   <ItemGroup>
