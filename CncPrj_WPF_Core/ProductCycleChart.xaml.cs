@@ -39,7 +39,7 @@ namespace CncPrj_WPF_Core
             string parseOPcode = opcode.Replace("-","_");
             HttpOPCode oPCode = (HttpOPCode)Enum.Parse(typeof(HttpOPCode), parseOPcode);
             Debug.WriteLine(oPCode);
-            List<HttpCycleInformaiton> cycleInfo = HNHttp.GetCycleInformationRequest(oPCode, sn);
+            List<HttpCycleInformaiton> cycleInfo = HNHttp.GetCycleInformationList(oPCode, sn);
             InputProdcutCycleChart(cycleInfo);
         }
 

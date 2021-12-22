@@ -7,27 +7,52 @@
   </PropertyGroup>
 
   <ItemGroup>
+
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+    <Page Remove="bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Img\calendarImg.png" />
+    <None Remove="Img\calendarImg_black.png" />
+    <None Remove="Img\calendarImg_m.png" />
+    <None Remove="Img\calendar_Up.png" />
     <None Remove="Img\closeBtn.png" />
     <None Remove="Img\error.png" />
     <None Remove="Img\expansion.png" />
     <None Remove="Img\expansion_m.png" />
     <None Remove="Img\info.png" />
     <None Remove="Img\information.png" />
+    <None Remove="Img\loading2.gif" />
     <None Remove="Img\loginBack.png" />
     <None Remove="Img\logo.png" />
     <None Remove="Img\logout.png" />
     <None Remove="Img\logout_m.png" />
+    <None Remove="Img\no-image.png" />
     <None Remove="Img\refreshBtn.png" />
+    <None Remove="Img\refreshBtn_black.png" />
+    <None Remove="Img\refreshBtn_m.png" />
+    <None Remove="Img\Reset.png" />
+    <None Remove="Img\Reset_Up.png" />
+    <None Remove="Img\Select.png" />
+    <None Remove="Img\Select_Up.png" />
+    <None Remove="Img\Side_Close.png" />
+    <None Remove="Img\Side_Close_Up.png" />
+    <None Remove="Img\Side_Open.png" />
+    <None Remove="Img\Side_Open_Up.png" />
     <None Remove="Img\sortBtn.png" />
     <None Remove="Img\sortBtn_m.png" />
     <None Remove="Img\warn.png" />
     <None Remove="Img\warning.png" />
+    <None Remove="Img\Window_Open.png" />
+    <None Remove="Img\Window_Open_Up.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Abp" Version="6.5.0" />
-    <PackageReference Include="HNInc.Communication.Library" Version="0.0.1.5" />
+    <PackageReference Include="HNInc.Communication.Library" Version="0.0.1.7" />
     <PackageReference Include="SciChart" Version="6.4.0.13629" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
@@ -60,22 +85,70 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Img\calendar.png" />
     <Resource Include="Img\calendarImg.png" />
+    <Resource Include="Img\calendar_Up.png" />
     <Resource Include="Img\closeBtn.png" />
     <Resource Include="Img\error.png" />
     <Resource Include="Img\expansion.png" />
     <Resource Include="Img\expansion_m.png" />
-    <Resource Include="Img\info.png" />
     <Resource Include="Img\information.png" />
+    <Resource Include="Img\loading2.gif" />
     <Resource Include="Img\loginBack.png" />
     <Resource Include="Img\logo.png" />
     <Resource Include="Img\logout.png" />
     <Resource Include="Img\logout_m.png" />
+    <Resource Include="Img\no-image.png" />
     <Resource Include="Img\refreshBtn.png" />
-    <Resource Include="Img\sortBtn.png" />
-    <Resource Include="Img\sortBtn_m.png" />
+    <Resource Include="Img\Reset.png" />
+    <Resource Include="Img\Reset_Up.png" />
+    <Resource Include="Img\Select.png" />
+    <Resource Include="Img\Select_Up.png" />
+    <Resource Include="Img\Side_Close.png" />
+    <Resource Include="Img\Side_Close_Up.png" />
+    <Resource Include="Img\Side_Open.png" />
+    <Resource Include="Img\Side_Open_Up.png" />
     <Resource Include="Img\warn.png" />
-    <Resource Include="Img\warning.png" />
+    <Resource Include="Img\Window_Open.png" />
+    <Resource Include="Img\Window_Open_Up.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="SetProductInfoPeriod - 복사.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>SetProductInfoPeriod.xaml.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="SetProductInfoPeriod - 복사.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

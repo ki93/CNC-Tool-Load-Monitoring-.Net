@@ -82,8 +82,8 @@
             </s:SciChartSurface.RenderableSeries>
         </s:SciChartSurface>
 
-        <DataGrid Margin="10,20,10,25" Grid.Row="2" Name="dataGrid" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="CTdataGrid"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
-                  CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False">
+        <DataGrid Margin="10,20,10,25" Grid.Row="2" Name="dataGrid" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="CTdataGrid"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden"
+                  CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" HeadersVisibility="Column" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=CtStart}" Header="Start Time" Width="*"/>
                 <DataGridTextColumn Binding="{Binding Path=CtEnd}" Header="End Time" Width="*" />

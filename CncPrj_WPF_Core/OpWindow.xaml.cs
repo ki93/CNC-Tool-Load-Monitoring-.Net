@@ -35,6 +35,8 @@ namespace CncPrj_WPF_Core
         private DataTable processTable;
         private Login userLogin;
         bool gridVisibility;
+        DateTime productInfoPeriodStarttime;
+        DateTime productInfoPeriodEndtime;
 
         public OpWindow()
         {
@@ -57,7 +59,9 @@ namespace CncPrj_WPF_Core
             processTable = new DataTable();
             InputCycleTimeAverage();
             InputRealTimeCount();
-            new JudgeQuality(ref opwindow).InitJudgeQualityImage();         
+            new JudgeQuality(ref opwindow).InitJudgeQualityImage();
+            productInfoPeriodStarttime = DateTime.Today;
+            productInfoPeriodEndtime = DateTime.Today;
         }
 
         public OpWindow(ref Login login)
@@ -142,7 +146,7 @@ namespace CncPrj_WPF_Core
         //RealTime product count 데이터 출력
         public void InputRealTimeCount()
         {
-            HttpRealTimeCount realTimeCount = HNHttp.GetRealTimeCountRequest(HttpOPCode.OP10_3);
+            HttpRealTimeCount realTimeCount = HNHttp.GetRealTimeCount(HttpOPCode.OP10_3);
             
             Debug.WriteLine(realTimeCount.ToString());
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
@@ -153,7 +157,7 @@ namespace CncPrj_WPF_Core
         //cycle time 5개 평균 데이터 출력
         public void InputCycleTimeAverage()
         {
-            HttpCycleTimeAverage cycleTimeAverage = HNHttp.GetCycleTimeAverageRequest(5);
+            HttpCycleTimeAverage cycleTimeAverage = HNHttp.GetCycleTimeAverage(5);
 
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
@@ -164,7 +168,7 @@ namespace CncPrj_WPF_Core
         //가동 상태 데이터 출력
         public void InputDeiviceHealthCheck()
         {
-            HttpDeiviceHealthCheck deiviceHealthCheck = HNHttp.GetDeiviceHealthCheckRequest(HttpOPCode.OP10_3);
+            HttpDeiviceHealthCheck deiviceHealthCheck = HNHttp.GetDeiviceHealthCheck(HttpOPCode.OP10_3);
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
                 if (deiviceHealthCheck._status == "success")
@@ -176,7 +180,7 @@ namespace CncPrj_WPF_Core
                     normalBack.GradientStops.Add(new GradientStop(Color.FromRgb(70, 89, 66), 0.0));
 
                     opsituationState.Content = "Running";
-                    opsituationState.Background = normalBack;
+                    //opsituationState.Background = normalBack;
                     runState.Fill = normalBack;
                 }
                 else
@@ -188,7 +192,6 @@ namespace CncPrj_WPF_Core
                     abnormalBack.GradientStops.Add(new GradientStop(Color.FromRgb(196, 22, 42), 0.0));
 
                     opsituationState.Content = "Stop";
-                    opsituationState.Background = abnormalBack;
                     runState.Fill = abnormalBack;
                 }
             }));
@@ -403,7 +406,7 @@ namespace CncPrj_WPF_Core
                 //List<SpindleLoad> spindleLoads = HNHttp.GetSpindleLoadRequest((int)Convert.ToDateTime(hitoryStartTime).Year, (int)Convert.ToDateTime(hitoryStartTime).Month, (int)Convert.ToDateTime(hitoryStartTime).Day, (int)Convert.ToDateTime(hitoryEndTime).Year, (int)Convert.ToDateTime(hitoryEndTime).Month, (int)Convert.ToDateTime(hitoryEndTime).Day, OPCode.OP10_3, hitoryGroupByTime);
                 Task.Run(() =>
                 {
-                    List<HttpSpindleLoad> spindleLoads = HNHttp.GetSpindleLoadRequest(Convert.ToDateTime(hitoryStartTime).ToUniversalTime(), Convert.ToDateTime(hitoryEndTime).ToUniversalTime(), HttpOPCode.OP10_3, hitoryGroupByTime);
+                    List<HttpSpindleLoad> spindleLoads = HNHttp.GetSpindleLoadList(Convert.ToDateTime(hitoryStartTime).ToUniversalTime(), Convert.ToDateTime(hitoryEndTime).ToUniversalTime(), HttpOPCode.OP10_3, hitoryGroupByTime);
                     Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                     {
                         drawMainChart.HistoryChart(spindleLoads);
@@ -421,7 +424,7 @@ namespace CncPrj_WPF_Core
             processTable.Columns.Add("startTime", typeof(string));
             processTable.Columns.Add("endTime", typeof(string));
             processTable.Columns.Add("issue", typeof(string));
-            List<HttpProductInformation> productInformations = HNHttp.GetProductInformation(0);
+            List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(0);
             productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             foreach (var item in productInformations)
@@ -463,6 +466,109 @@ namespace CncPrj_WPF_Core
                 receiveRow["issue"] = productInformation._predict;
                 processTable.Rows.InsertAt(receiveRow, 0);
             }));
+        }
+        //제품 정보 dataGrid Sort
+        private void ProductInfoListSortEvt(object sender, RoutedEventArgs e)
+        {
+            if (gridVisibility)
+            {
+                gridVisibility = false;
+                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select_Up.png", UriKind.RelativeOrAbsolute));
+                App.Current.Resources["RowVisibility"] = Visibility.Collapsed;
+            }
+            else
+            {
+                gridVisibility = true;
+                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select.png", UriKind.RelativeOrAbsolute));
+                App.Current.Resources["RowVisibility"] = Visibility.Visible;
+            }
+        }
+        //제품 정보 dataGrid MouseOver
+        private void ProductInfoSortBtmMouseEnter(object sender, MouseEventArgs e)
+        {
+            if (gridVisibility)
+            {
+                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select_Up.png", UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select.png", UriKind.RelativeOrAbsolute));
+            }
+        }
+        private void ProductInfoSortBtmMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (gridVisibility)
+            {
+                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select.png", UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select_Up.png", UriKind.RelativeOrAbsolute));
+            }
+        }
+        //dataGrid Search
+        private void ProductInfoListSearchEvt(object sender, RoutedEventArgs e)
+        {
+            SetProductInfoPeriod info = new SetProductInfoPeriod(ref opwindow, productInfoPeriodStarttime, productInfoPeriodEndtime);
+            info.ShowDialog();
+        }
+        //dataGrid Search Request
+        public void RequestProductInfoList(DateTime starttime, DateTime endtime)
+        {
+            productInfoPeriodStarttime = starttime;
+            productInfoPeriodEndtime = endtime;
+            TimeSpan timespanFromToday = DateTime.Today.Subtract(starttime);
+            int daysFromToday = timespanFromToday.Days;
+            Debug.WriteLine("test"+daysFromToday);
+            gridVisibility = true;
+            App.Current.Resources["RowVisibility"] = Visibility.Visible;
+            List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(daysFromToday);
+            productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            processTable.Clear();
+            foreach (var item in productInformations)
+            {
+                DateTime _startTime = origin.AddMilliseconds(Double.Parse(item._startTime)).ToLocalTime();
+                string startTime = _startTime.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
+
+                DateTime _endTime = origin.AddMilliseconds(Double.Parse(item._endTime)).ToLocalTime();
+                string endTime = _endTime.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
+                DataRow receiveRow = processTable.NewRow();
+                receiveRow["opcode"] = item._opcode;
+                receiveRow["sn"] = item._serialNumber;
+                receiveRow["startTime"] = startTime;
+                receiveRow["endTime"] = endTime;
+                receiveRow["issue"] = item._predict;
+                processTable.Rows.Add(receiveRow);
+            }
+        }
+
+        //dataGrid Refresh
+        private void ProductInfoListRefreshEvt(object sender, RoutedEventArgs e)
+        {
+            gridVisibility = true;
+            productInfoPeriodStarttime = DateTime.Today;
+            productInfoPeriodEndtime = DateTime.Today;
+            App.Current.Resources["RowVisibility"] = Visibility.Visible;
+            List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(0);
+            productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            processTable.Clear();
+            foreach (var item in productInformations)
+            {
+                DateTime _startTime = origin.AddMilliseconds(Double.Parse(item._startTime)).ToLocalTime();
+                string startTime = _startTime.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
+
+                DateTime _endTime = origin.AddMilliseconds(Double.Parse(item._endTime)).ToLocalTime();
+                string endTime = _endTime.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
+                DataRow receiveRow = processTable.NewRow();
+                receiveRow["opcode"] = item._opcode;
+                receiveRow["sn"] = item._serialNumber;
+                receiveRow["startTime"] = startTime;
+                receiveRow["endTime"] = endTime;
+                receiveRow["issue"] = item._predict;
+                processTable.Rows.Add(receiveRow);
+            }
         }
         //porduct info 그리드 더블클릭 이벤트
         private void ProcessGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -524,19 +630,5 @@ namespace CncPrj_WPF_Core
             realTimeLoadSpindleSciChartSurface.Margin = new Thickness(30, 10, 30, 10);
             realTimeMaeSciChartSurface.Margin = new Thickness(30, 10, 30, 23);
         }
-        //dataGrid Sort
-        private void DataGridSortEvt(object sender, RoutedEventArgs e)
-        {
-            if (gridVisibility)
-            {
-                gridVisibility = false;
-                App.Current.Resources["RowVisibility"] = Visibility.Collapsed;
-            }
-            else
-            {
-                gridVisibility = true;
-                App.Current.Resources["RowVisibility"] = Visibility.Visible;
-            }
-        }
     }
-}
+} 
