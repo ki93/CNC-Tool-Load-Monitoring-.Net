@@ -39,7 +39,7 @@ namespace CncPrj_WPF_Core
         public void chartExpansion(string startTime, string endTime, string groupBy)
         {
             Debug.WriteLine(startTime, endTime, groupBy);
-            List<HttpSpindleLoad> spindleLoads = HNHttp.GetSpindleLoadRequest(Convert.ToDateTime(startTime).ToUniversalTime(), Convert.ToDateTime(endTime).ToUniversalTime(), HttpOPCode.OP10_3, groupBy);
+            List<HttpSpindleLoad> spindleLoads = HNHttp.GetSpindleLoadList(Convert.ToDateTime(startTime).ToUniversalTime(), Convert.ToDateTime(endTime).ToUniversalTime(), HttpOPCode.OP10_3, groupBy);
             opwin.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
                 opwin.historyChartLoadMsg.Visibility = Visibility.Hidden;

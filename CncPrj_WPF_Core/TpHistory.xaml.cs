@@ -38,11 +38,11 @@ namespace CncPrj_WPF_Core
             weeklyTable.Columns.Add("Count", typeof(string));
             monthlyTable.Columns.Add("Date", typeof(string));
             monthlyTable.Columns.Add("Count", typeof(string));
-            List<HttpProductCounts> dayProductCounts = HNHttp.GetProductCountsRequest(DateTime.Now.AddDays(-100), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.day);
+            List<HttpProductCounts> dayProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddDays(-100), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.day);
             DayInputProductCounts(dayProductCounts);
-            List<HttpProductCounts> weekProductCounts = HNHttp.GetProductCountsRequest(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.week);
+            List<HttpProductCounts> weekProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.week);
             WeekInputProductCounts(weekProductCounts);
-            List<HttpProductCounts> monthProductCounts = HNHttp.GetProductCountsRequest(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.month);
+            List<HttpProductCounts> monthProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.month);
             MonthInputProductCounts(monthProductCounts);
         }
 
@@ -181,7 +181,7 @@ namespace CncPrj_WPF_Core
         //서치 버튼 이벤트
         private void phSearchBtn_Click(object sender, RoutedEventArgs e)
         {
-            List<HttpProductCounts> searchProductCounts = HNHttp.GetProductCountsRequest(searchStartTIme, searchEndTime.AddDays(1), HttpOPCode.OP10_3, HttpClassification.day);
+            List<HttpProductCounts> searchProductCounts = HNHttp.GetProductCountsList(searchStartTIme, searchEndTime.AddDays(1), HttpOPCode.OP10_3, HttpClassification.day);
             SearchInputProductCounts(searchProductCounts);
         }
     }
