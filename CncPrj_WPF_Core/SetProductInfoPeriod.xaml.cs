@@ -10,20 +10,26 @@ namespace CncPrj_WPF_Core
     /// </summary>
     public partial class SetProductInfoPeriod : Window
     {
-        public string startTime;
-        public string endTime;
-        public SetProductInfoPeriod()
+        DateTime _startTime;
+        DateTime _endTime;
+        OpWindow _opWindow;
+        public SetProductInfoPeriod(ref OpWindow opWindow, DateTime startTime, DateTime endTime)
         {
             InitializeComponent();
-            ProductInfoStartDatePick.SelectedDate = DateTime.Today;
-            ProductInfoEndDatePick.SelectedDate = DateTime.Today;
+            _opWindow = opWindow;
+            ProductInfoStartDatePick.SelectedDate = startTime;
+            ProductInfoStartDatePick.DisplayDateEnd = DateTime.Today;
+            //추후 수정
+            ProductInfoStartDatePick.DisplayDateStart = DateTime.Today.AddDays(-31);
+            ProductInfoEndDatePick.SelectedDate = endTime;
+            ProductInfoEndDatePick.DisplayDateEnd = DateTime.Today;
         }
 
         //Apply 버튼 이벤트 
         private void SubmitSetPrInfo_Click(object sender, RoutedEventArgs e)
         {
             //설정한 기간 전송
-            Debug.WriteLine(startTime, endTime);
+            _opWindow.RequestProductInfoList(_startTime, _endTime);
             Close();
         }
 
@@ -34,21 +40,14 @@ namespace CncPrj_WPF_Core
         //start 달력 선택 이벤트
         private void InfoStartDatePick_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            startTime = ProductInfoStartDatePick.SelectedDate.ToString();
+            _startTime = (DateTime)ProductInfoStartDatePick.SelectedDate;
             ProductInfoEndDatePick.DisplayDateStart = ProductInfoStartDatePick.SelectedDate;
-            //일단 30일까지로 잡음. (논의 후 수정 예정)
-            ProductInfoEndDatePick.DisplayDateEnd = DateTime.Parse(ProductInfoStartDatePick.SelectedDate.ToString()).AddDays(30);
-
-            if (ProductInfoEndDatePick.DisplayDateEnd > DateTime.Today)
-            {
-                ProductInfoEndDatePick.DisplayDateEnd = DateTime.Today;
-            }
         }
 
         //end 달력 선택 이벤트
         private void InfoEndDatePick_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            endTime = ProductInfoEndDatePick.SelectedDate.ToString();
+            _endTime = (DateTime)ProductInfoEndDatePick.SelectedDate;
         }
     }
 }

@@ -455,15 +455,17 @@
 
         <Rectangle Grid.Row="5" Grid.ColumnSpan="2" Margin="20,5,20,20" Style="{DynamicResource blackPanel}"/>
         <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="32" Height="32" Click="ProductInfoListSortEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,13,124,0" Cursor="Hand" Background="Transparent">
-            <Image Width="32" Height="32" >
+            <Image x:Name="ProductInfoListSortBtnImage" Width="32" Height="32" Source="Img/Select.png">
                 <Image.Style>
                     <Style TargetType="Image">
-                        <Setter Property="Source" Value="Img/Select.png"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
+                        <EventSetter Event="MouseEnter" Handler="ProductInfoSortBtmMouseEnter"/>
+                        <EventSetter Event="MouseLeave" Handler="ProductInfoSortBtmMouseLeave"/>
+                        <!--<Setter Property="Source" Value="Img/Select.png"/>-->
+                        <!--<Style.Triggers>
+                            <Trigger Property="IsMouseCaptured" Value="True">
                                 <Setter Property="Source" Value="Img/Select_Up.png"/>
                             </Trigger>
-                        </Style.Triggers>
+                        </Style.Triggers>-->
                     </Style>
                 </Image.Style>
             </Image>
@@ -565,6 +567,9 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="#1e1e1e" />
                         </Trigger>
+                        <DataTrigger Binding="{Binding issue}" Value="Normal">
+                            <Setter Property="Visibility" Value="{DynamicResource RowVisibility}"/>
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
