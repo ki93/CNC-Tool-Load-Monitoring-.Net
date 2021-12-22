@@ -146,7 +146,7 @@ namespace CncPrj_WPF_Core
         //RealTime product count 데이터 출력
         public void InputRealTimeCount()
         {
-            HttpRealTimeCount realTimeCount = HNHttp.GetRealTimeCountRequest(HttpOPCode.OP10_3);
+            HttpRealTimeCount realTimeCount = HNHttp.GetRealTimeCount(HttpOPCode.OP10_3);
             
             Debug.WriteLine(realTimeCount.ToString());
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
@@ -157,7 +157,7 @@ namespace CncPrj_WPF_Core
         //cycle time 5개 평균 데이터 출력
         public void InputCycleTimeAverage()
         {
-            HttpCycleTimeAverage cycleTimeAverage = HNHttp.GetCycleTimeAverageRequest(5);
+            HttpCycleTimeAverage cycleTimeAverage = HNHttp.GetCycleTimeAverage(5);
 
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
@@ -168,7 +168,7 @@ namespace CncPrj_WPF_Core
         //가동 상태 데이터 출력
         public void InputDeiviceHealthCheck()
         {
-            HttpDeiviceHealthCheck deiviceHealthCheck = HNHttp.GetDeiviceHealthCheckRequest(HttpOPCode.OP10_3);
+            HttpDeiviceHealthCheck deiviceHealthCheck = HNHttp.GetDeiviceHealthCheck(HttpOPCode.OP10_3);
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
                 if (deiviceHealthCheck._status == "success")
@@ -406,7 +406,7 @@ namespace CncPrj_WPF_Core
                 //List<SpindleLoad> spindleLoads = HNHttp.GetSpindleLoadRequest((int)Convert.ToDateTime(hitoryStartTime).Year, (int)Convert.ToDateTime(hitoryStartTime).Month, (int)Convert.ToDateTime(hitoryStartTime).Day, (int)Convert.ToDateTime(hitoryEndTime).Year, (int)Convert.ToDateTime(hitoryEndTime).Month, (int)Convert.ToDateTime(hitoryEndTime).Day, OPCode.OP10_3, hitoryGroupByTime);
                 Task.Run(() =>
                 {
-                    List<HttpSpindleLoad> spindleLoads = HNHttp.GetSpindleLoadRequest(Convert.ToDateTime(hitoryStartTime).ToUniversalTime(), Convert.ToDateTime(hitoryEndTime).ToUniversalTime(), HttpOPCode.OP10_3, hitoryGroupByTime);
+                    List<HttpSpindleLoad> spindleLoads = HNHttp.GetSpindleLoadList(Convert.ToDateTime(hitoryStartTime).ToUniversalTime(), Convert.ToDateTime(hitoryEndTime).ToUniversalTime(), HttpOPCode.OP10_3, hitoryGroupByTime);
                     Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                     {
                         drawMainChart.HistoryChart(spindleLoads);
@@ -424,7 +424,7 @@ namespace CncPrj_WPF_Core
             processTable.Columns.Add("startTime", typeof(string));
             processTable.Columns.Add("endTime", typeof(string));
             processTable.Columns.Add("issue", typeof(string));
-            List<HttpProductInformation> productInformations = HNHttp.GetProductInformation(0);
+            List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(0);
             productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             foreach (var item in productInformations)
@@ -522,7 +522,7 @@ namespace CncPrj_WPF_Core
             Debug.WriteLine("test"+daysFromToday);
             gridVisibility = true;
             App.Current.Resources["RowVisibility"] = Visibility.Visible;
-            List<HttpProductInformation> productInformations = HNHttp.GetProductInformation(daysFromToday);
+            List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(daysFromToday);
             productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             processTable.Clear();
@@ -550,7 +550,7 @@ namespace CncPrj_WPF_Core
             productInfoPeriodStarttime = DateTime.Today;
             productInfoPeriodEndtime = DateTime.Today;
             App.Current.Resources["RowVisibility"] = Visibility.Visible;
-            List<HttpProductInformation> productInformations = HNHttp.GetProductInformation(0);
+            List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(0);
             productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             processTable.Clear();
