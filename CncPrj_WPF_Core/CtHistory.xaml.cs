@@ -27,8 +27,8 @@ namespace CncPrj_WPF_Core
             InitializeComponent();
             ctHistory = this;
             CtDataTable = new DataTable();
-            List<HttpCycleTime> cycleTimes = HNHttp.GetCycleTimeListRequest(HttpOPCode.OP10_3, 100);
-            List<HttpCycleTime> cycleTimesChart = HNHttp.GetCycleTimeListRequest(HttpOPCode.OP10_3, 10);
+            List<HttpCycleTime> cycleTimes = HNHttp.GetCycleTimeList(HttpOPCode.OP10_3, 100);
+            List<HttpCycleTime> cycleTimesChart = HNHttp.GetCycleTimeList(HttpOPCode.OP10_3, 10);
             InputCycleTimeList(cycleTimes);
             InputBarChartData(cycleTimesChart);
         }
