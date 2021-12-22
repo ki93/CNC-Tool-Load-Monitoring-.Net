@@ -82,15 +82,67 @@
         <Label x:Name="opsituationState" Content="Stop" Margin="50,46,0,0" Style="{DynamicResource panelContent}" HorizontalAlignment="Left" Grid.Row="2"/>
 
         <Label Content="Daily Production" Margin="369,16,0,0"  Style="{DynamicResource panelTitle}" HorizontalAlignment="Left" Grid.Row="2"/>
-        <Button Grid.Column="0" Grid.Row="2" Margin="553,20,695,99" RenderTransformOrigin="0.390,0.600" Background="Transparent" BorderThickness="0" Click="tpHistoryEvt">
-            <Image Source="Img/info.png" Width="17" Height="17"></Image>
+        <Button Grid.Column="0" Grid.Row="2" BorderThickness="0" Height="22" Click="tpHistoryEvt" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-135,20,0,0" Cursor="Hand" Background="Transparent">
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Img/Window_Open.png"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/Window_Open_Up.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Resources>
         </Button>
+
         <Label x:Name="totalproductVal" Content="-" Margin="364,46,0,0" Style="{DynamicResource panelContent}" HorizontalAlignment="Left" Grid.Row="2"/>
 
         <Label Content="Cycle Time" Margin="687,16,0,0"  Style="{DynamicResource panelTitle}" HorizontalAlignment="Left" Grid.Row="2"/>
-        <Button Grid.Column="0" Grid.Row="2" Margin="854,20,394,99" RenderTransformOrigin="0.390,0.600" Background="Transparent" BorderThickness="0" Click="ctHistory">
-            <Image Source="Img/info.png"  Width="17" Height="17"></Image>
+        <Button Grid.Column="0" Grid.Row="2" BorderThickness="0" Height="22" Click="ctHistory" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="460,20,0,0" Cursor="Hand" Background="Transparent">
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Img/Window_Open.png"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/Window_Open_Up.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Resources>
         </Button>
+
         <Label x:Name="cycleTimeVal" Content="-" Margin="682,46,0,0" Style="{DynamicResource panelContent}" HorizontalAlignment="Left" Grid.Row="2"/>
         <Label Content="MAE(s)" Margin="997,16,0,0"  Style="{DynamicResource panelTitle}" HorizontalAlignment="Left" Grid.Row="2"/>
         <Label Name="loss1sVal" Content="-" Margin="992,46,0,0" Style="{DynamicResource panelContent}" HorizontalAlignment="Left" Grid.Row="2" FontSize="30"/>
@@ -278,8 +330,63 @@
         <Label x:Name="productResult" Grid.Row="2" Grid.Column="1" Content="Normal" Foreground="#fff" FontSize="17" FontWeight="Bold" Margin="192,100,194,10" HorizontalContentAlignment="Center" Panel.ZIndex="5"/>
 
         <Rectangle x:Name="Graph_Back" Grid.Row="3" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,5,20,5" Style="{DynamicResource blackPanel}"/>
-        <Button x:Name="historyChartOpenBtn"  Grid.Row="3" Panel.ZIndex="10" Margin="568,170,9,96" Grid.Column="1" Click="historyChartOpen" Content="Open"/>
-        <Button x:Name="historyChartCloseBtn"  Grid.Row="3" Panel.ZIndex="10" Margin="1278,170,579,96" Click="historyChartClose" Content="Close" Grid.ColumnSpan="2" Visibility="Hidden"/>
+        <Button x:Name="historyChartOpenBtn" Grid.Row="3" Grid.Column="1" Panel.ZIndex="10"  BorderThickness="0" Height ="70" Click="historyChartOpen" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,100,0,0" Cursor="Hand" Background="Transparent">
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Img/Side_Open.png"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/Side_Open_Up.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button x:Name="historyChartCloseBtn" Grid.Row="3" Grid.Column="1" Panel.ZIndex="10"  BorderThickness="0" Height ="70" Click="historyChartClose" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-40,100,0,0" Cursor="Hand" Background="Transparent" Visibility="Hidden">
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Img/Side_Close.png"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/Side_Close_Up.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
 
         <s:SciChartSurface x:Name="realTimeLoadSpindleSciChartSurface" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Margin="30,10,30,10"  >
             <s:SciChartSurface.RenderableSeries >
@@ -347,14 +454,14 @@
 
 
         <Rectangle Grid.Row="5" Grid.ColumnSpan="2" Margin="20,5,20,20" Style="{DynamicResource blackPanel}"/>
-        <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="40" Height="40" Click="ProductInfoListSortEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,130,0">
-            <Image Width="30" Height="30" >
+        <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="32" Height="32" Click="ProductInfoListSortEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,13,124,0" Cursor="Hand" Background="Transparent">
+            <Image Width="32" Height="32" >
                 <Image.Style>
                     <Style TargetType="Image">
-                        <Setter Property="Source" Value="Img/sortBtn.png"/>
+                        <Setter Property="Source" Value="Img/Select.png"/>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Source" Value="Img/sortBtn_m.png"/>
+                                <Setter Property="Source" Value="Img/Select_Up.png"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -372,28 +479,17 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="LightGray" Offset="1.0"/>
-                                <GradientStop Color="White" Offset="0.0"/>
-                            </LinearGradientBrush>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="40" Height="40" Click="ProductInfoListSearchEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,80,0">
-            <Image Width="30" Height="30" >
+        <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="32" Height="32" Click="ProductInfoListSearchEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,13,76,0" Background="Transparent">
+            <Image Width="32" Height="32" >
                 <Image.Style>
                     <Style TargetType="Image">
-                        <Setter Property="Source" Value="Img/calendarImg_black.png"/>
+                        <Setter Property="Source" Value="Img/calendar.png"/>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Source" Value="Img/calendarImg_m.png"/>
+                                <Setter Property="Source" Value="Img/calendar_Up.png"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -411,28 +507,17 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="LightGray" Offset="1.0"/>
-                                <GradientStop Color="White" Offset="0.0"/>
-                            </LinearGradientBrush>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="40" Height="40" Click="ProductInfoListSearchEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,30,0">
-            <Image Width="30" Height="30" >
+        <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="32" Height="32" Click="ProductInfoListRefreshEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,13,30,0" Background="Transparent">
+            <Image Width="32" Height="32" >
                 <Image.Style>
                     <Style TargetType="Image">
-                        <Setter Property="Source" Value="Img/refreshBtn_black.png"/>
+                        <Setter Property="Source" Value="Img/Reset.png"/>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Source" Value="Img/refreshBtn_m.png"/>
+                                <Setter Property="Source" Value="Img/Reset_Up.png"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -450,17 +535,6 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="LightGray" Offset="1.0"/>
-                                <GradientStop Color="White" Offset="0.0"/>
-                            </LinearGradientBrush>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
         </Button>
@@ -491,9 +565,6 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="#1e1e1e" />
                         </Trigger>
-                        <DataTrigger Binding="{Binding Path=issue}" Value="Normal">
-                            <Setter Property="Visibility" Value="{DynamicResource RowVisibility}"/>
-                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
