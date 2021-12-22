@@ -22,6 +22,9 @@
     <Compile Update="InfoAlert.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="SetProductInfoPeriod.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="WarningAlert.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -55,6 +58,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="InfoAlert.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SetProductInfoPeriod.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WarningAlert.xaml">
