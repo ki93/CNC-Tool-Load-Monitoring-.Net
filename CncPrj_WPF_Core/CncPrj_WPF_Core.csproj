@@ -15,6 +15,8 @@
 
   <ItemGroup>
     <None Remove="Img\calendarImg.png" />
+    <None Remove="Img\calendarImg_black.png" />
+    <None Remove="Img\calendarImg_m.png" />
     <None Remove="Img\closeBtn.png" />
     <None Remove="Img\error.png" />
     <None Remove="Img\expansion.png" />
@@ -28,6 +30,8 @@
     <None Remove="Img\logout_m.png" />
     <None Remove="Img\no-image.png" />
     <None Remove="Img\refreshBtn.png" />
+    <None Remove="Img\refreshBtn_black.png" />
+    <None Remove="Img\refreshBtn_m.png" />
     <None Remove="Img\sortBtn.png" />
     <None Remove="Img\sortBtn_m.png" />
     <None Remove="Img\warn.png" />
@@ -70,6 +74,8 @@
 
   <ItemGroup>
     <Resource Include="Img\calendarImg.png" />
+    <Resource Include="Img\calendarImg_black.png" />
+    <Resource Include="Img\calendarImg_m.png" />
     <Resource Include="Img\closeBtn.png" />
     <Resource Include="Img\error.png" />
     <Resource Include="Img\expansion.png" />
@@ -83,6 +89,8 @@
     <Resource Include="Img\logout_m.png" />
     <Resource Include="Img\no-image.png" />
     <Resource Include="Img\refreshBtn.png" />
+    <Resource Include="Img\refreshBtn_black.png" />
+    <Resource Include="Img\refreshBtn_m.png" />
     <Resource Include="Img\sortBtn.png" />
     <Resource Include="Img\sortBtn_m.png" />
     <Resource Include="Img\warn.png" />
