@@ -1,19 +1,12 @@
 ﻿using HNInc.Communication.Library;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CncPrj_WPF_Core
 {
@@ -22,28 +15,81 @@ namespace CncPrj_WPF_Core
     /// </summary>
     public partial class Login : Page
     {
-        public OpWindow opwindow;
-        public Login login;
+        IsolatedStorageFile isoStore;
+        public OpWindow _opWindow;
         public Login()
         {
             InitializeComponent();
-            login = this;
-            opwindow = new OpWindow(ref login);
+
+            _opWindow = new OpWindow();
+            _opWindow.login = this;
+
+            isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+            if (isoStore.FileExists("IDRememberMe.txt"))
+            {
+                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.Open, isoStore))
+                {
+                    using (StreamReader reader = new StreamReader(isoStream))
+                    {
+                        idBox.Text = reader.ReadToEnd();
+                    }
+                }
+            }
+        }
+        public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            if (isoStore.FileExists("IDRememberMe.txt"))
+            {
+                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.Open, isoStore))
+                {
+                    using (StreamReader reader = new StreamReader(isoStream))
+                    {
+                        idBox.Text = reader.ReadToEnd();
+                    }
+                }
+            }
+            NavigationService.LoadCompleted -= NavigationServiceLoadCompleted;
         }
         private void LoginEvt(object sender, RoutedEventArgs e)
         {
-            string id = idBox.Text;
-            string pw = pwBox.Password;
+            string id = idBox.Text.Trim();
+            string pw = pwBox.Password.Trim();
             HttpAuthentication authentication = HNHttp.CheckAuthentication(id, pw);
-            Debug.WriteLine(authentication._processResult);
 
             if (authentication._checkPassword)
             {
                 // ID/PW 모두 일치하는 경우
                 //MessageBox.Show("로그인 성공","알림", MessageBoxButton.OK, MessageBoxImage.Information);
-                Uri uri = new Uri("/OpWindow.xaml", UriKind.Relative);
-                NavigationService.Navigate(uri);
-                opwindow.InputUserId(id);
+                if (authentication._processResult.Equals("Success"))
+                {
+                    if ((bool)uRememberMe.IsChecked)
+                    {
+                        if (!isoStore.FileExists("IDRememberMe.txt"))
+                        {
+                            using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.CreateNew, isoStore))
+                            {
+                                using (StreamWriter writer = new StreamWriter(isoStream))
+                                {
+                                    writer.Write(id);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (isoStore.FileExists("IDRememberMe.txt"))
+                        {
+                            isoStore.DeleteFile("IDRememberMe.txt");
+                        }
+                    }
+                    NavigationService.LoadCompleted += _opWindow.NavigationServiceLoadCompleted;
+                    NavigationService.Navigate(_opWindow, id);
+                }
+                else
+                {
+                    ErrorAlert loginErrorAlert = new ErrorAlert(authentication._processResult);
+                    loginErrorAlert.ShowDialog();
+                }
             }
             else
             {
@@ -67,6 +113,7 @@ namespace CncPrj_WPF_Core
                 else
                 {
                     // 둘 다 일치하지 않는 경우
+                    idBox.Focus();
                     logResult.Text = "아이디와 비밀번호가 일치하지 않습니다.";
                 }
             }

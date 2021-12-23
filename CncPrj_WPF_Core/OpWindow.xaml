@@ -29,6 +29,7 @@
         <Rectangle Grid.Row="0" Grid.ColumnSpan="2" Fill="#3c4852"/>
         <Image Width="60" Source="Img/logo.png" Margin="20,6,0,6" HorizontalAlignment="Left"/>
         <TextBlock FontSize="30" FontWeight="Bold" Foreground="white"  Text="CNC Tool Load Monitoring" Margin="100,0,0,0" VerticalAlignment="Center" Height="40"  />
+
         <Button x:Name="logoutBtn" Grid.Row="0" Grid.Column="1" Canvas.Right="0" Background="#3c4852" Margin="0 10 20 0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="37" Width="37" Click="logoutEvt">
             <!-- margin 왼쪽 위 오른쪽 아래 -->
             <Image Width="35">
@@ -59,8 +60,11 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <TextBlock x:Name="userId" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="238,11,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="92" Text="ddsfwefwfwef"/>
-        <TextBlock x:Name="currentTime" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="335,11,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234" />
+        <TextBlock x:Name="userId" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="372,0,0,0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="200" TextAlignment="Right" Text="Login Required"/>
+        <!--원래 위치-->
+        <!--<TextBlock x:Name="currentTime" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="335,11,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234" />-->
+        <!--id 배치에 의한 위치 변경-->
+        <TextBlock x:Name="currentTime" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="386,6,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234" Grid.Row="1" />
         <TextBlock x:Name="currentLocation" FontSize="17" Grid.Column="0" Grid.Row="1" FontWeight="Medium" Foreground="#d6d6d6"  Text="Workshop1 | Line1 | Operation1" Margin="20 16 0 0" />
 
         <Border BorderBrush="#797a7c" BorderThickness="2" Margin="20,5,5,5" Grid.Row="2">

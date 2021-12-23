@@ -7,12 +7,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.Media;
-using SciChart.Charting.Model.DataSeries;
-using System.IO;
 using System.Windows.Media.Imaging;
-using WpfAnimatedGif;
 using System.Windows.Input;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
+using System.Threading;
 
 namespace CncPrj_WPF_Core
 {
@@ -33,15 +32,14 @@ namespace CncPrj_WPF_Core
         BrushConverter converter = new BrushConverter();
         bool maeFlag = true;
         private DataTable processTable;
-        private Login userLogin;
         bool gridVisibility;
         DateTime productInfoPeriodStarttime;
         DateTime productInfoPeriodEndtime;
+        public Login login;
 
         public OpWindow()
         {
             InitializeComponent();
-
             timer = new DispatcherTimer(); //호출 함수 설정
             timer.Tick += timer_Tick; //함수 호출 주기 설정
             timer.Interval = TimeSpan.FromSeconds(1); //타이머 시작
@@ -64,20 +62,16 @@ namespace CncPrj_WPF_Core
             productInfoPeriodEndtime = DateTime.Today;
         }
 
-        public OpWindow(ref Login login)
+        public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
         {
-            InitializeComponent();
-            userLogin = login;
-        }
-
-        public void InputUserId(string id)
-        {
-           userId.Text = id;
+            userId.Text = e.ExtraData.ToString();
+            NavigationService.LoadCompleted -= NavigationServiceLoadCompleted;
         }
 
         //mae 출력
         public void InputRealTimeLossData(string RTLossData, object data)
         {
+
             // drawMainChart스레드를 접근하기 위해서
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
@@ -218,8 +212,9 @@ namespace CncPrj_WPF_Core
         //logout 버튼 이벤트
         private void logoutEvt(object sender, RoutedEventArgs e)
         {
-            Uri uri = new Uri("/Login.xaml", UriKind.Relative);
-            NavigationService.Navigate(uri);
+            login._opWindow = this;
+            NavigationService.LoadCompleted += login.NavigationServiceLoadCompleted;
+            NavigationService.Navigate(login);
         }
         //차트 이력 기간 설정 버튼 이벤트 -> 기간 설정 윈도우 오픈
         private void setPeriodBtn_Click(object sender, RoutedEventArgs e)
@@ -418,12 +413,19 @@ namespace CncPrj_WPF_Core
         private void processTable_Loaded(object sender, RoutedEventArgs e)
         {
             gridVisibility = true;
-            ProcessGrid.ItemsSource = processTable.DefaultView;
-            processTable.Columns.Add("opcode", typeof(string));
-            processTable.Columns.Add("sn", typeof(string));
-            processTable.Columns.Add("startTime", typeof(string));
-            processTable.Columns.Add("endTime", typeof(string));
-            processTable.Columns.Add("issue", typeof(string));
+            if (processTable.Columns.Count==0)
+            {
+                ProcessGrid.ItemsSource = processTable.DefaultView;
+                processTable.Columns.Add("opcode", typeof(string));
+                processTable.Columns.Add("sn", typeof(string));
+                processTable.Columns.Add("startTime", typeof(string));
+                processTable.Columns.Add("endTime", typeof(string));
+                processTable.Columns.Add("issue", typeof(string));
+            }
+            else
+            {
+                processTable.Clear();
+            }
             List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(0);
             productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);

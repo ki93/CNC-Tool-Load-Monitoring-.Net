@@ -50,7 +50,6 @@ namespace CncPrj_WPF_Core
                     realSpindleLoad.Append(currentDateTime, scaleLoad);
                     predictedSpindleLoad.Append(currentDateTime, scalePredict);
                     mae.Append(currentDateTime, maeValue);
-
                     opwindow.RealLoadLineSeries.DataSeries = realSpindleLoad;
                     opwindow.PredictLoadLineSeries.DataSeries = predictedSpindleLoad;
                     opwindow.RealMaeLineSeries.DataSeries = mae;
