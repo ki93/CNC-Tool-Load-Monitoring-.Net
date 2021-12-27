@@ -20,7 +20,18 @@
 
         <TextBlock Foreground="#38e09a" FontSize="28" FontWeight="Bold" Margin="10,0,0,0" HorizontalAlignment="Left" Width="631" VerticalAlignment="Center" Height="45">FFT Image Expansion</TextBlock>
         <Button Grid.Row="0" Margin="1130,10,20,12" Background="#FF111217" BorderThickness="0" Click="CloseExpansionWindow">
-            <Image Source="Img/closeBtn.png"/>
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Img/closeBtn.png"></Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/closeBtn_m.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
             <Button.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="Transparent" />

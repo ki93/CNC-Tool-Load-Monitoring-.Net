@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CncPrj_WPF_Core"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
         Title="ErrorAlert" Height="250" Width="450" Left="750" Top="400" WindowStyle="None">
     <Grid>
@@ -29,5 +30,6 @@
                 </Style>
             </Button.Resources>
         </Button>
+        <TextBlock x:Name="uAlertCount" Text="" FontSize="10" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Grid.Column="1" Margin="266,0,36,0" Grid.Row="1"/>
     </Grid>
 </Window>

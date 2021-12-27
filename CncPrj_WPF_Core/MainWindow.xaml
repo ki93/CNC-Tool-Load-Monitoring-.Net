@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920" Left="0" Top="0">
     <Grid>
-        <Frame Source="OpWindow.xaml" NavigationUIVisibility="hidden"  Name="frameContent"/>
-        <!--<Frame Name="frameContent" Source="Login.xaml" NavigationUIVisibility="Hidden" />--> 
+        <!--<Frame Source="MoveStep.xaml" NavigationUIVisibility="hidden"  Name="frameContent"/>-->
+        <!--<Frame Source="OpWindow.xaml" NavigationUIVisibility="hidden"  Name="frameContent"/>-->
+        <Frame Name="frameContent" Source="Login.xaml" NavigationUIVisibility="Hidden" /> 
 
     </Grid>
 </Window>

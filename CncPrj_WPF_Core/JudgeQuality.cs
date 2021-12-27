@@ -1,5 +1,6 @@
 ﻿using HNInc.Communication.Library;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -126,7 +127,17 @@ namespace CncPrj_WPF_Core
                 {
                     opwindow.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                     {
-                        WarningAlert warningAlert = new WarningAlert(e.Message);
+                        WarningAlert warningAlert;
+                        if (opwindow._alerts.ContainsKey(e.Message))
+                        {
+                            warningAlert = (WarningAlert)opwindow._alerts[e.Message];
+                            warningAlert.CountUp();
+                        }
+                        else
+                        {
+                            warningAlert = new WarningAlert(e.Message,ref opwindow);
+                            opwindow._alerts.Add(e.Message, warningAlert);
+                        }
                         warningAlert.ShowDialog();
                     }));
                 });

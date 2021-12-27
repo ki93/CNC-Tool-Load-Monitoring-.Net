@@ -12,7 +12,18 @@
     <Grid>
         <TextBlock Foreground="#38e09a" FontSize="25" FontWeight="Bold" Margin="46,17,0,0" HorizontalAlignment="Left" Width="631" VerticalAlignment="Top">Production History</TextBlock>
         <Button Margin="730,20,30,440" Background="#FF111217" BorderThickness="0" Click="CloseProductWindow">
-            <Image Source="Img/closeBtn.png"/>
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Img/closeBtn.png"></Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/closeBtn_m.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
             <Button.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="Transparent" />

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace CncPrj_WPF_Core
 {
@@ -17,12 +19,13 @@ namespace CncPrj_WPF_Core
         {
             InitializeComponent();
             _opWindow = opWindow;
-            ProductInfoStartDatePick.SelectedDate = startTime;
-            ProductInfoStartDatePick.DisplayDateEnd = DateTime.Today;
+
             //추후 수정
             ProductInfoStartDatePick.DisplayDateStart = DateTime.Today.AddDays(-31);
             ProductInfoEndDatePick.SelectedDate = endTime;
             ProductInfoEndDatePick.DisplayDateEnd = DateTime.Today;
+            ProductInfoStartDatePick.SelectedDate = startTime;
+            ProductInfoStartDatePick.DisplayDateEnd = DateTime.Today;
         }
 
         //Apply 버튼 이벤트 
@@ -40,8 +43,35 @@ namespace CncPrj_WPF_Core
         //start 달력 선택 이벤트
         private void InfoStartDatePick_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            _startTime = (DateTime)ProductInfoStartDatePick.SelectedDate;
+            DateTime temp = (DateTime)ProductInfoStartDatePick.SelectedDate;
             ProductInfoEndDatePick.DisplayDateStart = ProductInfoStartDatePick.SelectedDate;
+            if (_endTime < temp)
+            {
+                ProductInfoStartDatePick.SelectedDate = _startTime;
+                Task.Run(() =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        InfoAlert infoAlert;
+                        string message = "시작 날짜를 다시 설정해주세요. 종료 날짜보다 느릴 수 없습니다.";
+                        if (_opWindow._alerts.ContainsKey(message))
+                        {
+                            infoAlert = (InfoAlert)_opWindow._alerts[message];
+                            infoAlert.CountUp();
+                        }
+                        else
+                        {
+                            infoAlert = new InfoAlert(message, ref _opWindow);
+                            _opWindow._alerts.Add(message, infoAlert);
+                            infoAlert.ShowDialog();
+                        }
+                    }));
+                });
+            }
+            else
+            {
+                _startTime = temp;
+            }
         }
 
         //end 달력 선택 이벤트
