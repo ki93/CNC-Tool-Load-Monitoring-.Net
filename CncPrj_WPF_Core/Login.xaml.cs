@@ -3,10 +3,12 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using System.Windows.Threading;
 
 namespace CncPrj_WPF_Core
 {
@@ -15,19 +17,19 @@ namespace CncPrj_WPF_Core
     /// </summary>
     public partial class Login : Page
     {
-        IsolatedStorageFile isoStore;
+        IsolatedStorageFile _isoStore;
         public OpWindow _opWindow;
         public Login()
         {
             InitializeComponent();
 
             _opWindow = new OpWindow();
-            _opWindow.login = this;
+            _opWindow._login = this;
 
-            isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
-            if (isoStore.FileExists("IDRememberMe.txt"))
+            _isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+            if (_isoStore.FileExists("IDRememberMe.txt"))
             {
-                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.Open, isoStore))
+                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.Open, _isoStore))
                 {
                     using (StreamReader reader = new StreamReader(isoStream))
                     {
@@ -38,9 +40,9 @@ namespace CncPrj_WPF_Core
         }
         public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
         {
-            if (isoStore.FileExists("IDRememberMe.txt"))
+            if (_isoStore.FileExists("IDRememberMe.txt"))
             {
-                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.Open, isoStore))
+                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.Open, _isoStore))
                 {
                     using (StreamReader reader = new StreamReader(isoStream))
                     {
@@ -64,9 +66,9 @@ namespace CncPrj_WPF_Core
                 {
                     if ((bool)uRememberMe.IsChecked)
                     {
-                        if (!isoStore.FileExists("IDRememberMe.txt"))
+                        if (!_isoStore.FileExists("IDRememberMe.txt"))
                         {
-                            using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.CreateNew, isoStore))
+                            using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.CreateNew, _isoStore))
                             {
                                 using (StreamWriter writer = new StreamWriter(isoStream))
                                 {
@@ -77,9 +79,9 @@ namespace CncPrj_WPF_Core
                     }
                     else
                     {
-                        if (isoStore.FileExists("IDRememberMe.txt"))
+                        if (_isoStore.FileExists("IDRememberMe.txt"))
                         {
-                            isoStore.DeleteFile("IDRememberMe.txt");
+                            _isoStore.DeleteFile("IDRememberMe.txt");
                         }
                     }
                     NavigationService.LoadCompleted += _opWindow.NavigationServiceLoadCompleted;
@@ -87,8 +89,24 @@ namespace CncPrj_WPF_Core
                 }
                 else
                 {
-                    ErrorAlert loginErrorAlert = new ErrorAlert(authentication._processResult);
-                    loginErrorAlert.ShowDialog();
+                    Task.Run(() =>
+                    {
+                        Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                        {
+                            ErrorAlert loginErrorAlert;
+                            if (_opWindow._alerts.ContainsKey(authentication._processResult))
+                            {
+                                loginErrorAlert = (ErrorAlert)_opWindow._alerts["Test"];
+                                loginErrorAlert.CountUp();
+                            }
+                            else
+                            {
+                                loginErrorAlert = new ErrorAlert(authentication._processResult, ref _opWindow);
+                                _opWindow._alerts.Add("Test", loginErrorAlert);
+                                loginErrorAlert.ShowDialog();
+                            }
+                        }));
+                    });
                 }
             }
             else

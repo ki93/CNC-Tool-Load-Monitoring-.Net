@@ -19,16 +19,26 @@ namespace CncPrj_WPF_Core
     /// </summary>
     public partial class ErrorAlert : Window
     {
-        public ErrorAlert(string message)
+        int _count;
+        OpWindow _opWindow;
+
+        public ErrorAlert(string message, ref OpWindow opWindow)
         {
             InitializeComponent();
             errMsg.Text = message;
+            _opWindow = opWindow;
+            _count = 0;
+        }
+        public void CountUp()
+        {
+            _count++;
+            uAlertCount.Text = $"(+{_count})";
         }
 
         private void ErrorAlertClose(object sender, RoutedEventArgs e)
         {
+            _opWindow._alerts.Remove(errMsg.Text);
             Close();
         }
-
     }
 }
