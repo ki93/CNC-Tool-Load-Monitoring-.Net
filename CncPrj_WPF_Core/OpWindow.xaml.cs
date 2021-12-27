@@ -32,10 +32,11 @@ namespace CncPrj_WPF_Core
         BrushConverter converter = new BrushConverter();
         bool maeFlag = true;
         private DataTable processTable;
-        bool gridVisibility;
-        DateTime productInfoPeriodStarttime;
-        DateTime productInfoPeriodEndtime;
-        public Login login;
+        bool _gridVisibility;
+        DateTime _productInfoPeriodStarttime;
+        DateTime _productInfoPeriodEndtime;
+        public Login _login;
+        public Dictionary<Object, Object> _alerts;
 
         public OpWindow()
         {
@@ -52,14 +53,15 @@ namespace CncPrj_WPF_Core
             hitoryGroupByTime = (string)historyChartGroupByItem.Content;
             hitoryStartTime = DateTime.Now.AddMinutes(-15).ToString();
             hitoryEndTime = DateTime.Now.ToString();
-
             historyChartInit();
             processTable = new DataTable();
             InputCycleTimeAverage();
             InputRealTimeCount();
             new JudgeQuality(ref opwindow).InitJudgeQualityImage();
-            productInfoPeriodStarttime = DateTime.Today;
-            productInfoPeriodEndtime = DateTime.Today;
+            _productInfoPeriodStarttime = DateTime.Today;
+            _productInfoPeriodEndtime = DateTime.Today;
+            _alerts = new Dictionary<object, object>();
+            
         }
 
         public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
@@ -71,7 +73,6 @@ namespace CncPrj_WPF_Core
         //mae 출력
         public void InputRealTimeLossData(string RTLossData, object data)
         {
-
             // drawMainChart스레드를 접근하기 위해서
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
@@ -212,9 +213,9 @@ namespace CncPrj_WPF_Core
         //logout 버튼 이벤트
         private void logoutEvt(object sender, RoutedEventArgs e)
         {
-            login._opWindow = this;
-            NavigationService.LoadCompleted += login.NavigationServiceLoadCompleted;
-            NavigationService.Navigate(login);
+            _login._opWindow = this;
+            NavigationService.LoadCompleted += _login.NavigationServiceLoadCompleted;
+            NavigationService.Navigate(_login);
         }
         //차트 이력 기간 설정 버튼 이벤트 -> 기간 설정 윈도우 오픈
         private void setPeriodBtn_Click(object sender, RoutedEventArgs e)
@@ -412,7 +413,7 @@ namespace CncPrj_WPF_Core
         }
         private void processTable_Loaded(object sender, RoutedEventArgs e)
         {
-            gridVisibility = true;
+            _gridVisibility = true;
             if (processTable.Columns.Count==0)
             {
                 ProcessGrid.ItemsSource = processTable.DefaultView;
@@ -472,15 +473,15 @@ namespace CncPrj_WPF_Core
         //제품 정보 dataGrid Sort
         private void ProductInfoListSortEvt(object sender, RoutedEventArgs e)
         {
-            if (gridVisibility)
+            if (_gridVisibility)
             {
-                gridVisibility = false;
+                _gridVisibility = false;
                 ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select_Up.png", UriKind.RelativeOrAbsolute));
                 App.Current.Resources["RowVisibility"] = Visibility.Collapsed;
             }
             else
             {
-                gridVisibility = true;
+                _gridVisibility = true;
                 ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select.png", UriKind.RelativeOrAbsolute));
                 App.Current.Resources["RowVisibility"] = Visibility.Visible;
             }
@@ -488,7 +489,7 @@ namespace CncPrj_WPF_Core
         //제품 정보 dataGrid MouseOver
         private void ProductInfoSortBtmMouseEnter(object sender, MouseEventArgs e)
         {
-            if (gridVisibility)
+            if (_gridVisibility)
             {
                 ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select_Up.png", UriKind.RelativeOrAbsolute));
             }
@@ -499,7 +500,7 @@ namespace CncPrj_WPF_Core
         }
         private void ProductInfoSortBtmMouseLeave(object sender, MouseEventArgs e)
         {
-            if (gridVisibility)
+            if (_gridVisibility)
             {
                 ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select.png", UriKind.RelativeOrAbsolute));
             }
@@ -511,18 +512,18 @@ namespace CncPrj_WPF_Core
         //dataGrid Search
         private void ProductInfoListSearchEvt(object sender, RoutedEventArgs e)
         {
-            SetProductInfoPeriod info = new SetProductInfoPeriod(ref opwindow, productInfoPeriodStarttime, productInfoPeriodEndtime);
+            SetProductInfoPeriod info = new SetProductInfoPeriod(ref opwindow, _productInfoPeriodStarttime, _productInfoPeriodEndtime);
             info.ShowDialog();
         }
         //dataGrid Search Request
         public void RequestProductInfoList(DateTime starttime, DateTime endtime)
         {
-            productInfoPeriodStarttime = starttime;
-            productInfoPeriodEndtime = endtime;
+            _productInfoPeriodStarttime = starttime;
+            _productInfoPeriodEndtime = endtime;
             TimeSpan timespanFromToday = DateTime.Today.Subtract(starttime);
             int daysFromToday = timespanFromToday.Days;
             Debug.WriteLine("test"+daysFromToday);
-            gridVisibility = true;
+            _gridVisibility = true;
             App.Current.Resources["RowVisibility"] = Visibility.Visible;
             List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(daysFromToday);
             productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
@@ -548,9 +549,9 @@ namespace CncPrj_WPF_Core
         //dataGrid Refresh
         private void ProductInfoListRefreshEvt(object sender, RoutedEventArgs e)
         {
-            gridVisibility = true;
-            productInfoPeriodStarttime = DateTime.Today;
-            productInfoPeriodEndtime = DateTime.Today;
+            _gridVisibility = true;
+            _productInfoPeriodStarttime = DateTime.Today;
+            _productInfoPeriodEndtime = DateTime.Today;
             App.Current.Resources["RowVisibility"] = Visibility.Visible;
             List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(0);
             productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
@@ -593,8 +594,24 @@ namespace CncPrj_WPF_Core
             if (fftSource.Contains("no-image"))
             {
                 string infoMsg = "Failed to load the image.";
-                InfoAlert infoAlert = new InfoAlert(infoMsg);
-                infoAlert.ShowDialog();
+                Task.Run(() =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        InfoAlert infoAlert;
+                        if (_alerts.ContainsKey(infoMsg))
+                        {
+                            infoAlert = (InfoAlert)_alerts[infoMsg];
+                            infoAlert.CountUp();
+                        }
+                        else
+                        {
+                            infoAlert = new InfoAlert(infoMsg, ref opwindow);
+                            _alerts.Add(infoMsg, infoAlert);
+                            infoAlert.ShowDialog();
+                        }
+                    }));
+                });
             }
             else
             {
