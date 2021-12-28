@@ -8,7 +8,15 @@
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="OpWindow">
-    
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Page.Resources>
+
     <Grid Background="#2b2d30">
         <Grid.RowDefinitions>
             <!--Row-->
@@ -166,13 +174,10 @@
         <!--<Rectangle Grid.Row="3" Grid.Column="1" Fill="#1e1e1e" Margin="15,10,258,261" RadiusX="5" RadiusY="5"></Rectangle>
         <Image Grid.Row="3" Grid.Column="1" Source="Img/calendarImg.png" Margin="28,31,591,282" Panel.ZIndex="2"/>
         <Label Grid.Row="3" Grid.Column="1" Content="2021-10-10 ~ 2021-10-11" Foreground="white" Margin="60,22,258,274" FontWeight="Bold" FontSize="20" Panel.ZIndex="2"/>-->
-        <ComboBox x:Name="historyChartGroupByValue" Grid.Row="3" Grid.Column="1" Margin="387,10,188,260" FontSize="20" FontWeight="Bold" Height="40" VerticalContentAlignment="Center" VerticalAlignment="Center" SelectionChanged="historyChartGroupByValue_SelectionChanged" SelectedValuePath="Content" Cursor="Hand" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" Background="#1e1e1e">
+        <ComboBox x:Name="historyChartGroupByValue" Grid.Row="3" Grid.Column="1"  Margin="387,10,188,260" FontSize="20" Height="59" FontWeight="Bold" VerticalContentAlignment="Center" VerticalAlignment="Center" SelectionChanged="historyChartGroupByValue_SelectionChanged" SelectedValuePath="Content" Cursor="Hand" Style="{StaticResource ComboboxStyle}" Foreground="White" >
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="ComboBoxItem">
-                    <Setter Property="Background" Value="#1e1e1e"/>
                     <Setter Property="Cursor" Value="Hand" />
-                    <Setter Property="BorderBrush" Value="#1e1e1e"/>
-                    <Setter Property="Foreground" Value="white"/>
                     <Style.Triggers>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Background" Value="#1e1e1e" />
@@ -181,28 +186,6 @@
                     </Style.Triggers>
                 </Style>
             </ComboBox.ItemContainerStyle>
-
-            <ComboBox.Style>
-                <Style TargetType="ComboBox">
-                    <Setter Property="Cursor" Value="Hand" />
-                    <Setter Property="Foreground" Value="#1e1e1e"/>
-                </Style>
-            </ComboBox.Style>
-            
-            <ComboBox.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="LightBlue" />
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"></Setter>
-                </Style>
-                <Style TargetType="TextBlock">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ComboBoxItem}}" Value="True">
-                            <Setter Property="Background" Value="Red" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ComboBox.Resources>
-
             <ComboBoxItem Content="1s" x:Name="combo1s"/>
             <ComboBoxItem Content="2s" x:Name="combo2s"/>
             <ComboBoxItem Content="3s" x:Name="combo3s" IsSelected="True" />
@@ -214,6 +197,7 @@
             <ComboBoxItem Content="9s" x:Name="combo9s"/>
             <ComboBoxItem Content="10s" x:Name="combo10s"/>
         </ComboBox>
+
         <Button Grid.Row="3" Grid.Column="1" Margin="457,10,118,261" Background="#1e1e1e" Foreground="White" BorderBrush="{x:Null}" Click="RefreshHistoryChart">
             <Image Source="Img/refreshBtn.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="33"></Image>
             <Button.Resources>
@@ -607,9 +591,7 @@
             </DataGrid.CellStyle>
 
         </DataGrid>
-
-
-
+    
     </Grid>
-
 </Page>
+    
