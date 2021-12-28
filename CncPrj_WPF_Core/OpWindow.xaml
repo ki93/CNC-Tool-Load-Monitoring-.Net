@@ -16,6 +16,7 @@
 
         </ResourceDictionary>
     </Page.Resources>
+
     <Grid Background="#2b2d30">
         <Grid.RowDefinitions>
             <!--Row-->
@@ -32,6 +33,7 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
 
         <Rectangle Grid.Row="0" Grid.ColumnSpan="2" Fill="#3c4852"/>
         <Image Width="60" Source="Img/logo.png" Margin="20,6,0,6" HorizontalAlignment="Left"/>
