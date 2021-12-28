@@ -28,7 +28,7 @@ namespace CncPrj_WPF_Core
         string fftSource;
         SocketConnecting socketConnecting;
         public OpWindow opwindow;
-        DispatcherTimer timer;
+        DispatcherTimer timer; 
         BrushConverter converter = new BrushConverter();
         bool maeFlag = true;
         private DataTable processTable;
@@ -230,7 +230,6 @@ namespace CncPrj_WPF_Core
             hitoryEndTime = endTime;
             //data http로 보내기
             HistoryChartHttpRequest();
-
 
             var timeRange = Convert.ToDateTime(endTime) - Convert.ToDateTime(startTime);
 

@@ -23,6 +23,7 @@
     <None Remove="Img\calendar_pressed_mouseover.png" />
     <None Remove="Img\calendar_Up.png" />
     <None Remove="Img\closeBtn.png" />
+    <None Remove="Img\closeBtn_m.png" />
     <None Remove="Img\error.png" />
     <None Remove="Img\expansion.png" />
     <None Remove="Img\expansion_m.png" />
@@ -98,6 +99,7 @@
     <Resource Include="Img\calendar_pressed.png" />
     <Resource Include="Img\calendar_pressed_mouseover.png" />
     <Resource Include="Img\closeBtn.png" />
+    <Resource Include="Img\closeBtn_m.png" />
     <Resource Include="Img\error.png" />
     <Resource Include="Img\expansion.png" />
     <Resource Include="Img\expansion_m.png" />
