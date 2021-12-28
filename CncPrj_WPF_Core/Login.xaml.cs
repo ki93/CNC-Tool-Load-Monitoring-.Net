@@ -50,6 +50,10 @@ namespace CncPrj_WPF_Core
                     }
                 }
             }
+            else
+            {
+                idBox.Text = "";
+            }
             NavigationService.LoadCompleted -= NavigationServiceLoadCompleted;
         }
         private void LoginEvt(object sender, RoutedEventArgs e)
@@ -57,7 +61,6 @@ namespace CncPrj_WPF_Core
             string id = idBox.Text.Trim();
             string pw = pwBox.Password.Trim();
             HttpAuthentication authentication = HNHttp.CheckAuthentication(id, pw);
-
             if (authentication._checkPassword)
             {
                 // ID/PW 모두 일치하는 경우
@@ -96,13 +99,13 @@ namespace CncPrj_WPF_Core
                             ErrorAlert loginErrorAlert;
                             if (_opWindow._alerts.ContainsKey(authentication._processResult))
                             {
-                                loginErrorAlert = (ErrorAlert)_opWindow._alerts["Test"];
+                                loginErrorAlert = (ErrorAlert)_opWindow._alerts[authentication._processResult];
                                 loginErrorAlert.CountUp();
                             }
                             else
                             {
                                 loginErrorAlert = new ErrorAlert(authentication._processResult, ref _opWindow);
-                                _opWindow._alerts.Add("Test", loginErrorAlert);
+                                _opWindow._alerts.Add(authentication._processResult, loginErrorAlert);
                                 loginErrorAlert.ShowDialog();
                             }
                         }));

@@ -464,12 +464,6 @@
                     <Style TargetType="Image">
                         <EventSetter Event="MouseEnter" Handler="ProductInfoSortBtmMouseEnter"/>
                         <EventSetter Event="MouseLeave" Handler="ProductInfoSortBtmMouseLeave"/>
-                        <!--<Setter Property="Source" Value="Img/Select.png"/>-->
-                        <!--<Style.Triggers>
-                            <Trigger Property="IsMouseCaptured" Value="True">
-                                <Setter Property="Source" Value="Img/Select_Up.png"/>
-                            </Trigger>
-                        </Style.Triggers>-->
                     </Style>
                 </Image.Style>
             </Image>
@@ -489,15 +483,11 @@
             </Button.Resources>
         </Button>
         <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="32" Height="32" Click="ProductInfoListSearchEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,13,76,0" Background="Transparent">
-            <Image Width="32" Height="32" >
+            <Image x:Name="ProductInfoListCalendarBtnImage" Width="32" Height="32" Source="Img/calendar.png">
                 <Image.Style>
                     <Style TargetType="Image">
-                        <Setter Property="Source" Value="Img/calendar.png"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Source" Value="Img/calendar_Up.png"/>
-                            </Trigger>
-                        </Style.Triggers>
+                        <EventSetter Event="MouseEnter" Handler="ProductInfoCalendarBtmMouseEnter"/>
+                        <EventSetter Event="MouseLeave" Handler="ProductInfoCalendarBtmMouseLeave"/>
                     </Style>
                 </Image.Style>
             </Image>
