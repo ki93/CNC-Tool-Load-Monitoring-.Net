@@ -184,7 +184,7 @@
             <ComboBox.Style>
                 <Style TargetType="ComboBox">
                     <Setter Property="Cursor" Value="Hand" />
-                    <Setter Property="Foreground" Value="#1e1e1e"/>
+                    <Setter Property="Foreground" Value="blue"/>
                 </Style>
             </ComboBox.Style>
 
