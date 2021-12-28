@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="OpWindow">
-
+    
     <Grid Background="#2b2d30">
         <Grid.RowDefinitions>
             <!--Row-->
@@ -25,6 +25,7 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
 
         <Rectangle Grid.Row="0" Grid.ColumnSpan="2" Fill="#3c4852"/>
         <Image Width="60" Source="Img/logo.png" Margin="20,6,0,6" HorizontalAlignment="Left"/>
@@ -165,7 +166,7 @@
         <!--<Rectangle Grid.Row="3" Grid.Column="1" Fill="#1e1e1e" Margin="15,10,258,261" RadiusX="5" RadiusY="5"></Rectangle>
         <Image Grid.Row="3" Grid.Column="1" Source="Img/calendarImg.png" Margin="28,31,591,282" Panel.ZIndex="2"/>
         <Label Grid.Row="3" Grid.Column="1" Content="2021-10-10 ~ 2021-10-11" Foreground="white" Margin="60,22,258,274" FontWeight="Bold" FontSize="20" Panel.ZIndex="2"/>-->
-        <ComboBox x:Name="historyChartGroupByValue" Grid.Row="3" Grid.Column="1"  Margin="387,10,188,261" FontSize="20" Height="63" FontWeight="Bold" VerticalContentAlignment="Center" VerticalAlignment="Center" Background="#1e1e1e" SelectionChanged="historyChartGroupByValue_SelectionChanged" SelectedValuePath="Content" Cursor="Hand">
+        <ComboBox x:Name="historyChartGroupByValue" Grid.Row="3" Grid.Column="1" Margin="387,10,188,260" FontSize="20" FontWeight="Bold" Height="40" VerticalContentAlignment="Center" VerticalAlignment="Center" SelectionChanged="historyChartGroupByValue_SelectionChanged" SelectedValuePath="Content" Cursor="Hand" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" Background="#1e1e1e">
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="ComboBoxItem">
                     <Setter Property="Background" Value="#1e1e1e"/>
@@ -175,7 +176,7 @@
                     <Style.Triggers>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Background" Value="#1e1e1e" />
-                            <Setter Property="Foreground" Value="SkyBlue"/>
+                            <Setter Property="Foreground" Value="#1e1e1e"/>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -184,9 +185,23 @@
             <ComboBox.Style>
                 <Style TargetType="ComboBox">
                     <Setter Property="Cursor" Value="Hand" />
-                    <Setter Property="Foreground" Value="blue"/>
+                    <Setter Property="Foreground" Value="#1e1e1e"/>
                 </Style>
             </ComboBox.Style>
+            
+            <ComboBox.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="LightBlue" />
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"></Setter>
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ComboBoxItem}}" Value="True">
+                            <Setter Property="Background" Value="Red" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.Resources>
 
             <ComboBoxItem Content="1s" x:Name="combo1s"/>
             <ComboBoxItem Content="2s" x:Name="combo2s"/>
