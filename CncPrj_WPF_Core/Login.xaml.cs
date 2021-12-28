@@ -157,7 +157,13 @@ namespace CncPrj_WPF_Core
             else
             {
                 pwBlock.Visibility = Visibility.Hidden;
-            }
+                //Test
+		//start
+		//
+		//
+		//
+		//end
+	    }
         }
     }
 }
