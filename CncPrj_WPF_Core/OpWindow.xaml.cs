@@ -26,6 +26,8 @@ namespace CncPrj_WPF_Core
         string hitoryEndTime;
         string hitoryGroupByTime;
         string fftSource;
+        string judgeSn;
+        string judgeResult;
         SocketConnecting socketConnecting;
         public OpWindow opwindow;
         DispatcherTimer timer; 
@@ -647,14 +649,16 @@ namespace CncPrj_WPF_Core
             }
             else
             {
-                ImageExpansion imageExpansion = new ImageExpansion(fftSource);
+                ImageExpansion imageExpansion = new ImageExpansion(fftSource, judgeSn, judgeResult);
                 imageExpansion.ShowDialog();
             }
         }
         //FFT 현재 이미지 주소
-        public void InputFFTImg(string src)
+        public void InputFFTImg(string src, string sn, string result)
         {
             fftSource = src;
+            judgeSn = sn;
+            judgeResult = result;
         }
         //history 차트 오픈 클릭 이벤트
         private void historyChartOpen(object sender, RoutedEventArgs e)
