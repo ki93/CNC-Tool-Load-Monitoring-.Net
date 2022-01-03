@@ -17,6 +17,8 @@ namespace CncPrj_WPF_Core
         private OpWindow opwindow;
         //Image 설정 용
         string _currentPath;
+        string _sn;
+        string _result;
 
         public JudgeQuality(ref OpWindow opwin)
         {
@@ -66,7 +68,9 @@ namespace CncPrj_WPF_Core
                 opwindow.productResult.Content = productPredictResult;
                 opwindow.productQualityImg.Source = new BitmapImage(new Uri(imageFilePath, UriKind.RelativeOrAbsolute));
                 opwindow.productQualityImg.Stretch = Stretch.Fill;
-                opwindow.InputFFTImg(imageFilePath);
+                _sn = productSerialNumber;
+                _result = productPredictResult;
+                opwindow.InputFFTImg(imageFilePath, _sn, _result);
 
             }));
         }
@@ -154,7 +158,8 @@ namespace CncPrj_WPF_Core
                     opwindow.productQualityImg.Source = new BitmapImage(new Uri(imageFilePath, UriKind.Absolute));
                     opwindow.productResult.Content = $"{quality._predict}, {quality._accuracy}%";
                     opwindow.productQualityImg.Stretch = Stretch.Fill;
-                    opwindow.InputFFTImg(imageFilePath);
+                    opwindow.InputFFTImg(imageFilePath, _sn, _result);
+
                 }));
 
                 string imageInformation;

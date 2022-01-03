@@ -182,9 +182,19 @@
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Foreground" Value="#1e1e1e"/>
                         </Trigger>
+
                     </Style.Triggers>
                 </Style>
             </ComboBox.ItemContainerStyle>
+            <ComboBox.Resources>
+                    <Style TargetType="{x:Type ComboBox}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="blue" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+            </ComboBox.Resources>
             <ComboBoxItem Content="1s" x:Name="combo1s"/>
             <ComboBoxItem Content="2s" x:Name="combo2s"/>
             <ComboBoxItem Content="3s" x:Name="combo3s" IsSelected="True" />
@@ -309,7 +319,7 @@
                 </Style>
             </Image.Style>
         </Image>
-        <Button Grid.Row="2" Grid.Column="1" Margin="66,36,66,39" Background="Transparent" Panel.ZIndex="10" MouseDoubleClick="FFTImgExpansion" BorderThickness="0">
+        <Button Grid.Row="2" Grid.Column="1" Margin="66,36,66,39" Background="Transparent" Panel.ZIndex="10" Click="FFTImgExpansion" BorderThickness="0">
             <Button.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="Transparent" />
