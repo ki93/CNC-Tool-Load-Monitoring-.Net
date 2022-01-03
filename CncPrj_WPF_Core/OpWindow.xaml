@@ -320,7 +320,7 @@
                 </Style>
             </Image.Style>
         </Image>
-        <Button Grid.Row="2" Grid.Column="1" Margin="66,36,66,39" Background="Transparent" Panel.ZIndex="10" MouseDoubleClick="FFTImgExpansion" BorderThickness="0">
+        <Button Grid.Row="2" Grid.Column="1" Margin="66,36,66,39" Background="Transparent" Panel.ZIndex="10" Click="FFTImgExpansion" BorderThickness="0">
             <Button.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="Transparent" />
