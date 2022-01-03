@@ -4,7 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:s="http://schemas.abtsoftware.co.uk/scichart"
-      xmlns:gif="http://wpfanimatedgif.codeplex.com"
       xmlns:local="clr-namespace:CncPrj_WPF_Core"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
@@ -234,8 +233,7 @@
             </Button.Background>
         </Button>
 
-        <Label x:Name="historyChartLoadBack" Grid.Row="3" Grid.Column="1" Margin="15,82,30,23" Panel.ZIndex="10" Grid.RowSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="Black" Opacity="0.75" Visibility="Hidden"/>
-        <Image x:Name="historyChartLoadImg" gif:ImageBehavior.AnimatedSource ="Img/imageLoading.gif" Panel.ZIndex="11" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Margin="135,0,130,0" Visibility="Hidden"></Image>
+        <Label x:Name="historyChartLoadMsg" Content="Loading Data..." FontSize="50" FontWeight="Bold" Foreground="White" Grid.Row="3" Grid.Column="1" Margin="15,82,30,23" Panel.ZIndex="10" Grid.RowSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="Black" Opacity="0.75" Visibility="Hidden"/>
         <s:SciChartSurface x:Name="pastTimeLoadSpindleSciChartSurface" Grid.Row="3" Grid.Column="1" Margin="15,85,30,10">
             <s:SciChartSurface.RenderableSeries >
                 <s:FastLineRenderableSeries x:Name="PastLoadLineSeries" Stroke="#FF4083B7" StrokeThickness = "2" />
