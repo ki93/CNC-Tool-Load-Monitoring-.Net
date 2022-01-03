@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="ImageExpansion"
         WindowStyle="None"
-        Height="600" Width="1050"
-        Left="440"
-        Top="220" Background="#FF111217">
+        ResizeMode="NoResize"
+        Height="600" Width="1200"
+        Left="380"
+        Top="200" Background="#FF111217">
     <Grid Background="#111217">
         <Grid.RowDefinitions>
             <!--Row-->

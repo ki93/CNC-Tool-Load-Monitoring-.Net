@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:CncPrj_WPF_Core"
         WindowStyle="None"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="TpHistory" Height="500" Width="800" Background="#FF111217"
         Left="500"
         Top="250">
