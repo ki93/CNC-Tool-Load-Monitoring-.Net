@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:CncPrj_WPF_Core"
         WindowStyle="None"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Height="650" Width="800"
         Left="500"
         Top="200">
@@ -20,7 +21,18 @@
 
         <TextBlock  Grid.Row="0" Foreground="#38e09a" FontSize="25" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Left" Width="697" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">Cycle Time History</TextBlock>
         <Button Background="#FF111217" BorderThickness="0" Click="CloseCTWindow" Margin="744,10,16,16">
-            <Image Source="Img/closeBtn.png"/>
+            <Image>
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Source" Value="Img/closeBtn.png"></Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/closeBtn_m.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
             <Button.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="Transparent" />

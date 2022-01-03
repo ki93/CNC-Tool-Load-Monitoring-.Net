@@ -7,12 +7,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.Media;
-using SciChart.Charting.Model.DataSeries;
-using System.IO;
 using System.Windows.Media.Imaging;
-using WpfAnimatedGif;
 using System.Windows.Input;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
+using System.Threading;
 
 namespace CncPrj_WPF_Core
 {
@@ -27,21 +26,23 @@ namespace CncPrj_WPF_Core
         string hitoryEndTime;
         string hitoryGroupByTime;
         string fftSource;
+        string judgeSn;
+        string judgeResult;
         SocketConnecting socketConnecting;
         public OpWindow opwindow;
-        DispatcherTimer timer;
+        DispatcherTimer timer; 
         BrushConverter converter = new BrushConverter();
         bool maeFlag = true;
         private DataTable processTable;
-        private Login userLogin;
-        bool gridVisibility;
-        DateTime productInfoPeriodStarttime;
-        DateTime productInfoPeriodEndtime;
+        bool _gridVisibility;
+        DateTime _productInfoPeriodStarttime;
+        DateTime _productInfoPeriodEndtime;
+        public Login _login;
+        public Dictionary<Object, Object> _alerts;
 
         public OpWindow()
         {
             InitializeComponent();
-
             timer = new DispatcherTimer(); //호출 함수 설정
             timer.Tick += timer_Tick; //함수 호출 주기 설정
             timer.Interval = TimeSpan.FromSeconds(1); //타이머 시작
@@ -54,25 +55,21 @@ namespace CncPrj_WPF_Core
             hitoryGroupByTime = (string)historyChartGroupByItem.Content;
             hitoryStartTime = DateTime.Now.AddMinutes(-15).ToString();
             hitoryEndTime = DateTime.Now.ToString();
-
             historyChartInit();
             processTable = new DataTable();
             InputCycleTimeAverage();
             InputRealTimeCount();
             new JudgeQuality(ref opwindow).InitJudgeQualityImage();
-            productInfoPeriodStarttime = DateTime.Today;
-            productInfoPeriodEndtime = DateTime.Today;
+            _productInfoPeriodStarttime = DateTime.Today;
+            _productInfoPeriodEndtime = DateTime.Today;
+            _alerts = new Dictionary<object, object>();
+            
         }
 
-        public OpWindow(ref Login login)
+        public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
         {
-            InitializeComponent();
-            userLogin = login;
-        }
-
-        public void InputUserId(string id)
-        {
-           userId.Text = id;
+            userId.Text = e.ExtraData.ToString();
+            NavigationService.LoadCompleted -= NavigationServiceLoadCompleted;
         }
 
         //mae 출력
@@ -218,8 +215,9 @@ namespace CncPrj_WPF_Core
         //logout 버튼 이벤트
         private void logoutEvt(object sender, RoutedEventArgs e)
         {
-            Uri uri = new Uri("/Login.xaml", UriKind.Relative);
-            NavigationService.Navigate(uri);
+            _login._opWindow = this;
+            NavigationService.LoadCompleted += _login.NavigationServiceLoadCompleted;
+            NavigationService.Navigate(_login);
         }
         //차트 이력 기간 설정 버튼 이벤트 -> 기간 설정 윈도우 오픈
         private void setPeriodBtn_Click(object sender, RoutedEventArgs e)
@@ -234,7 +232,6 @@ namespace CncPrj_WPF_Core
             hitoryEndTime = endTime;
             //data http로 보내기
             HistoryChartHttpRequest();
-
 
             var timeRange = Convert.ToDateTime(endTime) - Convert.ToDateTime(startTime);
 
@@ -417,13 +414,20 @@ namespace CncPrj_WPF_Core
         }
         private void processTable_Loaded(object sender, RoutedEventArgs e)
         {
-            gridVisibility = true;
-            ProcessGrid.ItemsSource = processTable.DefaultView;
-            processTable.Columns.Add("opcode", typeof(string));
-            processTable.Columns.Add("sn", typeof(string));
-            processTable.Columns.Add("startTime", typeof(string));
-            processTable.Columns.Add("endTime", typeof(string));
-            processTable.Columns.Add("issue", typeof(string));
+            _gridVisibility = true;
+            if (processTable.Columns.Count==0)
+            {
+                ProcessGrid.ItemsSource = processTable.DefaultView;
+                processTable.Columns.Add("opcode", typeof(string));
+                processTable.Columns.Add("sn", typeof(string));
+                processTable.Columns.Add("startTime", typeof(string));
+                processTable.Columns.Add("endTime", typeof(string));
+                processTable.Columns.Add("issue", typeof(string));
+            }
+            else
+            {
+                processTable.Clear();
+            }
             List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(0);
             productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
             DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
@@ -470,57 +474,65 @@ namespace CncPrj_WPF_Core
         //제품 정보 dataGrid Sort
         private void ProductInfoListSortEvt(object sender, RoutedEventArgs e)
         {
-            if (gridVisibility)
+            if (_gridVisibility)
             {
-                gridVisibility = false;
-                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select_Up.png", UriKind.RelativeOrAbsolute));
+                _gridVisibility = false;
+                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select.png", UriKind.RelativeOrAbsolute));
                 App.Current.Resources["RowVisibility"] = Visibility.Collapsed;
             }
             else
             {
-                gridVisibility = true;
-                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select.png", UriKind.RelativeOrAbsolute));
+                _gridVisibility = true;
+                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/filter_pressed.png", UriKind.RelativeOrAbsolute));
                 App.Current.Resources["RowVisibility"] = Visibility.Visible;
             }
         }
         //제품 정보 dataGrid MouseOver
         private void ProductInfoSortBtmMouseEnter(object sender, MouseEventArgs e)
         {
-            if (gridVisibility)
+            if (_gridVisibility)
             {
                 ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select_Up.png", UriKind.RelativeOrAbsolute));
             }
             else
             {
-                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select.png", UriKind.RelativeOrAbsolute));
+                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/filter_pressed_mouseover.png", UriKind.RelativeOrAbsolute));
             }
         }
         private void ProductInfoSortBtmMouseLeave(object sender, MouseEventArgs e)
         {
-            if (gridVisibility)
+            if (_gridVisibility)
             {
                 ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select.png", UriKind.RelativeOrAbsolute));
             }
             else
             {
-                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select_Up.png", UriKind.RelativeOrAbsolute));
+                ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/filter_pressed.png", UriKind.RelativeOrAbsolute));
             }
         }
         //dataGrid Search
         private void ProductInfoListSearchEvt(object sender, RoutedEventArgs e)
         {
-            SetProductInfoPeriod info = new SetProductInfoPeriod(ref opwindow, productInfoPeriodStarttime, productInfoPeriodEndtime);
+            SetProductInfoPeriod info = new SetProductInfoPeriod(ref opwindow, _productInfoPeriodStarttime, _productInfoPeriodEndtime);
             info.ShowDialog();
         }
         //dataGrid Search Request
         public void RequestProductInfoList(DateTime starttime, DateTime endtime)
         {
-            productInfoPeriodStarttime = starttime;
-            productInfoPeriodEndtime = endtime;
+            _productInfoPeriodStarttime = starttime;
+            _productInfoPeriodEndtime = endtime;
+            if (starttime.Equals(DateTime.Today))
+            {
+                ProductInfoListCalendarBtnImage.Source = new BitmapImage(new Uri(@"/Img/calendar.png", UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                ProductInfoListCalendarBtnImage.Source = new BitmapImage(new Uri(@"/Img/calendar_pressed.png", UriKind.RelativeOrAbsolute));
+            }
             TimeSpan timespanFromToday = DateTime.Today.Subtract(starttime);
             int daysFromToday = timespanFromToday.Days;
             Debug.WriteLine("test"+daysFromToday);
-            gridVisibility = true;
+            _gridVisibility = true;
             App.Current.Resources["RowVisibility"] = Visibility.Visible;
             List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(daysFromToday);
             productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
@@ -542,13 +554,38 @@ namespace CncPrj_WPF_Core
                 processTable.Rows.Add(receiveRow);
             }
         }
+        private void ProductInfoCalendarBtmMouseEnter(object sender, MouseEventArgs e)
+        {
+            if (_productInfoPeriodStarttime.Equals(DateTime.Today))
+            {
+                ProductInfoListCalendarBtnImage.Source = new BitmapImage(new Uri(@"/Img/calendar_Up.png", UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                ProductInfoListCalendarBtnImage.Source = new BitmapImage(new Uri(@"/Img/calendar_pressed_mouseover.png", UriKind.RelativeOrAbsolute));
+            }
+        }
+
+        private void ProductInfoCalendarBtmMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (_productInfoPeriodStarttime.Equals(DateTime.Today))
+            {
+                ProductInfoListCalendarBtnImage.Source = new BitmapImage(new Uri(@"/Img/calendar.png", UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                ProductInfoListCalendarBtnImage.Source = new BitmapImage(new Uri(@"/Img/calendar_pressed.png", UriKind.RelativeOrAbsolute));
+            }
+        }
 
         //dataGrid Refresh
         private void ProductInfoListRefreshEvt(object sender, RoutedEventArgs e)
         {
-            gridVisibility = true;
-            productInfoPeriodStarttime = DateTime.Today;
-            productInfoPeriodEndtime = DateTime.Today;
+            _gridVisibility = true;
+            ProductInfoListSortBtnImage.Source = new BitmapImage(new Uri(@"/Img/Select.png", UriKind.RelativeOrAbsolute));
+            ProductInfoListCalendarBtnImage.Source = new BitmapImage(new Uri(@"/Img/calendar.png", UriKind.RelativeOrAbsolute));
+            _productInfoPeriodStarttime = DateTime.Today;
+            _productInfoPeriodEndtime = DateTime.Today;
             App.Current.Resources["RowVisibility"] = Visibility.Visible;
             List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(0);
             productInformations.Sort((x1, x2) => x2._startTime.CompareTo(x1._startTime));
@@ -591,19 +628,37 @@ namespace CncPrj_WPF_Core
             if (fftSource.Contains("no-image"))
             {
                 string infoMsg = "Failed to load the image.";
-                InfoAlert infoAlert = new InfoAlert(infoMsg);
-                infoAlert.ShowDialog();
+                Task.Run(() =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        InfoAlert infoAlert;
+                        if (_alerts.ContainsKey(infoMsg))
+                        {
+                            infoAlert = (InfoAlert)_alerts[infoMsg];
+                            infoAlert.CountUp();
+                        }
+                        else
+                        {
+                            infoAlert = new InfoAlert(infoMsg, ref opwindow);
+                            _alerts.Add(infoMsg, infoAlert);
+                            infoAlert.ShowDialog();
+                        }
+                    }));
+                });
             }
             else
             {
-                ImageExpansion imageExpansion = new ImageExpansion(fftSource);
+                ImageExpansion imageExpansion = new ImageExpansion(fftSource, judgeSn, judgeResult);
                 imageExpansion.ShowDialog();
             }
         }
         //FFT 현재 이미지 주소
-        public void InputFFTImg(string src)
+        public void InputFFTImg(string src, string sn, string result)
         {
             fftSource = src;
+            judgeSn = sn;
+            judgeResult = result;
         }
         //history 차트 오픈 클릭 이벤트
         private void historyChartOpen(object sender, RoutedEventArgs e)

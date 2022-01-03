@@ -1,19 +1,14 @@
 ﻿using HNInc.Communication.Library;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace CncPrj_WPF_Core
 {
@@ -22,28 +17,104 @@ namespace CncPrj_WPF_Core
     /// </summary>
     public partial class Login : Page
     {
-        public OpWindow opwindow;
-        public Login login;
+        IsolatedStorageFile _isoStore;
+        public OpWindow _opWindow;
+        public MoveStep _moveStep;
         public Login()
         {
             InitializeComponent();
-            login = this;
-            opwindow = new OpWindow(ref login);
+
+            _opWindow = new OpWindow();
+            _opWindow._login = this;
+            _moveStep = new MoveStep();
+            _moveStep._login = this;
+
+
+            _isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
+            if (_isoStore.FileExists("IDRememberMe.txt"))
+            {
+                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.Open, _isoStore))
+                {
+                    using (StreamReader reader = new StreamReader(isoStream))
+                    {
+                        idBox.Text = reader.ReadToEnd();
+                    }
+                }
+            }
+        }
+        public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            if (_isoStore.FileExists("IDRememberMe.txt"))
+            {
+                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.Open, _isoStore))
+                {
+                    using (StreamReader reader = new StreamReader(isoStream))
+                    {
+                        idBox.Text = reader.ReadToEnd();
+                    }
+                }
+            }
+            else
+            {
+                idBox.Text = "";
+            }
+            NavigationService.LoadCompleted -= NavigationServiceLoadCompleted;
         }
         private void LoginEvt(object sender, RoutedEventArgs e)
         {
-            string id = idBox.Text;
-            string pw = pwBox.Password;
+            string id = idBox.Text.Trim();
+            string pw = pwBox.Password.Trim();
             HttpAuthentication authentication = HNHttp.CheckAuthentication(id, pw);
-            Debug.WriteLine(authentication._processResult);
-
             if (authentication._checkPassword)
             {
                 // ID/PW 모두 일치하는 경우
                 //MessageBox.Show("로그인 성공","알림", MessageBoxButton.OK, MessageBoxImage.Information);
-                Uri uri = new Uri("/OpWindow.xaml", UriKind.Relative);
-                NavigationService.Navigate(uri);
-                opwindow.InputUserId(id);
+                if (authentication._processResult.Equals("Success"))
+                {
+                    if ((bool)uRememberMe.IsChecked)
+                    {
+                        if (!_isoStore.FileExists("IDRememberMe.txt"))
+                        {
+                            using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.CreateNew, _isoStore))
+                            {
+                                using (StreamWriter writer = new StreamWriter(isoStream))
+                                {
+                                    writer.Write(id);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (_isoStore.FileExists("IDRememberMe.txt"))
+                        {
+                            _isoStore.DeleteFile("IDRememberMe.txt");
+                        }
+                    }
+                    NavigationService.LoadCompleted += _moveStep.NavigationServiceLoadCompleted;
+                    NavigationService.Navigate(_moveStep, id);
+                }
+                else
+                {
+                    Task.Run(() =>
+                    {
+                        Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                        {
+                            ErrorAlert loginErrorAlert;
+                            if (_moveStep._alerts.ContainsKey(authentication._processResult))
+                            {
+                                loginErrorAlert = (ErrorAlert)_moveStep._alerts[authentication._processResult];
+                                loginErrorAlert.CountUp();
+                            }
+                            else
+                            {
+                                loginErrorAlert = new ErrorAlert(authentication._processResult, ref _opWindow);
+                                _moveStep._alerts.Add(authentication._processResult, loginErrorAlert);
+                                loginErrorAlert.ShowDialog();
+                            }
+                        }));
+                    });
+                }
             }
             else
             {
@@ -67,6 +138,7 @@ namespace CncPrj_WPF_Core
                 else
                 {
                     // 둘 다 일치하지 않는 경우
+                    idBox.Focus();
                     logResult.Text = "아이디와 비밀번호가 일치하지 않습니다.";
                 }
             }

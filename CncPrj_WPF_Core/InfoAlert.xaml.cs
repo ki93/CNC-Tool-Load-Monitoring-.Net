@@ -19,15 +19,27 @@ namespace CncPrj_WPF_Core
     /// </summary>
     public partial class InfoAlert : Window
     {
+        int _count;
+        OpWindow _opWindow;
+        double _posX;
+        double _posY;
 
-        public InfoAlert(string message)
+        public InfoAlert(string message, ref OpWindow opWindow)
         {
             InitializeComponent();
             infoMsg.Text = message;
+            _opWindow = opWindow;
+            _count = 0;
+        }
+        public void CountUp()
+        {
+            _count++;
+            uAlertCount.Text = $"(+{_count})";
         }
 
         private void InfoAlertClose(object sender, RoutedEventArgs e)
         {
+            _opWindow._alerts.Remove(infoMsg.Text);
             Close();
         }
     }

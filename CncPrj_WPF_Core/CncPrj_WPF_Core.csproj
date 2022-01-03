@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <AssemblyName>CncPrj_WPF_Core</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,11 +19,16 @@
     <None Remove="Img\calendarImg.png" />
     <None Remove="Img\calendarImg_black.png" />
     <None Remove="Img\calendarImg_m.png" />
+    <None Remove="Img\calendar_pressed.png" />
+    <None Remove="Img\calendar_pressed_mouseover.png" />
     <None Remove="Img\calendar_Up.png" />
     <None Remove="Img\closeBtn.png" />
+    <None Remove="Img\closeBtn_m.png" />
     <None Remove="Img\error.png" />
     <None Remove="Img\expansion.png" />
     <None Remove="Img\expansion_m.png" />
+    <None Remove="Img\filter_pressed.png" />
+    <None Remove="Img\filter_pressed_mouseover.png" />
     <None Remove="Img\info.png" />
     <None Remove="Img\information.png" />
     <None Remove="Img\loading2.gif" />
@@ -34,6 +40,8 @@
     <None Remove="Img\refreshBtn.png" />
     <None Remove="Img\refreshBtn_black.png" />
     <None Remove="Img\refreshBtn_m.png" />
+    <None Remove="Img\refresh_pressed.png" />
+    <None Remove="Img\refresh_pressed_mouseover.png" />
     <None Remove="Img\Reset.png" />
     <None Remove="Img\Reset_Up.png" />
     <None Remove="Img\Select.png" />
@@ -88,10 +96,15 @@
     <Resource Include="Img\calendar.png" />
     <Resource Include="Img\calendarImg.png" />
     <Resource Include="Img\calendar_Up.png" />
+    <Resource Include="Img\calendar_pressed.png" />
+    <Resource Include="Img\calendar_pressed_mouseover.png" />
     <Resource Include="Img\closeBtn.png" />
+    <Resource Include="Img\closeBtn_m.png" />
     <Resource Include="Img\error.png" />
     <Resource Include="Img\expansion.png" />
     <Resource Include="Img\expansion_m.png" />
+    <Resource Include="Img\filter_pressed.png" />
+    <Resource Include="Img\filter_pressed_mouseover.png" />
     <Resource Include="Img\information.png" />
     <Resource Include="Img\loading2.gif" />
     <Resource Include="Img\loginBack.png" />
@@ -100,6 +113,8 @@
     <Resource Include="Img\logout_m.png" />
     <Resource Include="Img\no-image.png" />
     <Resource Include="Img\refreshBtn.png" />
+    <Resource Include="Img\refresh_pressed.png" />
+    <Resource Include="Img\refresh_pressed_mouseover.png" />
     <Resource Include="Img\Reset.png" />
     <Resource Include="Img\Reset_Up.png" />
     <Resource Include="Img\Select.png" />

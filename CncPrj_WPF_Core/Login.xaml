@@ -12,8 +12,8 @@
         <Image Source="/Img/loginBack.png" Width="1920" Height="1080"></Image>
         <Rectangle HorizontalAlignment="Center" Margin="0,190,0,200"  Width="610" Fill="#FFF"/>
         <TextBlock HorizontalAlignment="Center" Height="145" Margin="0,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="492" Text="CNC Tool Load Monitoring Solution" FontSize="48" FontWeight="Bold" TextAlignment="Center" Foreground="#363636" ></TextBlock>
-        <TextBox x:Name="idBox" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="438" Height="42" FontSize="22" Margin="0,511,0,0"/>
-        <TextBlock x:Name="idBlock" Text="Id" IsHitTestVisible="False" VerticalAlignment="Top" Margin="750,521,0,0" HorizontalAlignment="Left" FontSize="18">
+        <TextBox x:Name="idBox" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="438" Height="42" FontSize="22" Margin="0,511,0,0"/>
+        <TextBlock x:Name="idBlock" Text="Id" IsHitTestVisible="False" VerticalAlignment="Top" Margin="750,519,0,0" HorizontalAlignment="Left" FontSize="18">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="Visibility" Value="Hidden"/>
@@ -29,9 +29,11 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <PasswordBox x:Name="pwBox" HorizontalAlignment="Center" Height="42" Margin="0,568,0,0" VerticalAlignment="Top" Width="438" FontSize="22" KeyDown="LoginEvtKeyDown" PasswordChanged="PwBox_PasswordChanged"/>
-        <TextBlock x:Name="pwBlock" Text="Password" IsHitTestVisible="False" VerticalAlignment="Top" Margin="750,578,0,0" HorizontalAlignment="Left" FontSize="18" Foreground="gray"/>
-        <TextBlock x:Name="logResult" Margin="740,623,740,0" Foreground="#f22d29" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Top"/>
+        <CheckBox x:Name="uRememberMe" Margin="0,557,742,0" VerticalAlignment="Top" HorizontalAlignment="Right" Content="RememberMe" IsChecked="True"></CheckBox>
+        <PasswordBox x:Name="pwBox" VerticalContentAlignment="Center" HorizontalAlignment="Center" Height="42" Margin="0,576,0,0" VerticalAlignment="Top" Width="438" FontSize="22" KeyDown="LoginEvtKeyDown" PasswordChanged="PwBox_PasswordChanged"/>
+        <TextBlock x:Name="pwBlock" Text="Password" IsHitTestVisible="False" VerticalAlignment="Top" Margin="750,584,0,0" HorizontalAlignment="Left" FontSize="18" Foreground="gray"/>
+        <TextBlock x:Name="logResult" Margin="740,625,740,0" Foreground="#f22d29" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Top"/>
+
         <Button Content="Login" HorizontalAlignment="Center" Height="67" Margin="0,664,0,0" VerticalAlignment="Top" Width="438" FontSize="30" FontWeight="SemiBold" Background="#faa61a" Click="LoginEvt" BorderBrush="#FFFAA61A" Foreground="#363636"/>
 
     </Grid>

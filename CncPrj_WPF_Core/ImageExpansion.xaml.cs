@@ -15,10 +15,11 @@ namespace CncPrj_WPF_Core
     /// </summary>
     public partial class ImageExpansion : Window
     {
-        public ImageExpansion(string fftSource)
+        public ImageExpansion(string fftSource, string judgeSn, string judgeResult)
         {
             InitializeComponent();
             fftImg.Source = new BitmapImage(new Uri(fftSource, UriKind.Absolute));
+            ProductQuiltyInfo.Content = judgeSn + " : " + judgeResult;
         }
 
         private void CloseExpansionWindow(object sender, RoutedEventArgs e)

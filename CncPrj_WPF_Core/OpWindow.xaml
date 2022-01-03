@@ -8,6 +8,14 @@
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="OpWindow">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid Background="#2b2d30">
         <Grid.RowDefinitions>
@@ -25,10 +33,12 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
 
         <Rectangle Grid.Row="0" Grid.ColumnSpan="2" Fill="#3c4852"/>
         <Image Width="60" Source="Img/logo.png" Margin="20,6,0,6" HorizontalAlignment="Left"/>
         <TextBlock FontSize="30" FontWeight="Bold" Foreground="white"  Text="CNC Tool Load Monitoring" Margin="100,0,0,0" VerticalAlignment="Center" Height="40"  />
+
         <Button x:Name="logoutBtn" Grid.Row="0" Grid.Column="1" Canvas.Right="0" Background="#3c4852" Margin="0 10 20 0" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="37" Width="37" Click="logoutEvt">
             <!-- margin 왼쪽 위 오른쪽 아래 -->
             <Image Width="35">
@@ -59,8 +69,11 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <TextBlock x:Name="userId" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="238,11,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="92" Text="ddsfwefwfwef"/>
-        <TextBlock x:Name="currentTime" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="335,11,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234" />
+        <TextBlock x:Name="userId" FontSize="23" FontWeight="SemiBold" Foreground="white"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 80 0" Width="200" TextAlignment="Right" Text="Login Required"/>
+        <!--원래 위치-->
+        <!--<TextBlock x:Name="currentTime" FontSize="23" FontWeight="Light" Foreground="white" Canvas.Right="80" Margin="335,11,0,0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234" />-->
+        <!--id 배치에 의한 위치 변경-->
+        <TextBlock x:Name="currentTime" FontSize="23" FontWeight="Light" Foreground="white" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235" Grid.Row="1" Margin="0 10 15 0" />
         <TextBlock x:Name="currentLocation" FontSize="17" Grid.Column="0" Grid.Row="1" FontWeight="Medium" Foreground="#d6d6d6"  Text="Workshop1 | Line1 | Operation1" Margin="20 16 0 0" />
 
         <Border BorderBrush="#797a7c" BorderThickness="2" Margin="20,5,5,5" Grid.Row="2">
@@ -161,31 +174,27 @@
         <!--<Rectangle Grid.Row="3" Grid.Column="1" Fill="#1e1e1e" Margin="15,10,258,261" RadiusX="5" RadiusY="5"></Rectangle>
         <Image Grid.Row="3" Grid.Column="1" Source="Img/calendarImg.png" Margin="28,31,591,282" Panel.ZIndex="2"/>
         <Label Grid.Row="3" Grid.Column="1" Content="2021-10-10 ~ 2021-10-11" Foreground="white" Margin="60,22,258,274" FontWeight="Bold" FontSize="20" Panel.ZIndex="2"/>-->
-        <ComboBox x:Name="historyChartGroupByValue" Grid.Row="3" Grid.Column="1"  Margin="387,10,188,261" FontSize="20" Height="63" FontWeight="Bold" VerticalContentAlignment="Center" VerticalAlignment="Center" Background="#1e1e1e" SelectionChanged="historyChartGroupByValue_SelectionChanged" SelectedValuePath="Content" Cursor="Hand">
+        <ComboBox x:Name="historyChartGroupByValue" Grid.Row="3" Grid.Column="1"  Margin="387,10,188,260" FontSize="20" Height="58" FontWeight="Bold" VerticalContentAlignment="Center" VerticalAlignment="Center" SelectionChanged="historyChartGroupByValue_SelectionChanged" SelectedValuePath="Content" Cursor="Hand" Style="{StaticResource ComboboxStyle}" Foreground="White" >
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="ComboBoxItem">
-                    <Setter Property="Background" Value="#1e1e1e"/>
                     <Setter Property="Cursor" Value="Hand" />
-                    <Setter Property="BorderBrush" Value="#1e1e1e"/>
-                    <Setter Property="Foreground" Value="white"/>
                     <Style.Triggers>
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter Property="Background" Value="#1e1e1e" />
-                            <Setter Property="Foreground" Value="SkyBlue"/>
+                            <Setter Property="Foreground" Value="#1e1e1e"/>
                         </Trigger>
+
                     </Style.Triggers>
                 </Style>
             </ComboBox.ItemContainerStyle>
-
-            <ComboBox.Style>
-                <Style TargetType="ComboBox">
-                    <Setter Property="Cursor" Value="Hand" />
-                    <!--백그라운드가 안먹힘-->
-                    <Setter Property="Background" Value="blue"/>
-                    <Setter Property="Foreground" Value="#1e1e1e"/>
-                </Style>
-            </ComboBox.Style>
-
+            <ComboBox.Resources>
+                    <Style TargetType="{x:Type ComboBox}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="blue" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+            </ComboBox.Resources>
             <ComboBoxItem Content="1s" x:Name="combo1s"/>
             <ComboBoxItem Content="2s" x:Name="combo2s"/>
             <ComboBoxItem Content="3s" x:Name="combo3s" IsSelected="True" />
@@ -197,6 +206,7 @@
             <ComboBoxItem Content="9s" x:Name="combo9s"/>
             <ComboBoxItem Content="10s" x:Name="combo10s"/>
         </ComboBox>
+
         <Button Grid.Row="3" Grid.Column="1" Margin="457,10,118,261" Background="#1e1e1e" Foreground="White" BorderBrush="{x:Null}" Click="RefreshHistoryChart">
             <Image Source="Img/refreshBtn.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="33"></Image>
             <Button.Resources>
@@ -309,7 +319,7 @@
                 </Style>
             </Image.Style>
         </Image>
-        <Button Grid.Row="2" Grid.Column="1" Margin="66,36,66,39" Background="Transparent" Panel.ZIndex="10" MouseDoubleClick="FFTImgExpansion" BorderThickness="0">
+        <Button Grid.Row="2" Grid.Column="1" Margin="66,36,66,39" Background="Transparent" Panel.ZIndex="10" Click="FFTImgExpansion" BorderThickness="0">
             <Button.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="Transparent" />
@@ -460,12 +470,6 @@
                     <Style TargetType="Image">
                         <EventSetter Event="MouseEnter" Handler="ProductInfoSortBtmMouseEnter"/>
                         <EventSetter Event="MouseLeave" Handler="ProductInfoSortBtmMouseLeave"/>
-                        <!--<Setter Property="Source" Value="Img/Select.png"/>-->
-                        <!--<Style.Triggers>
-                            <Trigger Property="IsMouseCaptured" Value="True">
-                                <Setter Property="Source" Value="Img/Select_Up.png"/>
-                            </Trigger>
-                        </Style.Triggers>-->
                     </Style>
                 </Image.Style>
             </Image>
@@ -485,15 +489,11 @@
             </Button.Resources>
         </Button>
         <Button Grid.Row="5" Panel.ZIndex="10" Grid.Column="1" BorderThickness="0" Width="32" Height="32" Click="ProductInfoListSearchEvt" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,13,76,0" Background="Transparent">
-            <Image Width="32" Height="32" >
+            <Image x:Name="ProductInfoListCalendarBtnImage" Width="32" Height="32" Source="Img/calendar.png">
                 <Image.Style>
                     <Style TargetType="Image">
-                        <Setter Property="Source" Value="Img/calendar.png"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Source" Value="Img/calendar_Up.png"/>
-                            </Trigger>
-                        </Style.Triggers>
+                        <EventSetter Event="MouseEnter" Handler="ProductInfoCalendarBtmMouseEnter"/>
+                        <EventSetter Event="MouseLeave" Handler="ProductInfoCalendarBtmMouseLeave"/>
                     </Style>
                 </Image.Style>
             </Image>
@@ -541,7 +541,7 @@
             </Button.Resources>
         </Button>
 
-        <DataGrid Grid.Row="5" Grid.ColumnSpan="2" x:Name="ProcessGrid" Background="#1e1e1e" BorderBrush="{x:Null}" AutoGenerateColumns="False" IsReadOnly="True" VerticalScrollBarVisibility="Visible" Margin="30,10,30,30" HeadersVisibility="Column"  
+        <DataGrid Grid.Row="5" Grid.ColumnSpan="2" x:Name="ProcessGrid" Background="#1e1e1e" BorderBrush="{x:Null}" AutoGenerateColumns="False" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Margin="30,10,30,30" HeadersVisibility="Column"  
                   CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" GridLinesVisibility="Horizontal" Loaded="processTable_Loaded" SelectionMode="Single" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=opcode}" Header="OpCode" Width="0.5*"/>
@@ -600,9 +600,7 @@
             </DataGrid.CellStyle>
 
         </DataGrid>
-
-
-
+    
     </Grid>
-
 </Page>
+    
