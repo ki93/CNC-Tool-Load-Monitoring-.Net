@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="ImageExpansion"
         WindowStyle="None"
+        ResizeMode="NoResize"
         Height="600" Width="1200"
         Left="380"
         Top="200" Background="#FF111217">

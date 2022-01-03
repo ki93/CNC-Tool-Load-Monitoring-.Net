@@ -19,12 +19,16 @@ namespace CncPrj_WPF_Core
     {
         IsolatedStorageFile _isoStore;
         public OpWindow _opWindow;
+        public MoveStep _moveStep;
         public Login()
         {
             InitializeComponent();
 
             _opWindow = new OpWindow();
             _opWindow._login = this;
+            _moveStep = new MoveStep();
+            _moveStep._login = this;
+
 
             _isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
             if (_isoStore.FileExists("IDRememberMe.txt"))
@@ -87,8 +91,8 @@ namespace CncPrj_WPF_Core
                             _isoStore.DeleteFile("IDRememberMe.txt");
                         }
                     }
-                    NavigationService.LoadCompleted += _opWindow.NavigationServiceLoadCompleted;
-                    NavigationService.Navigate(_opWindow, id);
+                    NavigationService.LoadCompleted += _moveStep.NavigationServiceLoadCompleted;
+                    NavigationService.Navigate(_moveStep, id);
                 }
                 else
                 {
@@ -97,15 +101,15 @@ namespace CncPrj_WPF_Core
                         Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                         {
                             ErrorAlert loginErrorAlert;
-                            if (_opWindow._alerts.ContainsKey(authentication._processResult))
+                            if (_moveStep._alerts.ContainsKey(authentication._processResult))
                             {
-                                loginErrorAlert = (ErrorAlert)_opWindow._alerts[authentication._processResult];
+                                loginErrorAlert = (ErrorAlert)_moveStep._alerts[authentication._processResult];
                                 loginErrorAlert.CountUp();
                             }
                             else
                             {
                                 loginErrorAlert = new ErrorAlert(authentication._processResult, ref _opWindow);
-                                _opWindow._alerts.Add(authentication._processResult, loginErrorAlert);
+                                _moveStep._alerts.Add(authentication._processResult, loginErrorAlert);
                                 loginErrorAlert.ShowDialog();
                             }
                         }));
@@ -157,13 +161,7 @@ namespace CncPrj_WPF_Core
             else
             {
                 pwBlock.Visibility = Visibility.Hidden;
-                //Test
-		//start
-		//
-		//
-		//
-		//end
-	    }
+            }
         }
     }
 }

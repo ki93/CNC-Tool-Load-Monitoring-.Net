@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 
 namespace CncPrj_WPF_Core
@@ -12,6 +14,10 @@ namespace CncPrj_WPF_Core
     public partial class MoveStep : Page
     {
         DispatcherTimer timer;
+        public Login _login;
+        public OpWindow _opWindow;
+        public Dictionary<Object, Object> _alerts;
+        string _id;
 
         public MoveStep()
         {
@@ -20,12 +26,20 @@ namespace CncPrj_WPF_Core
             timer.Tick += timer_Tick; //함수 호출 주기 설정
             timer.Interval = TimeSpan.FromSeconds(1); //타이머 시작
             timer.Start();
+            _alerts = new Dictionary<object, object>();
+        }
+        public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            _id = e.ExtraData.ToString();
+            userId.Text = _id;
+            NavigationService.LoadCompleted -= NavigationServiceLoadCompleted;
         }
 
         private void logoutEvt(object sender, RoutedEventArgs e)
         {
-            Uri uri = new Uri("/Login.xaml", UriKind.Relative);
-            NavigationService.Navigate(uri);
+            _login._moveStep = this;
+            NavigationService.LoadCompleted += _login.NavigationServiceLoadCompleted;
+            NavigationService.Navigate(_login);
         }
 
         public void timer_Tick(object sender, EventArgs e)
@@ -35,8 +49,9 @@ namespace CncPrj_WPF_Core
 
         private void MoveOp1(object sender, RoutedEventArgs e)
         {
-            Uri uri = new Uri("/OpWindow.xaml", UriKind.Relative);
-            NavigationService.Navigate(uri);
+            _opWindow = _login._opWindow;
+            NavigationService.LoadCompleted += _opWindow.NavigationServiceLoadCompleted;
+            NavigationService.Navigate(_opWindow, _id);
         }
     }
 }

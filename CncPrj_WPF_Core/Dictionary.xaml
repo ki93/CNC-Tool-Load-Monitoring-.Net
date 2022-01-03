@@ -11,12 +11,13 @@
                             <ColumnDefinition/>
                             <ColumnDefinition MaxWidth="18"/>
                         </Grid.ColumnDefinitions>
-                        <ToggleButton  Style="{DynamicResource ComboboxTextBoxStyle}"  Margin="0" Focusable="False" IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press">
-                            <!--<TextBox Name="PART_EditableTextBox"  
+                        <ToggleButton  Panel.ZIndex="1" Style="{DynamicResource ComboboxToggleButtonStyle}"  Margin="0" Focusable="False" IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                        </ToggleButton>
+                        <TextBox Name="PART_EditableTextBox"  
                 Style="{DynamicResource ComboboxTextBoxStyle}"  
                 Padding="5,0,0,0"  
-                Height="{TemplateBinding Height}" IsReadOnly="True"/>-->
-                        </ToggleButton>
+                Height="{TemplateBinding Height}" IsReadOnly="True"/>
 
                         <ToggleButton Grid.Column="1" Margin="0"  
                Height="{TemplateBinding Height}"  
@@ -33,9 +34,9 @@
                         <ContentPresenter Name="ContentSite"  
                Content="{TemplateBinding SelectionBoxItem}"  
                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"  
-               ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"  
+               ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                VerticalAlignment="Center"  
-               HorizontalAlignment="Left"  
+               HorizontalAlignment="Center"  
                Margin="5,0,0,0"/>
                         <Popup Name="Popup"  
                Placement="Bottom"  
@@ -54,7 +55,7 @@
                    Background="#1e1e1e"
                                     />
                                 <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
-                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" Style="{DynamicResource StackPanelStyle}"></StackPanel>
                                 </ScrollViewer>
                             </Grid>
                         </Popup>
@@ -78,21 +79,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="ComboboxTextBoxStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Grid>
-                        <Border CornerRadius="5,0,0,5"  
-               BorderThickness="1,1,0,1"  
-               Background="#1e1e1e">
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--<Style x:Key="ComboboxTextBoxStyle" TargetType="{x:Type TextBox}">
+    <Style x:Key="ComboboxTextBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
@@ -105,5 +92,19 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>-->
+    </Style>
+    <Style x:Key="ComboboxToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid>
+                        <Border CornerRadius="5,0,0,5"  
+               BorderThickness="1,1,0,1"  
+               Background="Transparent">
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

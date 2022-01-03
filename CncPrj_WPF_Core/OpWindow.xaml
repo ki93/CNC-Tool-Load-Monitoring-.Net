@@ -174,13 +174,12 @@
         <!--<Rectangle Grid.Row="3" Grid.Column="1" Fill="#1e1e1e" Margin="15,10,258,261" RadiusX="5" RadiusY="5"></Rectangle>
         <Image Grid.Row="3" Grid.Column="1" Source="Img/calendarImg.png" Margin="28,31,591,282" Panel.ZIndex="2"/>
         <Label Grid.Row="3" Grid.Column="1" Content="2021-10-10 ~ 2021-10-11" Foreground="white" Margin="60,22,258,274" FontWeight="Bold" FontSize="20" Panel.ZIndex="2"/>-->
-        <ComboBox x:Name="historyChartGroupByValue" Grid.Row="3" Grid.Column="1"  Margin="387,10,188,260" FontSize="20" Height="59" FontWeight="Bold" VerticalContentAlignment="Center" VerticalAlignment="Center" SelectionChanged="historyChartGroupByValue_SelectionChanged" SelectedValuePath="Content" Cursor="Hand" Style="{StaticResource ComboboxStyle}" Foreground="White" >
+        <ComboBox x:Name="historyChartGroupByValue" Grid.Row="3" Grid.Column="1"  Margin="387,10,188,260" FontSize="20" Height="58" FontWeight="Bold" VerticalContentAlignment="Center" VerticalAlignment="Center" SelectionChanged="historyChartGroupByValue_SelectionChanged" SelectedValuePath="Content" Cursor="Hand" Style="{StaticResource ComboboxStyle}" Foreground="White" >
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="ComboBoxItem">
                     <Setter Property="Cursor" Value="Hand" />
                     <Style.Triggers>
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter Property="Background" Value="#1e1e1e" />
                             <Setter Property="Foreground" Value="#1e1e1e"/>
                         </Trigger>
                     </Style.Triggers>
@@ -532,7 +531,7 @@
             </Button.Resources>
         </Button>
 
-        <DataGrid Grid.Row="5" Grid.ColumnSpan="2" x:Name="ProcessGrid" Background="#1e1e1e" BorderBrush="{x:Null}" AutoGenerateColumns="False" IsReadOnly="True" VerticalScrollBarVisibility="Visible" Margin="30,10,30,30" HeadersVisibility="Column"  
+        <DataGrid Grid.Row="5" Grid.ColumnSpan="2" x:Name="ProcessGrid" Background="#1e1e1e" BorderBrush="{x:Null}" AutoGenerateColumns="False" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Margin="30,10,30,30" HeadersVisibility="Column"  
                   CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" GridLinesVisibility="Horizontal" Loaded="processTable_Loaded" SelectionMode="Single" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=opcode}" Header="OpCode" Width="0.5*"/>
