@@ -21,8 +21,6 @@ namespace CncPrj_WPF_Core
     {
         int _count;
         OpWindow _opWindow;
-        double _posX;
-        double _posY;
 
         public InfoAlert(string message, ref OpWindow opWindow)
         {
