@@ -108,13 +108,7 @@
                     <Setter Property="Background" Value="#1e1e1e" />
                     <Setter Property="Foreground" Value="#fff" />
                     <Setter Property="FontSize" Value="17" />
-
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#7a7a7a" />
-                            <Setter Property="Foreground" Value="#fff" />
-                        </Trigger>
-                    </Style.Triggers>
+                    <Setter Property="IsHitTestVisible" Value="False"></Setter>
                 </Style>
             </DataGrid.RowStyle>
 

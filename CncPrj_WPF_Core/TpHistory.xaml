@@ -72,7 +72,7 @@
             </TabControl.Resources>
             <TabItem Header="DAILY" Width="184" Height="48" FontSize="15" FontWeight="Bold" Foreground="White">
                 <DataGrid Name="dailyGrid" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="dailyGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden"
-                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" HeadersVisibility="Column">
+                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" HeadersVisibility="Column" GridLinesVisibility="Horizontal">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date" Width="*"/>
                         <DataGridTextColumn Binding="{Binding Path=Count}" Header="Count" Width="*" />
@@ -80,16 +80,10 @@
 
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
+                            <Setter Property="IsHitTestVisible" Value="False"/>
                             <Setter Property="Background" Value="#1e1e1e" />
                             <Setter Property="Foreground" Value="#fff" />
                             <Setter Property="FontSize" Value="17" />
-
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#7a7a7a" />
-                                    <Setter Property="Foreground" Value="#fff" />
-                                </Trigger>
-                            </Style.Triggers>
                         </Style>
                     </DataGrid.RowStyle>
 
@@ -114,7 +108,7 @@
             </TabItem>
             <TabItem Header="WEEKLY" Width="184" Height="48" FontSize="15" FontWeight="Bold" Foreground="White">
                 <DataGrid Name="weeklyGrid" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="weeklyGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden"
-                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" HeadersVisibility="Column" >
+                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" HeadersVisibility="Column" GridLinesVisibility="Horizontal">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date" Width="*"/>
                         <DataGridTextColumn Binding="{Binding Path=Count}" Header="Count" Width="*" />
@@ -126,13 +120,7 @@
                             <Setter Property="Background" Value="#1e1e1e" />
                             <Setter Property="Foreground" Value="#fff" />
                             <Setter Property="FontSize" Value="17" />
-
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#7a7a7a" />
-                                    <Setter Property="Foreground" Value="#fff" />
-                                </Trigger>
-                            </Style.Triggers>
+                            <Setter Property="IsHitTestVisible" Value="False"></Setter>
                         </Style>
                     </DataGrid.RowStyle>
 
@@ -158,7 +146,7 @@
             </TabItem>
             <TabItem Header="MONTHLY" Width="184" Height="48" FontSize="15" FontWeight="Bold" Foreground="White">
                 <DataGrid Name="monthlyGrid" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="monthlyGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden"
-                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" HeadersVisibility="Column" >
+                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" HeadersVisibility="Column" GridLinesVisibility="Horizontal">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date" Width="*"/>
                         <DataGridTextColumn Binding="{Binding Path=Count}" Header="Count" Width="*" />
@@ -169,13 +157,7 @@
                             <Setter Property="Background" Value="#1e1e1e" />
                             <Setter Property="Foreground" Value="#fff" />
                             <Setter Property="FontSize" Value="17" />
-
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#7a7a7a" />
-                                    <Setter Property="Foreground" Value="#fff" />
-                                </Trigger>
-                            </Style.Triggers>
+                            <Setter Property="IsHitTestVisible" Value="False"></Setter>
                         </Style>
                     </DataGrid.RowStyle>
 
@@ -202,19 +184,23 @@
             <TabItem Header="SEARCH" Width="184" Height="48" FontSize="15" FontWeight="Bold" Foreground="White">
                 <!--<Label Foreground="#fff" Content="sssssss" />-->
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="451*"/>
+                        <ColumnDefinition Width="285*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.3*"/>
                         <RowDefinition Height="0.7*"/>
                     </Grid.RowDefinitions>
-                    <DatePicker x:Name="startDatePick" Grid.Row="0" Margin="367,24,222,38" BorderThickness="0" Background="#FF1E1E1E" Foreground="#FF1E1E1E" SelectedDate = "{Binding endDatePick.DisplayDateStart}" SelectedDateChanged="startDatePick_SelectedDateChanged" />
+                    <DatePicker x:Name="startDatePick" Grid.Row="0" Margin="367,24,222,38" BorderThickness="0" Background="#FF1E1E1E" Foreground="#FF1E1E1E" SelectedDate = "{Binding endDatePick.DisplayDateStart}" SelectedDateChanged="startDatePick_SelectedDateChanged" Grid.ColumnSpan="2" />
                     <!--<DatePicker SelectedDate="{Binding SelectedDate}"  DisplayDateStart="{Binding MinAvailDate}" DisplayDateEnd="{Binding MaxAvailDate}"></DatePicker>-->
-                    <DatePicker x:Name="endDatePick" Grid.Row="0" Margin="514,24,75,38" BorderThickness="0" Background="#FF1E1E1E" Foreground="#FF1E1E1E" SelectedDateChanged="endDatePick_SelectedDateChanged" />
-                    <Button Margin="661,25,10,37" Content="search" BorderThickness="0" Background="SeaGreen" Foreground="White" FontStretch="Medium" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="phSearchBtn_Click"></Button>
+                    <DatePicker x:Name="endDatePick" Grid.Row="0" Margin="63,24,75,38" BorderThickness="0" Background="#FF1E1E1E" Foreground="#FF1E1E1E" SelectedDateChanged="endDatePick_SelectedDateChanged" Grid.Column="1" />
+                    <Button Margin="210,25,10,37" Content="search" BorderThickness="0" Background="SeaGreen" Foreground="White" FontStretch="Medium" Click="phSearchBtn_Click" Grid.Column="1"/>
 
-                    <DataGrid Name="searchGrid" Grid.Row="1" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="searchGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden" HeadersVisibility="Column" >
+                    <DataGrid Name="searchGrid" Grid.Row="1" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="searchGrid_Loaded"  AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden" HeadersVisibility="Column" Grid.ColumnSpan="2" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date" Width="360"/>
-                            <DataGridTextColumn Binding="{Binding Path=Count}" Header="Count" Width="360" />
+                            <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding Path=Count}" Header="Count" Width="*" />
                         </DataGrid.Columns>
 
                         <DataGrid.RowStyle>
@@ -222,13 +208,7 @@
                                 <Setter Property="Background" Value="#1e1e1e" />
                                 <Setter Property="Foreground" Value="#fff" />
                                 <Setter Property="FontSize" Value="17" />
-
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#7a7a7a" />
-                                        <Setter Property="Foreground" Value="#fff" />
-                                    </Trigger>
-                                </Style.Triggers>
+                                <Setter Property="IsHitTestVisible" Value="False"></Setter>
                             </Style>
                         </DataGrid.RowStyle>
 
