@@ -11,8 +11,8 @@
         Left="500"
         Top="250">
     <Grid>
-        <TextBlock Foreground="#38e09a" FontSize="25" FontWeight="Bold" Margin="46,17,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="631">Production History</TextBlock>
-        <Button Margin="730,20,30,440" Background="#FF111217" BorderThickness="0" Click="CloseProductWindow">
+        <TextBlock Foreground="#38e09a" FontSize="25" FontWeight="Bold" Margin="26,20,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top">Production History</TextBlock>
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,25,28,445" Background="#FF111217" BorderThickness="0" Click="CloseProductWindow">
             <Button.Resources>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Background" Value="Transparent" />
@@ -43,7 +43,7 @@
             </Image>
 
         </Button>
-        <TabControl BorderThickness="0" Background="#1e1e1e" Width="740" Height="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26,69.876,26,49.124" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl BorderThickness="0" Background="#1e1e1e" Width="740" Height="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26,70,26,45" SelectionChanged="TabControl_SelectionChanged">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
                     <Setter Property="Template">
