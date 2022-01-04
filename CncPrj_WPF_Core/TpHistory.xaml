@@ -11,27 +11,15 @@
         Left="500"
         Top="250">
     <Grid>
-        <TextBlock Foreground="#38e09a" FontSize="25" FontWeight="Bold" Margin="26,20,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top">Production History</TextBlock>
-        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,25,28,445" Background="#FF111217" BorderThickness="0" Click="CloseProductWindow">
-            <Image>
-                <Image.Style>
-                    <Style TargetType="Image">
-                        <Setter Property="Source" Value="Img/closeBtn.png"></Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Source" Value="Img/closeBtn_m.png"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Image.Style>
-            </Image>
+        <TextBlock Foreground="#38e09a" FontSize="25" FontWeight="Bold" Margin="46,17,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="631">Production History</TextBlock>
+        <Button Margin="730,20,30,440" Background="#FF111217" BorderThickness="0" Click="CloseProductWindow">
             <Button.Resources>
-                <Style TargetType="Button">
+                <Style TargetType="{x:Type Button}">
                     <Setter Property="Background" Value="Transparent" />
                     <Setter Property="Cursor" Value="Hand" />
                     <Setter Property="Template">
                         <Setter.Value>
-                            <ControlTemplate TargetType="Button">
+                            <ControlTemplate TargetType="{x:Type Button}">
                                 <Grid Background="{TemplateBinding Background}">
                                     <ContentPresenter />
                                 </Grid>
@@ -41,8 +29,21 @@
                 </Style>
             </Button.Resources>
 
+            <Image>
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Setter Property="Source" Value="Img/closeBtn.png"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Img/closeBtn_m.png"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+
         </Button>
-        <TabControl BorderThickness="0" Background="#1e1e1e" Width="740" Height="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26,70,26,45" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl BorderThickness="0" Background="#1e1e1e" Width="740" Height="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="26,69.876,26,49.124" SelectionChanged="TabControl_SelectionChanged">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
                     <Setter Property="Template">
@@ -99,16 +100,9 @@
                     </DataGrid.ColumnHeaderStyle>
 
                     <DataGrid.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                            <Setter Property="TextBlock.Focusable" Value="False"></Setter>
-                            <Style.Triggers>
-                                <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                    <Setter Property="BorderBrush" Value="Transparent"/>
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            <Setter Property="Focusable" Value="False"/>
                         </Style>
                     </DataGrid.CellStyle>
                 </DataGrid>
@@ -143,16 +137,9 @@
                     </DataGrid.ColumnHeaderStyle>
 
                     <DataGrid.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                            <Setter Property="TextBlock.Focusable" Value="False"></Setter>
-                            <Style.Triggers>
-                                <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                    <Setter Property="BorderBrush" Value="Transparent"/>
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            <Setter Property="Focusable" Value="False"/>
                         </Style>
                     </DataGrid.CellStyle>
 
@@ -187,16 +174,9 @@
                     </DataGrid.ColumnHeaderStyle>
 
                     <DataGrid.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                            <Setter Property="TextBlock.Focusable" Value="False"></Setter>
-                            <Style.Triggers>
-                                <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                    <Setter Property="BorderBrush" Value="Transparent"/>
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                            <Setter Property="Focusable" Value="False"/>
                         </Style>
                     </DataGrid.CellStyle>
 
@@ -218,25 +198,25 @@
                     <DatePicker x:Name="endDatePick" Grid.Row="0" Margin="63,24,75,38" BorderThickness="0" Background="#FF1E1E1E" Foreground="#FF1E1E1E" SelectedDateChanged="endDatePick_SelectedDateChanged" Grid.Column="1" />
                     <Button Margin="210,25,10,37" Content="search" BorderThickness="0" Background="SeaGreen" Foreground="White" FontStretch="Medium" Click="phSearchBtn_Click" Grid.Column="1"/>
 
-                    <DataGrid Name="searchGrid" Grid.Row="1" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="searchGrid_Loaded" AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden"
-                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False" HeadersVisibility="Column" GridLinesVisibility="Horizontal">
+                    <DataGrid x:Name="searchGrid" Grid.Row="1" Background="#1e1e1e" BorderBrush="{x:Null}" Loaded="searchGrid_Loaded" AutoGenerateColumns="False" IsReadOnly="True" HorizontalScrollBarVisibility="Hidden"
+                          HeadersVisibility="Column" GridLinesVisibility="Horizontal" Grid.ColumnSpan="2">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding Path=Count}" Header="Count" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding Count}" Header="Count" Width="*" />
                         </DataGrid.Columns>
 
                         <DataGrid.RowStyle>
-                            <Style TargetType="DataGridRow">
+                            <Style TargetType="{x:Type DataGridRow}">
                                 <Setter Property="Background" Value="#1e1e1e" />
                                 <Setter Property="Foreground" Value="#fff" />
                                 <Setter Property="FontSize" Value="17" />
-                                <Setter Property="IsHitTestVisible" Value="False"></Setter>
+                                <Setter Property="IsHitTestVisible" Value="False"/>
                             </Style>
                         </DataGrid.RowStyle>
 
                         <DataGrid.ColumnHeaderStyle>
-                            <Style TargetType="DataGridColumnHeader">
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
                                 <Setter Property="Background" Value="#1e1e1e" />
                                 <Setter Property="Foreground" Value="#ababab" />
                                 <Setter Property="FontSize" Value="18" />
@@ -247,16 +227,9 @@
                         </DataGrid.ColumnHeaderStyle>
 
                         <DataGrid.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-                                <Setter Property="TextBlock.Focusable" Value="False"></Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="DataGridCell.IsSelected" Value="True">
-                                        <Setter Property="BorderBrush" Value="Transparent"/>
-                                        <Setter Property="Background" Value="Transparent"/>
-                                        <Setter Property="Foreground" Value="White"/>
-                                    </Trigger>
-                                </Style.Triggers>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                                <Setter Property="Focusable" Value="False"/>
                             </Style>
                         </DataGrid.CellStyle>
 
