@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
 using System.Threading;
+using WpfAnimatedGif;
 
 namespace CncPrj_WPF_Core
 {
@@ -344,7 +345,8 @@ namespace CncPrj_WPF_Core
         //chart history expansion
         public void ChartExpansion(object sender, RoutedEventArgs e)
         {
-            historyChartLoadMsg.Visibility = Visibility.Visible;
+            historyChartLoadBack.Visibility = Visibility.Visible;
+            historyChartLoadImg.Visibility = Visibility.Visible;
             Debug.WriteLine(DateTime.Now.ToLongTimeString());
 
             //새 윈도우로 데이터 넘기기   
@@ -397,7 +399,8 @@ namespace CncPrj_WPF_Core
             //data http로 보내기
             if (hitoryStartTime != null)
             {
-                historyChartLoadMsg.Visibility = Visibility.Visible;
+                historyChartLoadBack.Visibility = Visibility.Visible;
+                historyChartLoadImg.Visibility = Visibility.Visible;
 
                 Debug.WriteLine(hitoryStartTime, hitoryEndTime);
                 //List<SpindleLoad> spindleLoads = HNHttp.GetSpindleLoadRequest((int)Convert.ToDateTime(hitoryStartTime).Year, (int)Convert.ToDateTime(hitoryStartTime).Month, (int)Convert.ToDateTime(hitoryStartTime).Day, (int)Convert.ToDateTime(hitoryEndTime).Year, (int)Convert.ToDateTime(hitoryEndTime).Month, (int)Convert.ToDateTime(hitoryEndTime).Day, OPCode.OP10_3, hitoryGroupByTime);
@@ -407,7 +410,8 @@ namespace CncPrj_WPF_Core
                     Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                     {
                         drawMainChart.HistoryChart(spindleLoads);
-                        historyChartLoadMsg.Visibility = Visibility.Hidden;
+                        historyChartLoadBack.Visibility = Visibility.Hidden;
+                        historyChartLoadImg.Visibility = Visibility.Hidden;
                     }));
                 });
             }
