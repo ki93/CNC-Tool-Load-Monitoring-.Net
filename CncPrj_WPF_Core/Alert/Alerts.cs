@@ -129,7 +129,7 @@ namespace CncPrj_WPF_Core.Alert
                 }
                 if (infoAlerts.Count.Equals(0))
                 {
-                    _informationAlerts.Remove(infoAlert.GetInformationMessage());
+                    _informationAlerts.Remove(infoAlert.GetInformationMessageTitle());
                 }
             }
         }
@@ -149,7 +149,7 @@ namespace CncPrj_WPF_Core.Alert
                 }
                 if (warningAlerts.Count.Equals(0))
                 {
-                    _warningAlerts.Remove(warningAlert.GetWarningMessage());
+                    _warningAlerts.Remove(warningAlert.GetWarningMessageTitle());
                 }
             }
         }

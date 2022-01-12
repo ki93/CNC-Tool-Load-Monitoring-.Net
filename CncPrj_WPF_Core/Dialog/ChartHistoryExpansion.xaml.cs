@@ -39,7 +39,8 @@ namespace CncPrj_WPF_Core
             List<HttpSpindleLoad> spindleLoads = HNHttp.GetSpindleLoadList(Convert.ToDateTime(startTime).ToUniversalTime(), Convert.ToDateTime(endTime).ToUniversalTime(), HttpOPCode.OP10_3, groupBy);
             opwin.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
-                opwin.historyChartLoadMsg.Visibility = Visibility.Hidden;
+                opwin.historyChartLoadBack.Visibility = Visibility.Hidden;
+                opwin.historyChartLoadImg.Visibility = Visibility.Hidden;
                 HistoryChart(spindleLoads);
                 ShowDialog();
             }));

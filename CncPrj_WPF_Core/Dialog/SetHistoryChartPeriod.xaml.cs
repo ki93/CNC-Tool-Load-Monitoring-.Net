@@ -14,13 +14,13 @@ namespace CncPrj_WPF_Core
         public String endTimeValue;
         public OpWindow opwin;
 
-        public SetHistoryChartPeriod(ref OpWindow opWindow)
+        public SetHistoryChartPeriod(ref OpWindow opWindow, DateTime hitoryStartTime, DateTime hitoryEndTime)
         {
             InitializeComponent();
             SetHistoryChartPeriod setHistory = this;
             opwin = opWindow;
-            HitoryStartDatePick.SelectedDate = DateTime.Today;
-            HitoryEndDatePick.SelectedDate = DateTime.Today;
+            HitoryStartDatePick.SelectedDate = hitoryStartTime;
+            HitoryEndDatePick.SelectedDate = hitoryEndTime;
             HitoryStartDatePick.DisplayDateEnd = DateTime.Today;
             HitoryEndDatePick.DisplayDateEnd = DateTime.Today;
         }

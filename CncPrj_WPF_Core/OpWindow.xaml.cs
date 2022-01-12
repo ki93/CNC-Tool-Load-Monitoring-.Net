@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Navigation;
 using CncPrj_WPF_Core.Alert;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace CncPrj_WPF_Core
 {
@@ -40,6 +41,8 @@ namespace CncPrj_WPF_Core
         DateTime _productInfoPeriodStarttime;
         DateTime _productInfoPeriodEndtime;
         Alerts _alerts;
+        DateTime _historyChartStartTime;
+        DateTime _historyChartEndTime;
 
         public OpWindow()
         {
@@ -97,6 +100,8 @@ namespace CncPrj_WPF_Core
             _judgeQuality.InitJudgeQualityImage();
             _productInfoPeriodStarttime = DateTime.Today;
             _productInfoPeriodEndtime = DateTime.Today;
+            _historyChartStartTime = DateTime.Today;
+            _historyChartEndTime = DateTime.Today;
 
             userId.Text = e.ExtraData.ToString();
             NavigationService.LoadCompleted -= NavigationServiceLoadCompleted;
@@ -278,14 +283,44 @@ namespace CncPrj_WPF_Core
         //total Procuct 새 윈도우 오픈
         private void tpHistoryEvt(object sender, RoutedEventArgs e)
         {
-            TpHistory tpHistory = new TpHistory();
-            tpHistory.ShowDialog();
+            string currentMethod = MethodBase.GetCurrentMethod().Name;
+
+            try
+            {
+                TpHistory tpHistory = new TpHistory();
+                tpHistory.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                Task.Run(() =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        _alerts.CreateAlert(AlertCategory.Error, currentMethod, ex.ToString());
+                    }));
+                });
+            }
         }
         //cycle time 새 윈도우 오픈
         public void ctHistory(object sender, RoutedEventArgs e)
         {
-            CtHistory ctHistory = new CtHistory();
-            ctHistory.ShowDialog(); //showdialog => 모달, 해당 창 닫기 전 까지 뒤 화면 이동 불가, show => 모달리스, 뒤 화면 제어, 이동 가능
+            string currentMethod = MethodBase.GetCurrentMethod().Name;
+
+            try
+            {
+                CtHistory ctHistory = new CtHistory();
+                ctHistory.ShowDialog(); //showdialog => 모달, 해당 창 닫기 전 까지 뒤 화면 이동 불가, show => 모달리스, 뒤 화면 제어, 이동 가능
+            }
+            catch (Exception ex)
+            {
+                Task.Run(() =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        _alerts.CreateAlert(AlertCategory.Error, currentMethod, ex.ToString());
+                    }));
+                });
+            }
         }
         //logout 버튼 이벤트
         private void logoutEvt(object sender, RoutedEventArgs e)
@@ -317,7 +352,7 @@ namespace CncPrj_WPF_Core
         //차트 이력 기간 설정 버튼 이벤트 -> 기간 설정 윈도우 오픈
         private void setPeriodBtn_Click(object sender, RoutedEventArgs e)
         {
-            SetHistoryChartPeriod history = new SetHistoryChartPeriod(ref opwindow);
+            SetHistoryChartPeriod history = new SetHistoryChartPeriod(ref opwindow, _historyChartStartTime, _historyChartEndTime);
             history.ShowDialog();
         }
         //차트 history 기간
@@ -325,6 +360,8 @@ namespace CncPrj_WPF_Core
         {
             hitoryStartTime = startTime;
             hitoryEndTime = endTime;
+            _historyChartStartTime = Convert.ToDateTime(hitoryStartTime);
+            _historyChartEndTime = Convert.ToDateTime(hitoryEndTime);   
             //data http로 보내기
             HistoryChartHttpRequest();
 
@@ -439,8 +476,8 @@ namespace CncPrj_WPF_Core
         //chart history expansion
         public void ChartExpansion(object sender, RoutedEventArgs e)
         {
-            historyChartLoadMsg.Visibility = Visibility.Visible;
-
+            historyChartLoadBack.Visibility = Visibility.Visible;
+            historyChartLoadImg.Visibility = Visibility.Visible;
             //새 윈도우로 데이터 넘기기   
             ChartHistoryExpansion expansion = new ChartHistoryExpansion(ref opwindow);
             Task.Run(() =>
@@ -464,6 +501,8 @@ namespace CncPrj_WPF_Core
         {
             hitoryStartTime = DateTime.Now.AddMinutes(-15).ToString();
             hitoryEndTime = DateTime.Now.ToString();
+            _historyChartStartTime = Convert.ToDateTime(hitoryStartTime);
+            _historyChartEndTime = Convert.ToDateTime(hitoryEndTime);
             hitoryGroupByTime = "3s";
             setPeriodBtn.Content = "Last 15 minutes";
             historyChartGroupByValue.SelectedIndex = 2;
@@ -493,7 +532,8 @@ namespace CncPrj_WPF_Core
             //data http로 보내기
             if (hitoryStartTime != null)
             {
-                historyChartLoadMsg.Visibility = Visibility.Visible;
+                historyChartLoadBack.Visibility = Visibility.Visible;
+                historyChartLoadImg.Visibility = Visibility.Visible;
 
                 //List<SpindleLoad> spindleLoads = HNHttp.GetSpindleLoadRequest((int)Convert.ToDateTime(hitoryStartTime).Year, (int)Convert.ToDateTime(hitoryStartTime).Month, (int)Convert.ToDateTime(hitoryStartTime).Day, (int)Convert.ToDateTime(hitoryEndTime).Year, (int)Convert.ToDateTime(hitoryEndTime).Month, (int)Convert.ToDateTime(hitoryEndTime).Day, OPCode.OP10_3, hitoryGroupByTime);
                 Task.Run(() =>
@@ -504,7 +544,8 @@ namespace CncPrj_WPF_Core
                     {
                         Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                         {
-                            historyChartLoadMsg.Visibility = Visibility.Hidden;
+                            historyChartLoadBack.Visibility = Visibility.Hidden;
+                            historyChartLoadImg.Visibility = Visibility.Hidden;
                         }));
                         Task.Run(() =>
                         {
@@ -519,14 +560,16 @@ namespace CncPrj_WPF_Core
                         Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                         {
                             drawMainChart.HistoryChart(spindleLoads);
-                            historyChartLoadMsg.Visibility = Visibility.Hidden;
+                            historyChartLoadBack.Visibility = Visibility.Hidden;
+                            historyChartLoadImg.Visibility = Visibility.Hidden;
                         }));
                     }
                     else
                     {
                         Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                         {
-                            historyChartLoadMsg.Visibility = Visibility.Hidden;
+                            historyChartLoadBack.Visibility = Visibility.Hidden;
+                            historyChartLoadImg.Visibility = Visibility.Hidden;
                         }));
                         Task.Run(() =>
                         {
@@ -847,10 +890,12 @@ namespace CncPrj_WPF_Core
         public void FFTImgExpansion(object sender, RoutedEventArgs e)
         {
             string currentMethod = MethodBase.GetCurrentMethod().Name;
+            Debug.WriteLine("works");
 
             if (fftSource.Contains("no-image"))
             {
                 string infoMsg = "Failed to load the image.";
+
                 Task.Run(() =>
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
