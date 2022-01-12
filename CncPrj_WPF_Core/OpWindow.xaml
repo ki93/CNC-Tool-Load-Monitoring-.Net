@@ -10,12 +10,7 @@
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="OpWindow">
     <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dictionary.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-
-        </ResourceDictionary>
+        <local:productIssueConverter x:Key="productIssueConverter"/>
     </Page.Resources>
 
     <Grid Background="#2b2d30">
@@ -555,8 +550,8 @@
 
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
-                    <Setter Property="Background" Value="#1e1e1e" />
-                    <Setter Property="Foreground" Value="#fff" />
+                    <Setter Property="Background" Value= "#1e1e1e"/>
+                    <Setter Property="Foreground" Value= "{Binding issue, Converter={StaticResource productIssueConverter}}" />
                     <Setter Property="FontSize" Value="15" />
                     <Setter Property="FontWeight" Value="Bold" />
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -569,7 +564,7 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="#1e1e1e" />
                         </Trigger>
-                        <DataTrigger Binding="{Binding issue}" Value="Normal">
+                        <DataTrigger Binding="{Binding issue}"  Value="Normal">
                             <Setter Property="Visibility" Value="{DynamicResource RowVisibility}"/>
                         </DataTrigger>
                     </Style.Triggers>
