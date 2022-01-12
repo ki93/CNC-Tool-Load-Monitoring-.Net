@@ -481,6 +481,10 @@ namespace CncPrj_WPF_Core
                 receiveRow["endTime"] = endTime;
                 receiveRow["issue"] = productInformation._predict;
                 processTable.Rows.InsertAt(receiveRow, 0);
+                if(receiveRow["issue"].ToString() != "Normal")
+                {
+                    Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                }
             }));
         }
         //제품 정보 dataGrid Sort
@@ -564,6 +568,10 @@ namespace CncPrj_WPF_Core
                 receiveRow["endTime"] = endTime;
                 receiveRow["issue"] = item._predict;
                 processTable.Rows.Add(receiveRow);
+                if (receiveRow["issue"].ToString() != "Normal")
+                {
+                    Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                }
             }
         }
         private void ProductInfoCalendarBtmMouseEnter(object sender, MouseEventArgs e)
