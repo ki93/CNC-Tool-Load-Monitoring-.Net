@@ -15,29 +15,40 @@ using System.Windows.Shapes;
 namespace CncPrj_WPF_Core
 {
     /// <summary>
-    /// InfoAlert.xaml에 대한 상호 작용 논리
+    /// ErrorAlert.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class InfoAlert : Window
+    public partial class ErrorAlert : Window
     {
         int _count;
-        OpWindow _opWindow;
+        string _errorMessageTitle;
+        string _errorMessage;
 
-        public InfoAlert(string message, ref OpWindow opWindow)
+        public ErrorAlert(string title, string message)
         {
             InitializeComponent();
-            infoMsg.Text = message;
-            _opWindow = opWindow;
+            _errorMessageTitle = title;
+            _errorMessage = message;
+            uErrorMessageTitle.Text = _errorMessageTitle;
+            uErrorMessage.Text = _errorMessage;
             _count = 0;
         }
+        public string GetErrorMessageTitle()
+        {
+            return _errorMessageTitle;
+        }
+        public string GetErrorMessage()
+        {
+            return _errorMessage;
+        }
+
         public void CountUp()
         {
             _count++;
             uAlertCount.Text = $"(+{_count})";
         }
 
-        private void InfoAlertClose(object sender, RoutedEventArgs e)
+        private void ErrorAlertClose(object sender, RoutedEventArgs e)
         {
-            _opWindow._alerts.Remove(infoMsg.Text);
             Close();
         }
     }

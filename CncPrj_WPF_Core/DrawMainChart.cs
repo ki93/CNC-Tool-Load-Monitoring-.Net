@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using SciChart.Data.Model;
 using SciChart.Charting.Model.DataSeries;
 using HNInc.Communication.Library;
@@ -58,7 +57,7 @@ namespace CncPrj_WPF_Core
                 }
                 else
                 {
-                    Debug.WriteLine("CurrentTime : {0}, InputDate : {1}", currentDateTime, date);
+                    //Debug.WriteLine("CurrentTime : {0}, InputDate : {1}", currentDateTime, date);
                 }
             }
         }
@@ -100,7 +99,7 @@ namespace CncPrj_WPF_Core
                     }
                     else
                     {
-                        Debug.WriteLine("ELSE currentHistoryDateTime : {0}, InputDate : {1}", currentHistoryDateTime, historydate);
+                        //Debug.WriteLine("ELSE currentHistoryDateTime : {0}, InputDate : {1}", currentHistoryDateTime, historydate);
                     }
                 }
             }
