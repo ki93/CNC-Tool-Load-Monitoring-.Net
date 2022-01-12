@@ -1,5 +1,5 @@
-﻿using System;
-using System.Diagnostics;
+﻿using CncPrj_WPF_Core.Alert;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,10 +15,13 @@ namespace CncPrj_WPF_Core
         DateTime _startTime;
         DateTime _endTime;
         OpWindow _opWindow;
+        Alerts _alerts; 
+
         public SetProductInfoPeriod(ref OpWindow opWindow, DateTime startTime, DateTime endTime)
         {
             InitializeComponent();
             _opWindow = opWindow;
+            _alerts = new Alerts();
 
             //추후 수정
             ProductInfoStartDatePick.DisplayDateStart = DateTime.Today.AddDays(-31);
@@ -52,19 +55,8 @@ namespace CncPrj_WPF_Core
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                     {
-                        InfoAlert infoAlert;
                         string message = "시작 날짜를 다시 설정해주세요. 종료 날짜보다 느릴 수 없습니다.";
-                        if (_opWindow._alerts.ContainsKey(message))
-                        {
-                            infoAlert = (InfoAlert)_opWindow._alerts[message];
-                            infoAlert.CountUp();
-                        }
-                        else
-                        {
-                            infoAlert = new InfoAlert(message, ref _opWindow);
-                            _opWindow._alerts.Add(message, infoAlert);
-                            infoAlert.ShowDialog();
-                        }
+                        _alerts.CreateAlert(AlertCategory.Information, sender.ToString(), message);
                     }));
                 });
             }

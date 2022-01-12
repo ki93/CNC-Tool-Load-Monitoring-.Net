@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Data;
 using SciChart.Charting.Model.DataSeries;
-using System.Diagnostics;
 using HNInc.Communication.Library;
 using SciChart.Charting.Visuals.Annotations;
 

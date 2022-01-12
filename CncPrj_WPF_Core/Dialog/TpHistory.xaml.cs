@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -52,8 +51,6 @@ namespace CncPrj_WPF_Core
             //endDatePick.DisplayDateStart = startDatePick.SelectedDate;
             var startTIme = startDatePick.SelectedDate.ToString();
             searchStartTIme = DateTime.Parse(startTIme).ToLocalTime();
-            Debug.WriteLine(startTIme);
-
         }
         //search End Date 입력
         public void endDatePick_SelectedDateChanged(object sender, SelectionChangedEventArgs e)

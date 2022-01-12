@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using HNInc.Communication.Library;
 using SciChart.Charting.Model.DataSeries;
@@ -35,10 +34,8 @@ namespace CncPrj_WPF_Core
         //http conn
         public void httpConn(string opcode, string sn)
         {
-            Debug.WriteLine(opcode, sn);
             string parseOPcode = opcode.Replace("-","_");
             HttpOPCode oPCode = (HttpOPCode)Enum.Parse(typeof(HttpOPCode), parseOPcode);
-            Debug.WriteLine(oPCode);
             List<HttpCycleInformaiton> cycleInfo = HNHttp.GetCycleInformationList(oPCode, sn);
             InputProdcutCycleChart(cycleInfo);
         }

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace CncPrj_WPF_Core
 {
@@ -120,7 +117,6 @@ namespace CncPrj_WPF_Core
             if (DateTime.Compare(currTime, pickTime) == 0)
             {
                 endTimeValue = DateTime.Now.ToString();
-                Debug.WriteLine(endTimeValue);
             }
             else
             {

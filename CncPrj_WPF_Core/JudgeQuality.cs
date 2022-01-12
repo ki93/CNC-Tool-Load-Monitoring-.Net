@@ -1,7 +1,6 @@
-﻿using HNInc.Communication.Library;
+﻿using CncPrj_WPF_Core.Alert;
+using HNInc.Communication.Library;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -19,11 +18,13 @@ namespace CncPrj_WPF_Core
         string _currentPath;
         string _sn;
         string _result;
+        Alerts _alerts;
 
         public JudgeQuality(ref OpWindow opwin)
         {
             opwindow = opwin;
             _currentPath = AppDomain.CurrentDomain.BaseDirectory;
+            _alerts = new Alerts();
         }
 
         public void InitJudgeQualityImage()
@@ -91,14 +92,11 @@ namespace CncPrj_WPF_Core
         //품질 판정 end
         public void InputJudgeQualityEnd(string eventName, object data)
         {
+            string currentMethod = MethodBase.GetCurrentMethod().Name;
+
             SocketQualityInformation quality = (SocketQualityInformation)data;
             bool checkImageSave = true;
             string imagePath = Path.Combine(_currentPath, @"Image\");
-            //과거 최신 image 정보 관련
-            string recentImageInformationPath = Path.Combine(_currentPath, @"RecentImageName\");
-            string fileName = "RecentImageName.txt";
-            string recentImageInformationFilePath = Path.Combine(recentImageInformationPath, fileName);
-            //image 저장 실패 alert
             string imageFilePath = null;
             try
             {
@@ -117,32 +115,19 @@ namespace CncPrj_WPF_Core
                 }
                 else
                 {
-                    Debug.WriteLine($"Image File {quality._fileName} already exist");
+                    //Debug.WriteLine($"Image File {quality._fileName} already exist");
                 }
                 checkImageSave = true;
             }
             catch (Exception e)
             {
-                //  Show Dialog로 교체 예정
-                //messageBoxResult = MessageBox.Show(e.Message, "HN Inc", MessageBoxButton.OK, MessageBoxImage.Error);
                 imageFilePath = @"/Img/no-image.png";
                 checkImageSave = false;
                 Task.Run(() =>
                 {
                     opwindow.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                     {
-                        WarningAlert warningAlert;
-                        if (opwindow._alerts.ContainsKey(e.Message))
-                        {
-                            warningAlert = (WarningAlert)opwindow._alerts[e.Message];
-                            warningAlert.CountUp();
-                        }
-                        else
-                        {
-                            warningAlert = new WarningAlert(e.Message,ref opwindow);
-                            opwindow._alerts.Add(e.Message, warningAlert);
-                        }
-                        warningAlert.ShowDialog();
+                        _alerts.CreateAlert(AlertCategory.Warning, currentMethod, e.Message);
                     }));
                 });
 
@@ -171,7 +156,6 @@ namespace CncPrj_WPF_Core
                 {
                     imageInformation = $"{quality._fileName},{quality._serialNumber},{quality._predict},{quality._accuracy},fail";
                 }
-                File.WriteAllText(recentImageInformationFilePath, imageInformation);
             }
         }
 
