@@ -38,6 +38,8 @@ namespace CncPrj_WPF_Core
         bool _gridVisibility;
         DateTime _productInfoPeriodStarttime;
         DateTime _productInfoPeriodEndtime;
+        DateTime _historyChartStartTime;
+        DateTime _historyChartEndTime;
         public Login _login;
         public Dictionary<Object, Object> _alerts;
 
@@ -63,6 +65,8 @@ namespace CncPrj_WPF_Core
             new JudgeQuality(ref opwindow).InitJudgeQualityImage();
             _productInfoPeriodStarttime = DateTime.Today;
             _productInfoPeriodEndtime = DateTime.Today;
+            _historyChartStartTime = DateTime.Today;
+            _historyChartEndTime = DateTime.Today;
             _alerts = new Dictionary<object, object>();
             
         }
@@ -223,7 +227,7 @@ namespace CncPrj_WPF_Core
         //차트 이력 기간 설정 버튼 이벤트 -> 기간 설정 윈도우 오픈
         private void setPeriodBtn_Click(object sender, RoutedEventArgs e)
         {
-            SetHistoryChartPeriod history = new SetHistoryChartPeriod(ref opwindow);
+            SetHistoryChartPeriod history = new SetHistoryChartPeriod(ref opwindow, _historyChartStartTime, _historyChartEndTime);
             history.ShowDialog();
         }
         //차트 history 기간
@@ -231,6 +235,8 @@ namespace CncPrj_WPF_Core
         {
             hitoryStartTime = startTime;
             hitoryEndTime = endTime;
+            _historyChartStartTime = Convert.ToDateTime(hitoryStartTime);
+            _historyChartEndTime = Convert.ToDateTime(hitoryEndTime);   
             //data http로 보내기
             HistoryChartHttpRequest();
 
@@ -372,6 +378,8 @@ namespace CncPrj_WPF_Core
         {
             hitoryStartTime = DateTime.Now.AddMinutes(-15).ToString();
             hitoryEndTime = DateTime.Now.ToString();
+            _historyChartStartTime = Convert.ToDateTime(hitoryStartTime);
+            _historyChartEndTime = Convert.ToDateTime(hitoryEndTime);
             hitoryGroupByTime = "3s";
             setPeriodBtn.Content = "Last 15 minutes";
             historyChartGroupByValue.SelectedIndex = 2;
