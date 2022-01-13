@@ -60,7 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Abp" Version="6.5.0" />
+    <PackageReference Include="Abp" Version="7.0.1" />
     <PackageReference Include="HNInc.Communication.Library" Version="0.0.1.8" />
     <PackageReference Include="SciChart" Version="6.4.0.13629" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
