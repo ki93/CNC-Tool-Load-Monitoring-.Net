@@ -64,7 +64,7 @@ namespace CncPrj_WPF_Core
 
             _deviceHealthChecktimer = new DispatcherTimer();
             _deviceHealthChecktimer.Tick += InputDeiviceHealthCheck;
-            _deviceHealthChecktimer.Interval = TimeSpan.FromSeconds(60);
+            _deviceHealthChecktimer.Interval = TimeSpan.FromSeconds(10);
             _deviceHealthChecktimer.Start();
 
             if (_hNSocketIO == null)
