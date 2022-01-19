@@ -21,13 +21,13 @@ namespace CncPrj_WPF_Core
     public partial class Login : Page
     {
         IsolatedStorageFile _isoStore;
-        Alerts alerts;
+        Alerts _alerts;
 
         public Login()
         {
             InitializeComponent();
 
-            alerts = new Alerts();
+            _alerts = new Alerts();
 
             _isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
             if (_isoStore.FileExists("IDRememberMe.txt"))
@@ -93,6 +93,10 @@ namespace CncPrj_WPF_Core
                 MoveStep _moveStep = new MoveStep();
                 NavigationService.LoadCompleted += _moveStep.NavigationServiceLoadCompleted;
                 NavigationService.Navigate(_moveStep, id);
+            }
+            else if (authentication._processResult.Contains("Fail"))
+            {
+                _alerts.CreateAlert(AlertCategory.Error, currentMethod, authentication._processResult);
             }
             else
             {
