@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CncPrj_WPF_Core.Alert
 {
@@ -42,6 +43,7 @@ namespace CncPrj_WPF_Core.Alert
                         _errorAlerts.Add(title, errorAlerts);
                         errorAlert.ShowDialog();
                     }
+
                     break;
                 case AlertCategory.Information:
                     if (_informationAlerts.ContainsKey(title))
@@ -90,6 +92,18 @@ namespace CncPrj_WPF_Core.Alert
                     }
                     break;
             }
+        }
+        public int CountErrorAlerts()
+        {
+            return _errorAlerts.Count;
+        }
+        public int CountInformationAlerts()
+        {
+            return _informationAlerts.Count;
+        }
+        public int CountWarningAlerts()
+        {
+            return _warningAlerts.Count;
         }
         void RemoveErrorAlert(object sender, EventArgs eventArgs)
         {

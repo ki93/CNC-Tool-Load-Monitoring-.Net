@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:CncPrj_WPF_Core"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
+      Loaded="OnLoad"
       Title="Login">
 
     <Grid>

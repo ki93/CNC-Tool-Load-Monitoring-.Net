@@ -48,8 +48,7 @@ namespace CncPrj_WPF_Core
         {
             InitializeComponent();
         }
-
-        public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
+        public void OnLoad(object sender, EventArgs e)
         {
             opwindow = this;
             drawMainChart = new DrawMainChart(ref opwindow);
@@ -66,7 +65,6 @@ namespace CncPrj_WPF_Core
             _deviceHealthChecktimer.Tick += InputDeiviceHealthCheck;
             _deviceHealthChecktimer.Interval = TimeSpan.FromSeconds(10);
             _deviceHealthChecktimer.Start();
-
             if (_hNSocketIO == null)
             {
                 _hNSocketIO = new HNSocketIO(new Uri("http://9.8.100.153:8082/"), SocketIOClient.Transport.TransportProtocol.WebSocket, new TimeSpan(TimeSpan.TicksPerMinute), 5);
@@ -102,8 +100,15 @@ namespace CncPrj_WPF_Core
             _productInfoPeriodEndtime = DateTime.Today;
             _historyChartStartTime = DateTime.Today;
             _historyChartEndTime = DateTime.Today;
+            userId.Text = "Login Required";
+        }
+        public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
+        {
 
-            userId.Text = e.ExtraData.ToString();
+            if (e.ExtraData != null)
+            {
+                userId.Text = e.ExtraData.ToString();
+            }
             NavigationService.LoadCompleted -= NavigationServiceLoadCompleted;
         }
         void SocketOnConnected(Object a, Object b)
@@ -283,23 +288,8 @@ namespace CncPrj_WPF_Core
         //total Procuct 새 윈도우 오픈
         private void tpHistoryEvt(object sender, RoutedEventArgs e)
         {
-            string currentMethod = MethodBase.GetCurrentMethod().Name;
-
-            try
-            {
-                TpHistory tpHistory = new TpHistory();
-                tpHistory.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                Task.Run(() =>
-                {
-                    Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
-                    {
-                        _alerts.CreateAlert(AlertCategory.Error, currentMethod, ex.ToString());
-                    }));
-                });
-            }
+            TpHistory tpHistory = new TpHistory();
+            tpHistory.ShowDialog();
         }
         //cycle time 새 윈도우 오픈
         public void ctHistory(object sender, RoutedEventArgs e)

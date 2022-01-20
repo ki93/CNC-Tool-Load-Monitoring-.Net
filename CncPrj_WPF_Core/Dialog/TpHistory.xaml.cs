@@ -1,9 +1,14 @@
-﻿using HNInc.Communication.Library;
+﻿using CncPrj_WPF_Core.Alert;
+using HNInc.Communication.Library;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace CncPrj_WPF_Core
 {
@@ -20,10 +25,14 @@ namespace CncPrj_WPF_Core
         public DateTime searchStartTIme;
         public DateTime searchEndTime;
         public string searchTableDate;
+        Alerts _alerts;
 
         public TpHistory()
         {
             InitializeComponent();
+            _alerts = new Alerts();
+            string currentMethod = MethodBase.GetCurrentMethod().Name;
+
             tpHistory = this;
             dailyTable = new DataTable();
             weeklyTable = new DataTable();
@@ -37,12 +46,26 @@ namespace CncPrj_WPF_Core
             weeklyTable.Columns.Add("Count", typeof(string));
             monthlyTable.Columns.Add("Date", typeof(string));
             monthlyTable.Columns.Add("Count", typeof(string));
-            List<HttpProductCounts> dayProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddDays(-100), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.day);
-            DayInputProductCounts(dayProductCounts);
-            List<HttpProductCounts> weekProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.week);
-            WeekInputProductCounts(weekProductCounts);
-            List<HttpProductCounts> monthProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.month);
-            MonthInputProductCounts(monthProductCounts);
+            try
+            {
+                List<HttpProductCounts> dayProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddDays(-100), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.day);
+                DayInputProductCounts(dayProductCounts);
+                List<HttpProductCounts> weekProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.week);
+                WeekInputProductCounts(weekProductCounts);
+                List<HttpProductCounts> monthProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.month);
+                MonthInputProductCounts(monthProductCounts);
+            }
+            catch (Exception ex)
+            {
+                Task.Run(() =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        _alerts.CreateAlert(AlertCategory.Error, currentMethod, ex.ToString());
+                    }));
+                });
+
+            }
         }
 
         //search Start Date 입력
@@ -67,37 +90,81 @@ namespace CncPrj_WPF_Core
         public void DayInputProductCounts(List<HttpProductCounts> dayProductCounts)
         {
             dayProductCounts.Reverse();
+            string currentMethod = MethodBase.GetCurrentMethod().Name;
 
-            foreach (HttpProductCounts item in dayProductCounts)
+            try
             {
-                DateTime dateTime = DateTime.Parse(item._date).ToLocalTime();
-                string date = dateTime.ToString("yyyy'-'MM'-'dd");
-                string count = item._count.ToString();
-                dailyTable.Rows.Add(date, count);
+                foreach (HttpProductCounts item in dayProductCounts)
+                {
+                    DateTime dateTime = DateTime.Parse(item._date).ToLocalTime();
+                    string date = dateTime.ToString("yyyy'-'MM'-'dd");
+                    string count = item._count.ToString();
+                    dailyTable.Rows.Add(date, count);
+                }
+            }
+            catch (Exception ex)
+            {
+                Task.Run(() =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        _alerts.CreateAlert(AlertCategory.Error, currentMethod, ex.ToString());
+                    }));
+                });
             }
         }
         //주별 데이터 그리드 추가
         public void WeekInputProductCounts(List<HttpProductCounts> weekProductCounts)
         {
             weekProductCounts.Reverse();
-            foreach (HttpProductCounts item in weekProductCounts)
+            string currentMethod = MethodBase.GetCurrentMethod().Name;
+
+            try
             {
-                DateTime dateTime = DateTime.Parse(item._date).ToLocalTime();
-                string date = dateTime.ToString("yyyy'-'MM'-'dd");
-                string count = item._count.ToString();
-                weeklyTable.Rows.Add(date, count);
+                foreach (HttpProductCounts item in weekProductCounts)
+                {
+                    DateTime dateTime = DateTime.Parse(item._date).ToLocalTime();
+                    string date = dateTime.ToString("yyyy'-'MM'-'dd");
+                    string count = item._count.ToString();
+                    weeklyTable.Rows.Add(date, count);
+                }
+            }
+            catch (Exception ex)
+            {
+                Task.Run(() =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        _alerts.CreateAlert(AlertCategory.Error, currentMethod, ex.ToString());
+                    }));
+                });
             }
         }
         //월별 데이터 그리드 추가
         public void MonthInputProductCounts(List<HttpProductCounts> monthProductCounts)
         {
             monthProductCounts.Reverse();
-            foreach (HttpProductCounts item in monthProductCounts)
+            string currentMethod = MethodBase.GetCurrentMethod().Name;
+
+            try
             {
-                DateTime dateTime = DateTime.Parse(item._date).ToLocalTime();
-                string date = dateTime.ToString("yyyy'-'MM'-'dd");
-                string count = item._count.ToString();
-                monthlyTable.Rows.Add(date, count);
+                foreach (HttpProductCounts item in monthProductCounts)
+                {
+                    DateTime dateTime = DateTime.Parse(item._date).ToLocalTime();
+                    string date = dateTime.ToString("yyyy'-'MM'-'dd");
+                    string count = item._count.ToString();
+                    monthlyTable.Rows.Add(date, count);
+                }
+            }
+            catch (Exception ex)
+            {
+                Task.Run(() =>
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        _alerts.CreateAlert(AlertCategory.Error, currentMethod, ex.ToString());
+                    }));
+                });
             }
         }
         //서치 데이터 그리드 추가

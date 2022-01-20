@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -18,12 +19,11 @@ namespace CncPrj_WPF_Core
         Alerts _alerts;
         string _id;
 
-
         public MoveStep()
         {
             InitializeComponent();
         }
-        public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
+        public void OnLoad(object sender, EventArgs e)
         {
             timer = new DispatcherTimer(); //호출 함수 설정
             timer.Tick += timer_Tick; //함수 호출 주기 설정
@@ -31,8 +31,15 @@ namespace CncPrj_WPF_Core
             timer.Start();
             _alerts = new Alerts();
 
-            _id = e.ExtraData.ToString();
-            userId.Text = _id;
+            userId.Text = "Login Required";
+        }
+        public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            if (e.ExtraData != null)
+            {
+                _id = e.ExtraData.ToString();
+                userId.Text = _id;
+            }
             NavigationService.LoadCompleted -= NavigationServiceLoadCompleted;
         }
 
@@ -57,7 +64,6 @@ namespace CncPrj_WPF_Core
             OpWindow opWindow = new OpWindow();
             NavigationService.LoadCompleted += opWindow.NavigationServiceLoadCompleted;
             NavigationService.Navigate(opWindow, _id);
-
         }
     }
 }

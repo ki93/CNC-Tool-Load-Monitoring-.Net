@@ -6,6 +6,7 @@
       xmlns:s="http://schemas.abtsoftware.co.uk/scichart"
       xmlns:gif="http://wpfanimatedgif.codeplex.com"
       xmlns:local="clr-namespace:CncPrj_WPF_Core"
+      Loaded="OnLoad"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="OpWindow">

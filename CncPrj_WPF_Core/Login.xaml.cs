@@ -41,6 +41,23 @@ namespace CncPrj_WPF_Core
                 }
             }
         }
+        public void OnLoad(object sender, EventArgs e)
+        {
+            if (_isoStore.FileExists("IDRememberMe.txt"))
+            {
+                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.Open, _isoStore))
+                {
+                    using (StreamReader reader = new StreamReader(isoStream))
+                    {
+                        idBox.Text = reader.ReadToEnd();
+                    }
+                }
+            }
+            else
+            {
+                idBox.Text = "";
+            }
+        }
         public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
         {
             if (_isoStore.FileExists("IDRememberMe.txt"))
