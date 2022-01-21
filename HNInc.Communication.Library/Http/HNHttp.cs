@@ -12,13 +12,22 @@ namespace HNInc.Communication.Library
 {
     public class HNHttp
     {
+        string _wasUrl;
+        string _accountDBUrl;
+        string _accountDB;
         // 생성자 필요
-        public static HttpDeiviceHealthCheck GetDeiviceHealthCheck(HttpOPCode oPCode)
+        public HNHttp(string wasUrl, string accountDBUrl, string accountDB)
+        {
+            _wasUrl = wasUrl;
+            _accountDBUrl = accountDBUrl;
+            _accountDB = accountDB;
+        }
+        public HttpDeiviceHealthCheck GetDeiviceHealthCheck(HttpOPCode oPCode)
         {
             HttpDeiviceHealthCheck deiviceHealthCheck = new HttpDeiviceHealthCheck();
             // Create a request for the URL.
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("http://9.8.100.153:8082/product/device-health-check?");
+            stringBuilder.Append($"{_wasUrl}product/device-health-check?");
             stringBuilder.AppendFormat("opcode={0}", oPCode.ToString().Replace("_", "-"));
             string URI = stringBuilder.ToString();
             WebRequest request = (HttpWebRequest)WebRequest.Create(URI);
@@ -57,7 +66,7 @@ namespace HNInc.Communication.Library
             }
             return deiviceHealthCheck;
         }
-        public static List<HttpProductCounts> GetProductCountsList(DateTime startTime, DateTime endTime, HttpOPCode oPCode, HttpClassification classification)
+        public List<HttpProductCounts> GetProductCountsList(DateTime startTime, DateTime endTime, HttpOPCode oPCode, HttpClassification classification)
         {
             HttpProductCounts productCounts = null;
             List<HttpProductCounts> productCountList = new List<HttpProductCounts>();
@@ -65,7 +74,7 @@ namespace HNInc.Communication.Library
             string startDate = startTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ");
             string endDate = endTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ");
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("http://9.8.100.153:8082/product/counts?");
+            stringBuilder.Append($"{_wasUrl}product/counts?");
             stringBuilder.AppendFormat("startDate={0}", startDate);
             stringBuilder.AppendFormat("&endDate={0}", endDate);
             stringBuilder.AppendFormat("&opcode={0}", oPCode.ToString().Replace("_", "-"));
@@ -104,12 +113,12 @@ namespace HNInc.Communication.Library
             }
             return productCountList;
         }
-        public static List<HttpCycleTime> GetCycleTimeList(HttpOPCode oPCode, int count)
+        public  List<HttpCycleTime> GetCycleTimeList(HttpOPCode oPCode, int count)
         {
             HttpCycleTime cycleTime = null;
             List<HttpCycleTime> cycleTimes = new List<HttpCycleTime>();
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("http://9.8.100.153:8082/product/cycle-time?");
+            stringBuilder.Append($"{_wasUrl}product/cycle-time?");
             stringBuilder.AppendFormat("opcode={0}", oPCode.ToString().Replace("_", "-"));
             stringBuilder.AppendFormat("&count={0}", count);
             string URI = stringBuilder.ToString();
@@ -140,11 +149,11 @@ namespace HNInc.Communication.Library
             }
             return cycleTimes;
         }
-        public static HttpCycleTimeAverage GetCycleTimeAverage(int count)
+        public HttpCycleTimeAverage GetCycleTimeAverage(int count)
         {
             HttpCycleTimeAverage cycleTimeAverage = null;
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("http://9.8.100.153:8082/product/CTAvg?");
+            stringBuilder.Append($"{_wasUrl}product/CTAvg?");
             stringBuilder.AppendFormat("count={0}", count);
             string URI = stringBuilder.ToString();
             WebRequest request = (HttpWebRequest)WebRequest.Create(URI);
@@ -172,12 +181,12 @@ namespace HNInc.Communication.Library
             }
             return cycleTimeAverage;
         }
-        public static List<HttpCycleInformaiton> GetCycleInformationList(HttpOPCode oPCode, string serialNumber)
+        public List<HttpCycleInformaiton> GetCycleInformationList(HttpOPCode oPCode, string serialNumber)
         {
             HttpCycleInformaiton cycleInformaiton = null;
             List<HttpCycleInformaiton> cycleInformaitons = new List<HttpCycleInformaiton>();
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("http://9.8.100.153:8082/product/a-cycle?");
+            stringBuilder.Append($"{_wasUrl}product/a-cycle?");
             stringBuilder.AppendFormat("opcode={0}", oPCode.ToString().Replace("_", "-"));
             stringBuilder.AppendFormat("&sn={0}", serialNumber);
             string URI = stringBuilder.ToString();
@@ -221,11 +230,11 @@ namespace HNInc.Communication.Library
             }
             return cycleInformaitons;
         }
-        public static HttpRealTimeCount GetRealTimeCount(HttpOPCode oPCode)
+        public HttpRealTimeCount GetRealTimeCount(HttpOPCode oPCode)
         {
             HttpRealTimeCount realTimeCount = null;
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("http://9.8.100.153:8082/product/RTcnt?");
+            stringBuilder.Append($"{_wasUrl}product/RTcnt?");
             stringBuilder.AppendFormat("&opcode={0}", oPCode.ToString().Replace("_", "-"));
             string URI = stringBuilder.ToString();
             WebRequest request = (HttpWebRequest)WebRequest.Create(URI);
@@ -254,7 +263,7 @@ namespace HNInc.Communication.Library
             }
             return realTimeCount;
         }
-        public static List<HttpSpindleLoad> GetSpindleLoadList(DateTime startTime, DateTime endTime, HttpOPCode oPCode, string groupBy)
+        public List<HttpSpindleLoad> GetSpindleLoadList(DateTime startTime, DateTime endTime, HttpOPCode oPCode, string groupBy)
         {
             HttpSpindleLoad spindleLoad = null;
             List<HttpSpindleLoad> spindleLoads = new List<HttpSpindleLoad>();
@@ -262,7 +271,7 @@ namespace HNInc.Communication.Library
             string startDate = startTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ");
             string endDate = endTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ");
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("http://9.8.100.153:8082/product/spindle-load?");
+            stringBuilder.Append($"{_wasUrl}product/spindle-load?");
             stringBuilder.AppendFormat("startDate={0}", startDate);
             stringBuilder.AppendFormat("&endDate={0}", endDate);
             stringBuilder.AppendFormat("&opcode={0}", oPCode.ToString().Replace("_", "-"));
@@ -308,13 +317,13 @@ namespace HNInc.Communication.Library
             }
             return spindleLoads;
         }
-        public static List<HttpProductInformation> GetProductInformationList(int days)
+        public List<HttpProductInformation> GetProductInformationList(int days)
         {
             HttpProductInformation productInformation = null;
             List<HttpProductInformation> productInformations = new List<HttpProductInformation>();
 
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("http://9.8.100.153:8082/quality/record?");
+            stringBuilder.Append($"{_wasUrl}quality/record?");
             stringBuilder.AppendFormat("base={0}", days);
             string URI = stringBuilder.ToString();
             WebRequest request = (HttpWebRequest)WebRequest.Create(URI);
@@ -389,11 +398,11 @@ namespace HNInc.Communication.Library
             }
             return productInformations;
         }
-        public static HttpQualityInformaiton GetQualityInformaiton()
+        public HttpQualityInformaiton GetQualityInformaiton()
         {
             HttpQualityInformaiton qualityInformaiton = null;
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("http://9.8.100.153:8082/quality/history?");
+            stringBuilder.Append($"{_wasUrl}quality/history?");
             string URI = stringBuilder.ToString();
             WebRequest request = (HttpWebRequest)WebRequest.Create(URI);
             WebResponse response;
@@ -422,7 +431,7 @@ namespace HNInc.Communication.Library
             }
             return qualityInformaiton;
         }
-        public static HttpAuthentication CheckAuthentication(string id, string password)
+        public HttpAuthentication CheckAuthentication(string id, string password)
         {
             //암호화
             byte[] passwordArray = Encoding.Default.GetBytes(password);
@@ -437,10 +446,8 @@ namespace HNInc.Communication.Library
             //Connection
             HttpAuthentication authentication = new HttpAuthentication();
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("Server=192.168.76.151;");
-            stringBuilder.Append("Port=3306;");
-            stringBuilder.Append("Uid=root;");
-            stringBuilder.Append("Pwd=!234567890;");
+            stringBuilder.Append(_accountDBUrl);
+            stringBuilder.Append(_accountDB);
             string conn_string = stringBuilder.ToString();
             using(MySqlConnection mariaDBConnection = new MySqlConnection(conn_string))
             {

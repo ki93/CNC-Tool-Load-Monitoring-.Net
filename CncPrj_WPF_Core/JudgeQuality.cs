@@ -1,6 +1,8 @@
 ﻿using CncPrj_WPF_Core.Alert;
 using HNInc.Communication.Library;
 using System;
+using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ namespace CncPrj_WPF_Core
     public class JudgeQuality
     {
         private OpWindow opwindow;
+        HNHttp _hNHttp;
         //Image 설정 용
         string _currentPath;
         string _sn;
@@ -23,13 +26,15 @@ namespace CncPrj_WPF_Core
         public JudgeQuality(ref OpWindow opwin)
         {
             opwindow = opwin;
+            Debug.WriteLine(new Uri(ConfigurationManager.AppSettings.Get("WasUrl")));
+            _hNHttp = new HNHttp(ConfigurationManager.AppSettings.Get("WasUrl"), ConfigurationManager.AppSettings.Get("AccountDBURL"), ConfigurationManager.AppSettings.Get("AccountDB"));
             _currentPath = AppDomain.CurrentDomain.BaseDirectory;
             _alerts = new Alerts();
         }
 
         public void InitJudgeQualityImage()
         {
-            HttpQualityInformaiton httpQualityInformaiton = HNHttp.GetQualityInformaiton();
+            HttpQualityInformaiton httpQualityInformaiton = _hNHttp.GetQualityInformaiton();
             //최신 image 정보
             string productSerialNumber = null;
             string productPredictResult = null;

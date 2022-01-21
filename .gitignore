@@ -2,6 +2,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,dotnetcore
 
 ### DotnetCore ###
+# Local configuration file (api key, url)
+App.config
+
 # .NET Core build folders
 bin/
 obj/
