@@ -35,12 +35,11 @@ namespace CncPrj_WPF_Core
         //http conn
         public void httpConn(string opcode, string sn)
         {
-            Debug.WriteLine(opcode, sn);
             string parseOPcode = opcode.Replace("-","_");
             HttpOPCode oPCode = (HttpOPCode)Enum.Parse(typeof(HttpOPCode), parseOPcode);
-            Debug.WriteLine(oPCode);
             List<HttpCycleInformaiton> cycleInfo = HNHttp.GetCycleInformationList(oPCode, sn);
             InputProdcutCycleChart(cycleInfo);
+            
         }
 
         //draw Chart
@@ -48,6 +47,7 @@ namespace CncPrj_WPF_Core
         {
             foreach (HttpCycleInformaiton item in cycleInfo)
             {
+                Debug.WriteLine(item);
                 DateTime time = DateTime.Parse(item._time);
                 Double sclaeLoad = Double.Parse(item._scaleLoad);
                 Double sclaePredict = Double.Parse(item._scalePredict);

@@ -29,6 +29,7 @@
     <None Remove="Img\expansion_m.png" />
     <None Remove="Img\filter_pressed.png" />
     <None Remove="Img\filter_pressed_mouseover.png" />
+    <None Remove="Img\imageLoading.gif" />
     <None Remove="Img\info.png" />
     <None Remove="Img\information.png" />
     <None Remove="Img\loading2.gif" />
@@ -59,8 +60,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Abp" Version="6.5.0" />
-    <PackageReference Include="HNInc.Communication.Library" Version="0.0.1.7" />
+    <PackageReference Include="Abp" Version="7.0.1" />
+    <PackageReference Include="HNInc.Communication.Library" Version="0.0.1.10" />
     <PackageReference Include="SciChart" Version="6.4.0.13629" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
@@ -105,6 +106,7 @@
     <Resource Include="Img\expansion_m.png" />
     <Resource Include="Img\filter_pressed.png" />
     <Resource Include="Img\filter_pressed_mouseover.png" />
+    <Resource Include="Img\imageLoading.gif" />
     <Resource Include="Img\information.png" />
     <Resource Include="Img\loading2.gif" />
     <Resource Include="Img\loginBack.png" />

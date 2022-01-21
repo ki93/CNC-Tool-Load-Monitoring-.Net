@@ -20,14 +20,14 @@
         </Grid.RowDefinitions>
 
         <TextBlock  Grid.Row="0" Foreground="#38e09a" FontSize="25" FontWeight="Bold" Margin="10,10,0,0" HorizontalAlignment="Left" Width="697" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">Cycle Time History</TextBlock>
-        <Button Background="#FF111217" BorderThickness="0" Click="CloseCTWindow" Margin="744,10,16,16">
+        <Button Background="#FF111217" BorderThickness="0" Click="CloseCTWindow" HorizontalAlignment="Right" Margin="0,10,10,15">
             <Image>
                 <Image.Style>
                     <Style TargetType="Image">
-                        <Setter Property="Source" Value="Img/closeBtn.png"></Setter>
+                        <Setter Property="Source" Value="../Img/closeBtn.png"></Setter>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Source" Value="Img/closeBtn_m.png"/>
+                                <Setter Property="Source" Value="../Img/closeBtn_m.png"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -50,7 +50,7 @@
             </Button.Resources>
 
         </Button>
-        <s:SciChartSurface x:Name="ctBarChart" Grid.Row="1" Margin="10,9.727,16,12.636">
+        <s:SciChartSurface x:Name="ctBarChart" Grid.Row="1" Margin="10,9.727,10,12.636">
             
             <!--  Create an X Axis  -->
             <s:SciChartSurface.XAxis>
@@ -108,13 +108,7 @@
                     <Setter Property="Background" Value="#1e1e1e" />
                     <Setter Property="Foreground" Value="#fff" />
                     <Setter Property="FontSize" Value="17" />
-
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#7a7a7a" />
-                            <Setter Property="Foreground" Value="#fff" />
-                        </Trigger>
-                    </Style.Triggers>
+                    <Setter Property="IsHitTestVisible" Value="False"></Setter>
                 </Style>
             </DataGrid.RowStyle>
 
@@ -133,6 +127,13 @@
                 <Style TargetType="DataGridCell">
                     <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
                     <Setter Property="TextBlock.Focusable" Value="False"></Setter>
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </DataGrid.CellStyle>
         </DataGrid>

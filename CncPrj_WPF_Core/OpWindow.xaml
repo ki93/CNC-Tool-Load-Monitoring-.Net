@@ -4,17 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:s="http://schemas.abtsoftware.co.uk/scichart"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com"
       xmlns:local="clr-namespace:CncPrj_WPF_Core"
+      Loaded="OnLoad"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="OpWindow">
     <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dictionary.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-
-        </ResourceDictionary>
+        <local:ProductIssueConverter x:Key="ProductIssueConverter"/>
     </Page.Resources>
 
     <Grid Background="#2b2d30">
@@ -162,7 +159,7 @@
 
         <Rectangle Grid.Row="3" Grid.RowSpan="2" Grid.Column="1" Margin="5,5,20,5" Style="{DynamicResource blackPanel}"/>
         <!--<Rectangle Grid.Row="3" Grid.Column="1" Fill="#FF424141" Margin="15,19,30,256"/>-->
-        <Button x:Name="setPeriodBtn" Grid.Row="3" Grid.Column="1" Margin="15,10,258,261" Background="#1e1e1e" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" Content="Last 15 minutes" FontSize="20" FontWeight="Bold" Click="setPeriodBtn_Click">
+        <Button x:Name="setPeriodBtn" Grid.Row="3" Grid.Column="1" Margin="15,10,258,250" Height="55" Background="#1e1e1e" Foreground="White" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" Content="Last 15 minutes" FontSize="20" FontWeight="Bold" Click="setPeriodBtn_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -170,11 +167,11 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <Image Grid.Row="3" Grid.Column="1" Source="Img/calendarImg.png" Margin="21,20,577,272"/>
+        <Image Grid.Row="3" Grid.Column="1" Source="Img/calendarImg.png" Margin="21,25,577,265"/>
         <!--<Rectangle Grid.Row="3" Grid.Column="1" Fill="#1e1e1e" Margin="15,10,258,261" RadiusX="5" RadiusY="5"></Rectangle>
         <Image Grid.Row="3" Grid.Column="1" Source="Img/calendarImg.png" Margin="28,31,591,282" Panel.ZIndex="2"/>
         <Label Grid.Row="3" Grid.Column="1" Content="2021-10-10 ~ 2021-10-11" Foreground="white" Margin="60,22,258,274" FontWeight="Bold" FontSize="20" Panel.ZIndex="2"/>-->
-        <ComboBox x:Name="historyChartGroupByValue" Grid.Row="3" Grid.Column="1"  Margin="387,10,188,260" FontSize="20" Height="58" FontWeight="Bold" VerticalContentAlignment="Center" VerticalAlignment="Center" SelectionChanged="historyChartGroupByValue_SelectionChanged" SelectedValuePath="Content" Cursor="Hand" Style="{StaticResource ComboboxStyle}" Foreground="White" >
+        <ComboBox x:Name="historyChartGroupByValue" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="230,10,30,250" Width="65" FontSize="20" Height="55" FontWeight="Bold" VerticalContentAlignment="Center" VerticalAlignment="Center" SelectionChanged="historyChartGroupByValue_SelectionChanged" SelectedValuePath="Content" Cursor="Hand" Style="{StaticResource ComboboxStyle}" Foreground="White" >
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="ComboBoxItem">
                     <Setter Property="Cursor" Value="Hand" />
@@ -182,7 +179,6 @@
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Foreground" Value="#1e1e1e"/>
                         </Trigger>
-
                     </Style.Triggers>
                 </Style>
             </ComboBox.ItemContainerStyle>
@@ -207,7 +203,7 @@
             <ComboBoxItem Content="10s" x:Name="combo10s"/>
         </ComboBox>
 
-        <Button Grid.Row="3" Grid.Column="1" Margin="457,10,118,261" Background="#1e1e1e" Foreground="White" BorderBrush="{x:Null}" Click="RefreshHistoryChart">
+        <Button Grid.Row="3" Grid.Column="1" Margin="457,10,118,250" Background="#1e1e1e" Height="55" Foreground="White" BorderBrush="{x:Null}" Click="RefreshHistoryChart">
             <Image Source="Img/refreshBtn.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" Width="33"></Image>
             <Button.Resources>
                 <Style TargetType="Border">
@@ -217,7 +213,7 @@
             </Button.Resources>
         </Button>
 
-        <Button Grid.Row="3" Grid.Column="1" Margin="527,10,30,261" Foreground="White" BorderBrush="{x:Null}" Content="Expansion" FontSize="15" FontWeight="Bold" Click="ChartExpansion">
+        <Button Grid.Row="3" Grid.Column="1" Margin="526,10,30,250" Height="55" Foreground="White" BorderBrush="{x:Null}" Content="Expansion" FontSize="15" FontWeight="Bold" Click="ChartExpansion">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -232,7 +228,9 @@
             </Button.Background>
         </Button>
 
-        <Label x:Name="historyChartLoadMsg" Content="Loading Data..." FontSize="50" FontWeight="Bold" Foreground="White" Grid.Row="3" Grid.Column="1" Margin="15,82,30,23" Panel.ZIndex="10" Grid.RowSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="Black" Opacity="0.75" Visibility="Hidden"/>
+        <Label x:Name="historyChartLoadBack" Grid.Row="3" Grid.Column="1" Margin="15,82,30,23" Panel.ZIndex="10" Grid.RowSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="Black" Opacity="0.75" Visibility="Hidden"/>
+        <Image x:Name="historyChartLoadImg" gif:ImageBehavior.AnimatedSource ="Img/imageLoading.gif" Panel.ZIndex="11" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Margin="135,0,130,0" Visibility="Hidden"></Image>
+        
         <s:SciChartSurface x:Name="pastTimeLoadSpindleSciChartSurface" Grid.Row="3" Grid.Column="1" Margin="15,85,30,10">
             <s:SciChartSurface.RenderableSeries >
                 <s:FastLineRenderableSeries x:Name="PastLoadLineSeries" Stroke="#FF4083B7" StrokeThickness = "2" />
@@ -553,8 +551,8 @@
 
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
-                    <Setter Property="Background" Value="#1e1e1e" />
-                    <Setter Property="Foreground" Value="#fff" />
+                    <Setter Property="Background" Value= "#1e1e1e"/>
+                    <Setter Property="Foreground" Value= "{Binding issue, Converter={StaticResource ProductIssueConverter}}" />
                     <Setter Property="FontSize" Value="15" />
                     <Setter Property="FontWeight" Value="Bold" />
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -567,7 +565,7 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="#1e1e1e" />
                         </Trigger>
-                        <DataTrigger Binding="{Binding issue}" Value="Normal">
+                        <DataTrigger Binding="{Binding issue}"  Value="Normal">
                             <Setter Property="Visibility" Value="{DynamicResource RowVisibility}"/>
                         </DataTrigger>
                     </Style.Triggers>

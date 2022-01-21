@@ -9,15 +9,27 @@ namespace CncPrj_WPF_Core
     public partial class WarningAlert : Window
     {
         int _count;
-        OpWindow _opWindow;
+        string _warningMessageTitle;
+        string _warningMessage;
 
-        public WarningAlert(string message, ref OpWindow opWindow)
+        public WarningAlert(string title, string message)
         {
             InitializeComponent();
-            warnMsg.Text = message;
-            _opWindow = opWindow;
+            _warningMessageTitle = title;
+            _warningMessage = message;
+            uWarningMessageTitle.Text = _warningMessageTitle;
+            uWarningMessage.Text = _warningMessage;
             _count = 0;
         }
+        public string GetWarningMessageTitle()
+        {
+            return _warningMessageTitle;
+        }
+        public string GetWarningMessage()
+        {
+            return _warningMessage;
+        }
+
         public void CountUp()
         {
             _count++;
@@ -25,7 +37,6 @@ namespace CncPrj_WPF_Core
         }
         private void WarningAlertClose(object sender, RoutedEventArgs e)
         {
-            _opWindow._alerts.Remove(warnMsg.Text);
             Close();
         }
     }

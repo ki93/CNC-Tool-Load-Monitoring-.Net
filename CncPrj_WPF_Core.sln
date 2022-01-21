@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31727.386
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CncPrj_WPF_Core", "CncPrj_WPF_Core\CncPrj_WPF_Core.csproj", "{122999C3-5D84-41C1-AA55-BA3F1A20A776}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CncPrj_WPF_Core", "CncPrj_WPF_Core\CncPrj_WPF_Core.csproj", "{122999C3-5D84-41C1-AA55-BA3F1A20A776}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HNInc.Communication.Library", "HNInc.Communication.Library\HNInc.Communication.Library.csproj", "{FF171DE1-6907-49C7-B291-B7FE0B0A7B74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{122999C3-5D84-41C1-AA55-BA3F1A20A776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{122999C3-5D84-41C1-AA55-BA3F1A20A776}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{122999C3-5D84-41C1-AA55-BA3F1A20A776}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF171DE1-6907-49C7-B291-B7FE0B0A7B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF171DE1-6907-49C7-B291-B7FE0B0A7B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF171DE1-6907-49C7-B291-B7FE0B0A7B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF171DE1-6907-49C7-B291-B7FE0B0A7B74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

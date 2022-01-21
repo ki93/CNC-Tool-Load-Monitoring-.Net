@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using HNInc.Communication.Library;
@@ -38,11 +36,11 @@ namespace CncPrj_WPF_Core
         //http 연결
         public void chartExpansion(string startTime, string endTime, string groupBy)
         {
-            Debug.WriteLine(startTime, endTime, groupBy);
             List<HttpSpindleLoad> spindleLoads = HNHttp.GetSpindleLoadList(Convert.ToDateTime(startTime).ToUniversalTime(), Convert.ToDateTime(endTime).ToUniversalTime(), HttpOPCode.OP10_3, groupBy);
             opwin.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
-                opwin.historyChartLoadMsg.Visibility = Visibility.Hidden;
+                opwin.historyChartLoadBack.Visibility = Visibility.Hidden;
+                opwin.historyChartLoadImg.Visibility = Visibility.Hidden;
                 HistoryChart(spindleLoads);
                 ShowDialog();
             }));
@@ -89,7 +87,6 @@ namespace CncPrj_WPF_Core
                     }
                     else
                     {
-                        Debug.WriteLine("ELSE currentHistoryDateTime : {0}, InputDate : {1}", currentHistoryDateTime, historydate);
                     }
                 }
             }

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace CncPrj_WPF_Core
 {
@@ -17,13 +14,13 @@ namespace CncPrj_WPF_Core
         public String endTimeValue;
         public OpWindow opwin;
 
-        public SetHistoryChartPeriod(ref OpWindow opWindow)
+        public SetHistoryChartPeriod(ref OpWindow opWindow, DateTime hitoryStartTime, DateTime hitoryEndTime)
         {
             InitializeComponent();
             SetHistoryChartPeriod setHistory = this;
             opwin = opWindow;
-            HitoryStartDatePick.SelectedDate = DateTime.Today;
-            HitoryEndDatePick.SelectedDate = DateTime.Today;
+            HitoryStartDatePick.SelectedDate = hitoryStartTime;
+            HitoryEndDatePick.SelectedDate = hitoryEndTime;
             HitoryStartDatePick.DisplayDateEnd = DateTime.Today;
             HitoryEndDatePick.DisplayDateEnd = DateTime.Today;
         }
@@ -120,7 +117,6 @@ namespace CncPrj_WPF_Core
             if (DateTime.Compare(currTime, pickTime) == 0)
             {
                 endTimeValue = DateTime.Now.ToString();
-                Debug.WriteLine(endTimeValue);
             }
             else
             {

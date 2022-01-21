@@ -1,8 +1,11 @@
-﻿using HNInc.Communication.Library;
+﻿using CncPrj_WPF_Core.Alert;
+using HNInc.Communication.Library;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,17 +21,13 @@ namespace CncPrj_WPF_Core
     public partial class Login : Page
     {
         IsolatedStorageFile _isoStore;
-        public OpWindow _opWindow;
-        public MoveStep _moveStep;
+        Alerts _alerts;
+
         public Login()
         {
             InitializeComponent();
 
-            _opWindow = new OpWindow();
-            _opWindow._login = this;
-            _moveStep = new MoveStep();
-            _moveStep._login = this;
-
+            _alerts = new Alerts();
 
             _isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
             if (_isoStore.FileExists("IDRememberMe.txt"))
@@ -40,6 +39,23 @@ namespace CncPrj_WPF_Core
                         idBox.Text = reader.ReadToEnd();
                     }
                 }
+            }
+        }
+        public void OnLoad(object sender, EventArgs e)
+        {
+            if (_isoStore.FileExists("IDRememberMe.txt"))
+            {
+                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.Open, _isoStore))
+                {
+                    using (StreamReader reader = new StreamReader(isoStream))
+                    {
+                        idBox.Text = reader.ReadToEnd();
+                    }
+                }
+            }
+            else
+            {
+                idBox.Text = "";
             }
         }
         public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
@@ -62,59 +78,42 @@ namespace CncPrj_WPF_Core
         }
         private void LoginEvt(object sender, RoutedEventArgs e)
         {
+            string currentMethod = MethodBase.GetCurrentMethod().Name;
+
             string id = idBox.Text.Trim();
             string pw = pwBox.Password.Trim();
+
             HttpAuthentication authentication = HNHttp.CheckAuthentication(id, pw);
+            
             if (authentication._checkPassword)
             {
-                // ID/PW 모두 일치하는 경우
-                //MessageBox.Show("로그인 성공","알림", MessageBoxButton.OK, MessageBoxImage.Information);
-                if (authentication._processResult.Equals("Success"))
+                if ((bool)uRememberMe.IsChecked)
                 {
-                    if ((bool)uRememberMe.IsChecked)
+                    if (!_isoStore.FileExists("IDRememberMe.txt"))
                     {
-                        if (!_isoStore.FileExists("IDRememberMe.txt"))
+                        using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.CreateNew, _isoStore))
                         {
-                            using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("IDRememberMe.txt", FileMode.CreateNew, _isoStore))
+                            using (StreamWriter writer = new StreamWriter(isoStream))
                             {
-                                using (StreamWriter writer = new StreamWriter(isoStream))
-                                {
-                                    writer.Write(id);
-                                }
+                                writer.Write(id);
                             }
                         }
                     }
-                    else
-                    {
-                        if (_isoStore.FileExists("IDRememberMe.txt"))
-                        {
-                            _isoStore.DeleteFile("IDRememberMe.txt");
-                        }
-                    }
-                    NavigationService.LoadCompleted += _moveStep.NavigationServiceLoadCompleted;
-                    NavigationService.Navigate(_moveStep, id);
                 }
                 else
                 {
-                    Task.Run(() =>
+                    if (_isoStore.FileExists("IDRememberMe.txt"))
                     {
-                        Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
-                        {
-                            ErrorAlert loginErrorAlert;
-                            if (_moveStep._alerts.ContainsKey(authentication._processResult))
-                            {
-                                loginErrorAlert = (ErrorAlert)_moveStep._alerts[authentication._processResult];
-                                loginErrorAlert.CountUp();
-                            }
-                            else
-                            {
-                                loginErrorAlert = new ErrorAlert(authentication._processResult, ref _opWindow);
-                                _moveStep._alerts.Add(authentication._processResult, loginErrorAlert);
-                                loginErrorAlert.ShowDialog();
-                            }
-                        }));
-                    });
+                        _isoStore.DeleteFile("IDRememberMe.txt");
+                    }
                 }
+                MoveStep _moveStep = new MoveStep();
+                NavigationService.LoadCompleted += _moveStep.NavigationServiceLoadCompleted;
+                NavigationService.Navigate(_moveStep, id);
+            }
+            else if (authentication._processResult.Contains("Fail"))
+            {
+                _alerts.CreateAlert(AlertCategory.Error, currentMethod, authentication._processResult);
             }
             else
             {
@@ -154,6 +153,7 @@ namespace CncPrj_WPF_Core
 
         private void PwBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
+            logResult.Text = "";
             if (pwBox.Password.Length == 0)
             {
                 pwBlock.Visibility = Visibility.Visible;
@@ -162,6 +162,11 @@ namespace CncPrj_WPF_Core
             {
                 pwBlock.Visibility = Visibility.Hidden;
             }
+        }
+
+        private void idBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            logResult.Text = "";
         }
     }
 }

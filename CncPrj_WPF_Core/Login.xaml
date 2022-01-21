@@ -6,13 +6,14 @@
       xmlns:local="clr-namespace:CncPrj_WPF_Core"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
+      Loaded="OnLoad"
       Title="Login">
 
     <Grid>
         <Image Source="/Img/loginBack.png" Width="1920" Height="1080"></Image>
         <Rectangle HorizontalAlignment="Center" Margin="0,190,0,200"  Width="610" Fill="#FFF"/>
         <TextBlock HorizontalAlignment="Center" Height="145" Margin="0,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="492" Text="CNC Tool Load Monitoring Solution" FontSize="48" FontWeight="Bold" TextAlignment="Center" Foreground="#363636" ></TextBlock>
-        <TextBox x:Name="idBox" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="438" Height="42" FontSize="22" Margin="0,511,0,0"/>
+        <TextBox x:Name="idBox" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="438" Height="42" FontSize="22" Margin="0,511,0,0" TextChanged="idBox_TextChanged"/>
         <TextBlock x:Name="idBlock" Text="Id" IsHitTestVisible="False" VerticalAlignment="Top" Margin="750,519,0,0" HorizontalAlignment="Left" FontSize="18">
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
