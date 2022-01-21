@@ -19,7 +19,7 @@
 ## 공정 화면
 <img width="1000" src="https://user-images.githubusercontent.com/37472764/150473611-121278f9-79cb-412d-ab17-2b17cf9f0803.png">
 
-**기능 설명**
+**화면 구성 설명**
 1. 로그아웃 버튼
 - 클릭 시, 로그인 페이지로 이동
 2. 공정 위치
@@ -28,12 +28,40 @@
  - 공정의 가동현황 및 AI판정 여부
 4. 품질 판정
  - AI를 통한 제품의 양/불량품 품질 판정
+ - 판정 이미지 expansion
 5. 실시간 부하량 차트
  - 실시간으로 부하량과 AI를 통한 예측 부하량 그리고 mae가 업데이트 되는 차트
 6. 부하량 이력 조회 차트
  - 부하량과 AI를 통한 예측 부하량 그리고 mae에 대한 이력 조회 할 수 있는 차트
+ - 차트 expansion
 7. 제품 리스트
  - 생산된 제품의 정보와 품질을 확인할 수 있는 리스트
+ - 한 제품의 공정 중 부하량 chart
+
+**Dialog**
+1. 생산량 이력 조회
+<img width="500" src="https://user-images.githubusercontent.com/37472764/150488327-0a09740d-1d92-499d-a4e0-7a8cde53cb86.PNG">
+
+탭 이동을 통해 특정 기간, 일별, 주별, 월별 데이터 확인
+- 탭 이동을 통해 특정 기간, 일별, 주별, 월별 데이터 확인
+- search 탭에서 설정한 기간과 기간에 해당하는 생산량 COUNT가 표시
+
+2. Cycle Time 이력 조회
+<img width="500" src="https://user-images.githubusercontent.com/37472764/150488381-25d35fca-b7a9-4211-8a3d-dad3532f00e4.PNG">
+
+최근 10개 Cycle Time ( Bar Chart )
+- 최근 10개의 cycle time 그래프
+- 밀리세컨드까지 표시
+최근 100개 Cycle Time ( Grid )
+- 최근 100개의 cycle time 값
+- 공정의 start time, end time 표시, 그 차이를 cycle time 으로 표시.
+
+**Folding 기능**
+<img width="1000" src="https://user-images.githubusercontent.com/37472764/150490762-67e5ecc8-7fa2-40ec-b629-0a28c88125fd.png">
+                       
+1. 이력 조회 오픈 버튼
+ - 부하량 이력 조회 확인을 위한 버튼
+2. 이력 조회 클로즈 버튼
 
 ### 공통 alert
 1. 경고 알림 창
