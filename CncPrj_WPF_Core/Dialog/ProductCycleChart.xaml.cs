@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using HNInc.Communication.Library;
 using SciChart.Charting.Model.DataSeries;
@@ -38,6 +39,7 @@ namespace CncPrj_WPF_Core
             HttpOPCode oPCode = (HttpOPCode)Enum.Parse(typeof(HttpOPCode), parseOPcode);
             List<HttpCycleInformaiton> cycleInfo = HNHttp.GetCycleInformationList(oPCode, sn);
             InputProdcutCycleChart(cycleInfo);
+            
         }
 
         //draw Chart
@@ -45,6 +47,7 @@ namespace CncPrj_WPF_Core
         {
             foreach (HttpCycleInformaiton item in cycleInfo)
             {
+                Debug.WriteLine(item);
                 DateTime time = DateTime.Parse(item._time);
                 Double sclaeLoad = Double.Parse(item._scaleLoad);
                 Double sclaePredict = Double.Parse(item._scalePredict);
