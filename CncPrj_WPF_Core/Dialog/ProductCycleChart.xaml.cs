@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Windows;
 using HNInc.Communication.Library;
@@ -17,6 +18,7 @@ namespace CncPrj_WPF_Core
         private XyDataSeries<DateTime, Double> productLoad;
         private XyDataSeries<DateTime, Double> productPredict;
         private XyDataSeries<DateTime, Double> productMae;
+        HNHttp _hNHttp;
 
         public ProductCycleChart()
         {
@@ -24,6 +26,8 @@ namespace CncPrj_WPF_Core
             productLoad = new XyDataSeries<DateTime, double> { SeriesName = "Prodcut's Spindle Load" };
             productPredict = new XyDataSeries<DateTime, double> { SeriesName = "Prodcut's Predict Spindle Load" };
             productMae = new XyDataSeries<DateTime, double> { SeriesName = "Prodcut's Mae" };
+            _hNHttp = new HNHttp(ConfigurationManager.AppSettings.Get("WasUrl"), ConfigurationManager.AppSettings.Get("AccountDBURL"), ConfigurationManager.AppSettings.Get("AccountDB"));
+
         }
 
         //window close
@@ -37,7 +41,7 @@ namespace CncPrj_WPF_Core
         {
             string parseOPcode = opcode.Replace("-","_");
             HttpOPCode oPCode = (HttpOPCode)Enum.Parse(typeof(HttpOPCode), parseOPcode);
-            List<HttpCycleInformaiton> cycleInfo = HNHttp.GetCycleInformationList(oPCode, sn);
+            List<HttpCycleInformaiton> cycleInfo = _hNHttp.GetCycleInformationList(oPCode, sn);
             InputProdcutCycleChart(cycleInfo);
             
         }

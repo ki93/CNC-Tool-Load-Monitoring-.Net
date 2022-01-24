@@ -29,9 +29,9 @@ namespace HNInc.Communication.Library
         #endregion
         //Default
         #region Constructor
-        public HNSocketIO()
+        public HNSocketIO(Uri uri)
         {
-            _socketIO = new SocketIO(new Uri("http://9.8.100.153:8082/"), new SocketIOOptions
+            _socketIO = new SocketIO(uri, new SocketIOOptions
             {
                 Query = new Dictionary<string, string>
                 {

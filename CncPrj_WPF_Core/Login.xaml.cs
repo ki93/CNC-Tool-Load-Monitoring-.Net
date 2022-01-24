@@ -2,6 +2,7 @@
 using HNInc.Communication.Library;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
@@ -22,12 +23,14 @@ namespace CncPrj_WPF_Core
     {
         IsolatedStorageFile _isoStore;
         Alerts _alerts;
+        HNHttp _hNHttp;
 
         public Login()
         {
             InitializeComponent();
 
             _alerts = new Alerts();
+            _hNHttp = new HNHttp(ConfigurationManager.AppSettings.Get("WasUrl"), ConfigurationManager.AppSettings.Get("AccountDBURL"), ConfigurationManager.AppSettings.Get("AccountDB"));
 
             _isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
             if (_isoStore.FileExists("IDRememberMe.txt"))
@@ -83,7 +86,7 @@ namespace CncPrj_WPF_Core
             string id = idBox.Text.Trim();
             string pw = pwBox.Password.Trim();
 
-            HttpAuthentication authentication = HNHttp.CheckAuthentication(id, pw);
+            HttpAuthentication authentication = _hNHttp.CheckAuthentication(id, pw);
             
             if (authentication._checkPassword)
             {

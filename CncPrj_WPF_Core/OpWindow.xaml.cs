@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using CncPrj_WPF_Core.Alert;
 using System.Reflection;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace CncPrj_WPF_Core
 {
@@ -30,6 +31,7 @@ namespace CncPrj_WPF_Core
         string judgeSn;
         string judgeResult;
         HNSocketIO _hNSocketIO;
+        HNHttp _hNHttp;
         public OpWindow opwindow;
         JudgeQuality _judgeQuality;
         DispatcherTimer _timer;
@@ -65,9 +67,11 @@ namespace CncPrj_WPF_Core
             _deviceHealthChecktimer.Tick += InputDeiviceHealthCheck;
             _deviceHealthChecktimer.Interval = TimeSpan.FromSeconds(10);
             _deviceHealthChecktimer.Start();
+            _hNHttp = new HNHttp(ConfigurationManager.AppSettings.Get("WasUrl"), ConfigurationManager.AppSettings.Get("AccountDBURL"), ConfigurationManager.AppSettings.Get("AccountDB"));
+
             if (_hNSocketIO == null)
             {
-                _hNSocketIO = new HNSocketIO(new Uri("http://9.8.100.153:8082/"), SocketIOClient.Transport.TransportProtocol.WebSocket, new TimeSpan(TimeSpan.TicksPerMinute), 5);
+                _hNSocketIO = new HNSocketIO(new Uri(ConfigurationManager.AppSettings.Get("WasUrl")), SocketIOClient.Transport.TransportProtocol.WebSocket, new TimeSpan(TimeSpan.TicksPerMinute), 5);
                 _hNSocketIO.Connect();
 
                 _hNSocketIO.SocketConnectedEvent += SocketOnConnected;
@@ -189,7 +193,7 @@ namespace CncPrj_WPF_Core
         public void InputRealTimeCount()
         {
             string currentMethod = MethodBase.GetCurrentMethod().Name;
-            HttpRealTimeCount httpRealTimeCount = HNHttp.GetRealTimeCount(HttpOPCode.OP10_3);
+            HttpRealTimeCount httpRealTimeCount = _hNHttp.GetRealTimeCount(HttpOPCode.OP10_3);
             if (httpRealTimeCount._requestResult.Equals("Success"))
             {
                 Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
@@ -211,7 +215,7 @@ namespace CncPrj_WPF_Core
         //cycle time 5개 평균 데이터 출력
         public void InputCycleTimeAverage()
         {
-            HttpCycleTimeAverage httpCycleTimeAverage = HNHttp.GetCycleTimeAverage(5);
+            HttpCycleTimeAverage httpCycleTimeAverage = _hNHttp.GetCycleTimeAverage(5);
             string currentMethod = MethodBase.GetCurrentMethod().Name;
 
             if (httpCycleTimeAverage._requestResult.Equals("Success"))
@@ -236,7 +240,7 @@ namespace CncPrj_WPF_Core
         //가동 상태 데이터 출력
         public void InputDeiviceHealthCheck(object sender, EventArgs e)
         {
-            HttpDeiviceHealthCheck httpDeiviceHealthCheck = HNHttp.GetDeiviceHealthCheck(HttpOPCode.OP10_3);
+            HttpDeiviceHealthCheck httpDeiviceHealthCheck = _hNHttp.GetDeiviceHealthCheck(HttpOPCode.OP10_3);
             string currentMethod = MethodBase.GetCurrentMethod().Name;
 
             if (httpDeiviceHealthCheck._requestResult.Equals("Success"))
@@ -528,7 +532,7 @@ namespace CncPrj_WPF_Core
                 //List<SpindleLoad> spindleLoads = HNHttp.GetSpindleLoadRequest((int)Convert.ToDateTime(hitoryStartTime).Year, (int)Convert.ToDateTime(hitoryStartTime).Month, (int)Convert.ToDateTime(hitoryStartTime).Day, (int)Convert.ToDateTime(hitoryEndTime).Year, (int)Convert.ToDateTime(hitoryEndTime).Month, (int)Convert.ToDateTime(hitoryEndTime).Day, OPCode.OP10_3, hitoryGroupByTime);
                 Task.Run(() =>
                 {
-                    List<HttpSpindleLoad> spindleLoads = HNHttp.GetSpindleLoadList(Convert.ToDateTime(hitoryStartTime).ToUniversalTime(), Convert.ToDateTime(hitoryEndTime).ToUniversalTime(), HttpOPCode.OP10_3, hitoryGroupByTime);
+                    List<HttpSpindleLoad> spindleLoads = _hNHttp.GetSpindleLoadList(Convert.ToDateTime(hitoryStartTime).ToUniversalTime(), Convert.ToDateTime(hitoryEndTime).ToUniversalTime(), HttpOPCode.OP10_3, hitoryGroupByTime);
 
                     if (spindleLoads.Count==0)
                     {
@@ -592,7 +596,7 @@ namespace CncPrj_WPF_Core
             {
                 processTable.Clear();
             }
-            List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(0);
+            List<HttpProductInformation> productInformations = _hNHttp.GetProductInformationList(0);
             if (productInformations.Count==0)
             {
                 Task.Run(() =>
@@ -741,7 +745,7 @@ namespace CncPrj_WPF_Core
             _gridVisibility = true;
             App.Current.Resources["RowVisibility"] = Visibility.Visible;
             processTable.Clear();
-            List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(daysFromToday);
+            List<HttpProductInformation> productInformations = _hNHttp.GetProductInformationList(daysFromToday);
             if (productInformations.Count==0)
             {
                 Task.Run(() =>
@@ -819,7 +823,7 @@ namespace CncPrj_WPF_Core
             _productInfoPeriodEndtime = DateTime.Today;
             App.Current.Resources["RowVisibility"] = Visibility.Visible;
             processTable.Clear();
-            List<HttpProductInformation> productInformations = HNHttp.GetProductInformationList(0);
+            List<HttpProductInformation> productInformations = _hNHttp.GetProductInformationList(0);
             if (productInformations.Count==0)
             {
                 Task.Run(() =>

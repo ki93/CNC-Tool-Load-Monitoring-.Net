@@ -2,6 +2,7 @@
 using HNInc.Communication.Library;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Reflection;
@@ -17,6 +18,7 @@ namespace CncPrj_WPF_Core
     /// </summary>
     public partial class TpHistory : Window
     {
+        HNHttp _hNHttp;
         private DataTable dailyTable;
         private DataTable weeklyTable;
         private DataTable monthlyTable;
@@ -31,7 +33,9 @@ namespace CncPrj_WPF_Core
         {
             InitializeComponent();
             _alerts = new Alerts();
+
             string currentMethod = MethodBase.GetCurrentMethod().Name;
+            _hNHttp = new HNHttp(ConfigurationManager.AppSettings.Get("WasUrl"), ConfigurationManager.AppSettings.Get("AccountDBURL"), ConfigurationManager.AppSettings.Get("AccountDB"));
 
             tpHistory = this;
             dailyTable = new DataTable();
@@ -48,11 +52,11 @@ namespace CncPrj_WPF_Core
             monthlyTable.Columns.Add("Count", typeof(string));
             try
             {
-                List<HttpProductCounts> dayProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddDays(-100), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.day);
+                List<HttpProductCounts> dayProductCounts = _hNHttp.GetProductCountsList(DateTime.Now.AddDays(-100), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.day);
                 DayInputProductCounts(dayProductCounts);
-                List<HttpProductCounts> weekProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.week);
+                List<HttpProductCounts> weekProductCounts = _hNHttp.GetProductCountsList(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.week);
                 WeekInputProductCounts(weekProductCounts);
-                List<HttpProductCounts> monthProductCounts = HNHttp.GetProductCountsList(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.month);
+                List<HttpProductCounts> monthProductCounts = _hNHttp.GetProductCountsList(DateTime.Now.AddMonths(-5), DateTime.Now, HttpOPCode.OP10_3, HttpClassification.month);
                 MonthInputProductCounts(monthProductCounts);
             }
             catch (Exception ex)
@@ -245,7 +249,7 @@ namespace CncPrj_WPF_Core
         //서치 버튼 이벤트
         private void phSearchBtn_Click(object sender, RoutedEventArgs e)
         {
-            List<HttpProductCounts> searchProductCounts = HNHttp.GetProductCountsList(searchStartTIme, searchEndTime.AddDays(1), HttpOPCode.OP10_3, HttpClassification.day);
+            List<HttpProductCounts> searchProductCounts = _hNHttp.GetProductCountsList(searchStartTIme, searchEndTime.AddDays(1), HttpOPCode.OP10_3, HttpClassification.day);
             SearchInputProductCounts(searchProductCounts);
         }
     }

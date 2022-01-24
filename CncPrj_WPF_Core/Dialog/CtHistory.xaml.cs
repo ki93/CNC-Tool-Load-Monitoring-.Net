@@ -6,6 +6,7 @@ using System.Data;
 using SciChart.Charting.Model.DataSeries;
 using HNInc.Communication.Library;
 using SciChart.Charting.Visuals.Annotations;
+using System.Configuration;
 
 namespace CncPrj_WPF_Core
 {
@@ -14,6 +15,7 @@ namespace CncPrj_WPF_Core
     /// </summary>
     public partial class CtHistory : Window
     {
+        HNHttp _hNHttp;
         private DataTable CtDataTable;
         public CtHistory ctHistory;
         public string CtStartTime;
@@ -25,8 +27,10 @@ namespace CncPrj_WPF_Core
             InitializeComponent();
             ctHistory = this;
             CtDataTable = new DataTable();
-            List<HttpCycleTime> cycleTimes = HNHttp.GetCycleTimeList(HttpOPCode.OP10_3, 100);
-            List<HttpCycleTime> cycleTimesChart = HNHttp.GetCycleTimeList(HttpOPCode.OP10_3, 10);
+            _hNHttp = new HNHttp(ConfigurationManager.AppSettings.Get("WasUrl"), ConfigurationManager.AppSettings.Get("AccountDBURL"), ConfigurationManager.AppSettings.Get("AccountDB"));
+
+            List<HttpCycleTime> cycleTimes = _hNHttp.GetCycleTimeList(HttpOPCode.OP10_3, 100);
+            List<HttpCycleTime> cycleTimesChart = _hNHttp.GetCycleTimeList(HttpOPCode.OP10_3, 10);
             InputCycleTimeList(cycleTimes);
             InputBarChartData(cycleTimesChart);
         }

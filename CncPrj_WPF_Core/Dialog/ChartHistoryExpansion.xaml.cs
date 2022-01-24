@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Threading;
 using HNInc.Communication.Library;
@@ -13,6 +14,7 @@ namespace CncPrj_WPF_Core
     public partial class ChartHistoryExpansion : Window
     {
         public OpWindow opwin;
+        HNHttp _hNHttp;
         private XyDataSeries<DateTime, Double> historyScaleLoad;
         private XyDataSeries<DateTime, Double> historyScalePredict;
         private XyDataSeries<DateTime, Double> historyMae;
@@ -22,6 +24,7 @@ namespace CncPrj_WPF_Core
         {
             InitializeComponent();
             opwin = opwindow;
+            _hNHttp = new HNHttp(ConfigurationManager.AppSettings.Get("WasUrl"), ConfigurationManager.AppSettings.Get("AccountDBURL"), ConfigurationManager.AppSettings.Get("AccountDB"));
             historyScaleLoad = new XyDataSeries<DateTime, Double>() { SeriesName = "Spindle Load" };
             historyScalePredict = new XyDataSeries<DateTime, Double>() { SeriesName = "Predicted Spindle Load" };
             historyMae = new XyDataSeries<DateTime, Double>() { SeriesName = "Mae" };
@@ -36,7 +39,7 @@ namespace CncPrj_WPF_Core
         //http 연결
         public void chartExpansion(string startTime, string endTime, string groupBy)
         {
-            List<HttpSpindleLoad> spindleLoads = HNHttp.GetSpindleLoadList(Convert.ToDateTime(startTime).ToUniversalTime(), Convert.ToDateTime(endTime).ToUniversalTime(), HttpOPCode.OP10_3, groupBy);
+            List<HttpSpindleLoad> spindleLoads = _hNHttp.GetSpindleLoadList(Convert.ToDateTime(startTime).ToUniversalTime(), Convert.ToDateTime(endTime).ToUniversalTime(), HttpOPCode.OP10_3, groupBy);
             opwin.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
                 opwin.historyChartLoadBack.Visibility = Visibility.Hidden;
