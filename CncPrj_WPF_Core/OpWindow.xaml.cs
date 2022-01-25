@@ -104,11 +104,9 @@ namespace CncPrj_WPF_Core
             _productInfoPeriodEndtime = DateTime.Today;
             _historyChartStartTime = DateTime.Today;
             _historyChartEndTime = DateTime.Today;
-            userId.Text = "Login Required";
         }
         public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
         {
-
             if (e.ExtraData != null)
             {
                 userId.Text = e.ExtraData.ToString();

@@ -30,8 +30,6 @@ namespace CncPrj_WPF_Core
             timer.Interval = TimeSpan.FromSeconds(0); //타이머 시작
             timer.Start();
             _alerts = new Alerts();
-
-            userId.Text = "Login Required";
         }
         public void NavigationServiceLoadCompleted(object sender, NavigationEventArgs e)
         {
