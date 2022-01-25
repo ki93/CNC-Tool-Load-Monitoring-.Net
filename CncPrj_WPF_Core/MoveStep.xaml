@@ -51,7 +51,7 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <TextBlock x:Name="userId" FontSize="23" FontWeight="Light" Foreground="white" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 340 0" Text="ddsfwefwfwef"/>
+        <TextBlock x:Name="userId" FontSize="23" FontWeight="SemiBold" Foreground="white" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 340 0" Text="Login Required"/>
         <TextBlock x:Name="currentTime" FontSize="23" FontWeight="Light" Foreground="white" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Text="2021-10-20 Wed 10:00:00" Margin="0 0 75 0"/>
 
         <TreeView Grid.Column="0" Grid.Row="1" Background="Black" BorderThickness="0">
