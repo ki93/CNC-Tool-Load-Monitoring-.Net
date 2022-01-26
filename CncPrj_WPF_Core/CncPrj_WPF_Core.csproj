@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="Properties\Resources.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Img\calendarImg.png" />
     <None Remove="Img\calendarImg_black.png" />
     <None Remove="Img\calendarImg_m.png" />
@@ -29,6 +33,7 @@
     <None Remove="Img\expansion_m.png" />
     <None Remove="Img\filter_pressed.png" />
     <None Remove="Img\filter_pressed_mouseover.png" />
+    <None Remove="Img\HNIncLogo.png" />
     <None Remove="Img\imageLoading.gif" />
     <None Remove="Img\info.png" />
     <None Remove="Img\information.png" />
@@ -60,8 +65,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Img\HNIncLogo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Abp" Version="7.0.1" />
-    <PackageReference Include="HNInc.Communication.Library" Version="0.0.1.12" />
+    <PackageReference Include="HNInc.Communication.Library" Version="0.0.1.13" />
     <PackageReference Include="SciChart" Version="6.4.0.13629" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
@@ -106,6 +115,7 @@
     <Resource Include="Img\expansion_m.png" />
     <Resource Include="Img\filter_pressed.png" />
     <Resource Include="Img\filter_pressed_mouseover.png" />
+    <Resource Include="Img\HNIncLogo.png" />
     <Resource Include="Img\imageLoading.gif" />
     <Resource Include="Img\information.png" />
     <Resource Include="Img\loading2.gif" />
@@ -128,6 +138,10 @@
     <Resource Include="Img\warn.png" />
     <Resource Include="Img\Window_Open.png" />
     <Resource Include="Img\Window_Open_Up.png" />
+    <Resource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -145,13 +159,6 @@
       <SubType>Code</SubType>
       <DependentUpon>SetProductInfoPeriod.xaml.cs</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

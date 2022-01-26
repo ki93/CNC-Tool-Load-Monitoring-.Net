@@ -182,15 +182,23 @@ namespace HNInc.Communication.Library
             }
             return cycleTimeAverage;
         }
-        public List<HttpCycleInformaiton> GetCycleInformationList(HttpOPCode oPCode, string serialNumber)
+        public List<HttpCycleInformaiton> GetCycleInformationList(HttpOPCode oPCode, DateTime startTime, DateTime endTime)
         {
             HttpCycleInformaiton cycleInformaiton = null;
             List<HttpCycleInformaiton> cycleInformaitons = new List<HttpCycleInformaiton>();
+            startTime = startTime.ToUniversalTime();
+            endTime = endTime.ToUniversalTime();
+            Debug.WriteLine(startTime);
+            Debug.WriteLine(endTime);
+            string startDate = startTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ");
+            string endDate = endTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ");
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append($"{_wasUrl}product/a-cycle?");
             stringBuilder.AppendFormat("opcode={0}", oPCode.ToString().Replace("_", "-"));
-            stringBuilder.AppendFormat("&sn={0}", serialNumber);
+            stringBuilder.AppendFormat("&startTime={0}", startDate);
+            stringBuilder.AppendFormat("&endTime={0}", endDate);
             string URI = stringBuilder.ToString();
+            Debug.WriteLine(URI);
             WebRequest request = (HttpWebRequest)WebRequest.Create(URI);
             WebResponse response;
             try

@@ -3,6 +3,7 @@ using SciChart.Data.Model;
 using SciChart.Charting.Model.DataSeries;
 using HNInc.Communication.Library;
 using System.Collections.Generic;
+using SciChart.Charting.Visuals.Axes;
 
 namespace CncPrj_WPF_Core
 {
@@ -79,12 +80,6 @@ namespace CncPrj_WPF_Core
                     double meanScaleLoad = Convert.ToDouble(spindleLoad._meanScaleLoad);
                     double meanScalePredict = Convert.ToDouble(spindleLoad._meanScalePredict);
                     double meanMae = Convert.ToDouble(spindleLoad._meanMae);
-                    //if (opwindow.PastLoadLineSeries.DataSeries != null)
-                    //{
-                    //    opwindow.PastLoadLineSeries.DataSeries.Clear();
-                    //    opwindow.PastPredictLoadLineSeries.DataSeries.Clear();
-                    //    opwindow.PastMaeLineSeries.DataSeries.Clear();
-                    //}
 
                     if (currentHistoryDateTime < historydate)
                     {
@@ -93,6 +88,12 @@ namespace CncPrj_WPF_Core
                         historyScaleLoad.Append(currentHistoryDateTime, meanScaleLoad);
                         historyScalePredict.Append(currentHistoryDateTime, meanScalePredict);
                         historyMae.Append(currentHistoryDateTime, meanMae);
+                        var pastTimeLoadSpindleYAxis = opwindow.pastTimeLoadSpindleSciChartSurface.YAxis;
+                        var pastTimeLoadSpindleMaerange = new DoubleRange(0, 1);
+                        pastTimeLoadSpindleYAxis.VisibleRangeChanged += (s, e) => pastTimeLoadSpindleYAxis.VisibleRange = pastTimeLoadSpindleMaerange;
+                        var pastTimeMaeyAxis = opwindow.pastTimeMaeSciChartSurface.YAxis;
+                        var pastTimeMaerange = new DoubleRange(0, 1);
+                        pastTimeMaeyAxis.VisibleRangeChanged += (s,e) => pastTimeMaeyAxis.VisibleRange = pastTimeMaerange;
                         opwindow.PastLoadLineSeries.DataSeries = historyScaleLoad;
                         opwindow.PastPredictLoadLineSeries.DataSeries = historyScalePredict;
                         opwindow.PastMaeLineSeries.DataSeries = historyMae;

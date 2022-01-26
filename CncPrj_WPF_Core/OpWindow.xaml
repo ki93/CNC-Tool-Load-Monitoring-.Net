@@ -239,11 +239,11 @@
 
             <!--  Create an X Axis  -->
             <s:SciChartSurface.XAxis>
-                <s:DateTimeAxis TextFormatting="MM-dd" SubDayTextFormatting="HH:mm:ss" AutoRange="Always"/>
+                <s:DateTimeAxis TextFormatting="MM-dd" SubDayTextFormatting="HH:mm:ss" />
             </s:SciChartSurface.XAxis>
             <!--  Create a Y Axis  -->
             <s:SciChartSurface.YAxis>
-                <s:NumericAxis AxisAlignment="Left" VisibleRange="0,1" AutoRange="Never"/>
+                <s:NumericAxis AxisAlignment="Left" VisibleRange="0,1"/>
             </s:SciChartSurface.YAxis>
             <!--  Specify interactivity modifiers  -->
             <s:SciChartSurface.ChartModifier>
@@ -251,9 +251,6 @@
                     <s:RubberBandXyZoomModifier ExecuteOn="MouseLeftButton"
                                                  RubberBandFill="#33FFFFFF" RubberBandStroke="#AAFFFFFF"
                                                  RubberBandStrokeDashArray="2 2" ReceiveHandledEvents="True"/>
-                    <s:YAxisDragModifier DragMode="Scale"/>
-                    <s:XAxisDragModifier DragMode="Pan"/>
-                    <s:MouseWheelZoomModifier/>
                     <s:ZoomExtentsModifier ExecuteOn="MouseDoubleClick" />
                     <s:LegendModifier ShowLegend="True" Orientation="Horizontal"
                                        VerticalAlignment="Top"                                     
@@ -270,11 +267,11 @@
 
             <!--  Create an X Axis  -->
             <s:SciChartSurface.XAxis>
-                <s:DateTimeAxis TextFormatting="MM-dd" SubDayTextFormatting="HH:mm:ss" AutoRange="Always" VisibleRange="{Binding ElementName=pastTimeLoadSpindleSciChartSurface, Path=XAxis.VisibleRange, Mode=TwoWay}"/>
+                <s:DateTimeAxis TextFormatting="MM-dd" SubDayTextFormatting="HH:mm:ss" VisibleRange="{Binding ElementName=pastTimeLoadSpindleSciChartSurface, Path=XAxis.VisibleRange, Mode=TwoWay}"/>
             </s:SciChartSurface.XAxis>
             <!--  Create a Y Axis  -->
             <s:SciChartSurface.YAxis>
-                <s:NumericAxis AxisAlignment="Left" VisibleRange="0,1" AutoRange="Never"/>
+                <s:NumericAxis  AxisAlignment="Left" VisibleRange="0,1" />
             </s:SciChartSurface.YAxis>
             <!--  Specify interactivity modifiers  -->
             <s:SciChartSurface.ChartModifier>
@@ -282,9 +279,6 @@
                     <s:RubberBandXyZoomModifier ExecuteOn="MouseLeftButton"
                                                  RubberBandFill="#33FFFFFF" RubberBandStroke="#AAFFFFFF"
                                                  RubberBandStrokeDashArray="2 2" ReceiveHandledEvents="True"/>
-                    <s:YAxisDragModifier DragMode="Scale"/>
-                    <s:XAxisDragModifier DragMode="Pan"/>
-                    <s:MouseWheelZoomModifier/>
                     <s:ZoomExtentsModifier ExecuteOn="MouseDoubleClick" />
                     <s:LegendModifier ShowLegend="True" Orientation="Horizontal"
                                        VerticalAlignment="Top"                                     
@@ -413,13 +407,6 @@
             <!--  Specify interactivity modifiers  -->
             <s:SciChartSurface.ChartModifier>
                 <s:ModifierGroup s:MouseManager.MouseEventGroup="RealTimeChartGroup">
-                    <s:RubberBandXyZoomModifier ExecuteOn="MouseLeftButton"
-                                                 RubberBandFill="#33FFFFFF" RubberBandStroke="#AAFFFFFF"
-                                                 RubberBandStrokeDashArray="2 2" ReceiveHandledEvents="True"/>
-                    <s:YAxisDragModifier DragMode="Scale"/>
-                    <s:XAxisDragModifier DragMode="Pan"/>
-                    <s:MouseWheelZoomModifier/>
-                    <s:ZoomExtentsModifier ExecuteOn="MouseDoubleClick" />
                     <s:LegendModifier ShowLegend="True" Orientation="Horizontal"
                                        VerticalAlignment="Top"                                     
                                        HorizontalAlignment="Left"
@@ -444,13 +431,6 @@
             <!--  Specify interactivity modifiers  -->
             <s:SciChartSurface.ChartModifier>
                 <s:ModifierGroup s:MouseManager.MouseEventGroup="RealTimeChartGroup">
-                    <s:RubberBandXyZoomModifier ExecuteOn="MouseLeftButton"
-                                                 RubberBandFill="#33FFFFFF" RubberBandStroke="#AAFFFFFF"
-                                                 RubberBandStrokeDashArray="2 2" ReceiveHandledEvents="True"/>
-                    <s:YAxisDragModifier DragMode="Scale"/>
-                    <s:XAxisDragModifier DragMode="Pan"/>
-                    <s:MouseWheelZoomModifier/>
-                    <s:ZoomExtentsModifier ExecuteOn="MouseDoubleClick" />
                     <s:LegendModifier ShowLegend="True" Orientation="Horizontal"
                                        VerticalAlignment="Top"                                     
                                        HorizontalAlignment="Left"
