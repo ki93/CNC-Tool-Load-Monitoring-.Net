@@ -413,13 +413,6 @@
             <!--  Specify interactivity modifiers  -->
             <s:SciChartSurface.ChartModifier>
                 <s:ModifierGroup s:MouseManager.MouseEventGroup="RealTimeChartGroup">
-                    <s:RubberBandXyZoomModifier ExecuteOn="MouseLeftButton"
-                                                 RubberBandFill="#33FFFFFF" RubberBandStroke="#AAFFFFFF"
-                                                 RubberBandStrokeDashArray="2 2" ReceiveHandledEvents="True"/>
-                    <s:YAxisDragModifier DragMode="Scale"/>
-                    <s:XAxisDragModifier DragMode="Pan"/>
-                    <s:MouseWheelZoomModifier/>
-                    <s:ZoomExtentsModifier ExecuteOn="MouseDoubleClick" />
                     <s:LegendModifier ShowLegend="True" Orientation="Horizontal"
                                        VerticalAlignment="Top"                                     
                                        HorizontalAlignment="Left"
@@ -444,13 +437,6 @@
             <!--  Specify interactivity modifiers  -->
             <s:SciChartSurface.ChartModifier>
                 <s:ModifierGroup s:MouseManager.MouseEventGroup="RealTimeChartGroup">
-                    <s:RubberBandXyZoomModifier ExecuteOn="MouseLeftButton"
-                                                 RubberBandFill="#33FFFFFF" RubberBandStroke="#AAFFFFFF"
-                                                 RubberBandStrokeDashArray="2 2" ReceiveHandledEvents="True"/>
-                    <s:YAxisDragModifier DragMode="Scale"/>
-                    <s:XAxisDragModifier DragMode="Pan"/>
-                    <s:MouseWheelZoomModifier/>
-                    <s:ZoomExtentsModifier ExecuteOn="MouseDoubleClick" />
                     <s:LegendModifier ShowLegend="True" Orientation="Horizontal"
                                        VerticalAlignment="Top"                                     
                                        HorizontalAlignment="Left"
