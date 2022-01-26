@@ -19,10 +19,10 @@ namespace CncPrj_WPF_Core.Properties {
     // 클래스에서 자동으로 생성되었습니다.
     // 멤버를 추가하거나 제거하려면 .ResX 파일을 편집한 다음 /str 옵션을 사용하여 ResGen을
     // 다시 실행하거나 VS 프로젝트를 다시 빌드하십시오.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace CncPrj_WPF_Core.Properties {
         ///   이 클래스에서 사용하는 캐시된 ResourceManager 인스턴스를 반환합니다.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CncPrj_WPF_Core.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace CncPrj_WPF_Core.Properties {
         ///   재정의합니다.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap calendar {
+        public static System.Drawing.Bitmap calendar {
             get {
                 object obj = ResourceManager.GetObject("calendar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +73,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap calendar_pressed {
+        public static System.Drawing.Bitmap calendar_pressed {
             get {
                 object obj = ResourceManager.GetObject("calendar_pressed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +83,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap calendar_pressed_mouseover {
+        public static System.Drawing.Bitmap calendar_pressed_mouseover {
             get {
                 object obj = ResourceManager.GetObject("calendar_pressed_mouseover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -93,7 +93,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap calendar_Up {
+        public static System.Drawing.Bitmap calendar_Up {
             get {
                 object obj = ResourceManager.GetObject("calendar_Up", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -103,7 +103,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap calendarImg {
+        public static System.Drawing.Bitmap calendarImg {
             get {
                 object obj = ResourceManager.GetObject("calendarImg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +113,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap closeBtn {
+        public static System.Drawing.Bitmap closeBtn {
             get {
                 object obj = ResourceManager.GetObject("closeBtn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -123,7 +123,17 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap error {
+        public static System.Drawing.Bitmap closeBtn_m {
+            get {
+                object obj = ResourceManager.GetObject("closeBtn_m", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        public static System.Drawing.Bitmap error {
             get {
                 object obj = ResourceManager.GetObject("error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -133,7 +143,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap expansion {
+        public static System.Drawing.Bitmap expansion {
             get {
                 object obj = ResourceManager.GetObject("expansion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -143,7 +153,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap expansion_m {
+        public static System.Drawing.Bitmap expansion_m {
             get {
                 object obj = ResourceManager.GetObject("expansion_m", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -153,7 +163,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap filter_pressed {
+        public static System.Drawing.Bitmap filter_pressed {
             get {
                 object obj = ResourceManager.GetObject("filter_pressed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -163,7 +173,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap filter_pressed_mouseover {
+        public static System.Drawing.Bitmap filter_pressed_mouseover {
             get {
                 object obj = ResourceManager.GetObject("filter_pressed_mouseover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -173,9 +183,39 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap filter_pressed_mouseover1 {
+        public static System.Drawing.Bitmap HNIncLogo {
             get {
-                object obj = ResourceManager.GetObject("filter_pressed_mouseover1", resourceCulture);
+                object obj = ResourceManager.GetObject("HNIncLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (아이콘)과(와) 유사한 System.Drawing.Icon 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        public static System.Drawing.Icon HNIncLogo1 {
+            get {
+                object obj = ResourceManager.GetObject("HNIncLogo1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (아이콘)과(와) 유사한 System.Drawing.Icon 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        public static System.Drawing.Icon HNIncLogo2 {
+            get {
+                object obj = ResourceManager.GetObject("HNIncLogo2", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        public static System.Drawing.Bitmap imageLoading {
+            get {
+                object obj = ResourceManager.GetObject("imageLoading", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,17 +223,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap filter_pressed1 {
-            get {
-                object obj = ResourceManager.GetObject("filter_pressed1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap information {
+        public static System.Drawing.Bitmap information {
             get {
                 object obj = ResourceManager.GetObject("information", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -203,7 +233,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap loading {
+        public static System.Drawing.Bitmap loading {
             get {
                 object obj = ResourceManager.GetObject("loading", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -213,7 +243,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap loading2 {
+        public static System.Drawing.Bitmap loading2 {
             get {
                 object obj = ResourceManager.GetObject("loading2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -223,17 +253,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap loading21 {
-            get {
-                object obj = ResourceManager.GetObject("loading21", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap loginBack {
+        public static System.Drawing.Bitmap loginBack {
             get {
                 object obj = ResourceManager.GetObject("loginBack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -243,7 +263,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap logo {
+        public static System.Drawing.Bitmap logo {
             get {
                 object obj = ResourceManager.GetObject("logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -253,7 +273,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap logout {
+        public static System.Drawing.Bitmap logout {
             get {
                 object obj = ResourceManager.GetObject("logout", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -263,7 +283,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap logout_m {
+        public static System.Drawing.Bitmap logout_m {
             get {
                 object obj = ResourceManager.GetObject("logout_m", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -273,7 +293,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap no_image {
+        public static System.Drawing.Bitmap no_image {
             get {
                 object obj = ResourceManager.GetObject("no_image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -283,17 +303,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap no_image1 {
-            get {
-                object obj = ResourceManager.GetObject("no_image1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap refresh_pressed {
+        public static System.Drawing.Bitmap refresh_pressed {
             get {
                 object obj = ResourceManager.GetObject("refresh_pressed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -303,7 +313,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap refresh_pressed_mouseover {
+        public static System.Drawing.Bitmap refresh_pressed_mouseover {
             get {
                 object obj = ResourceManager.GetObject("refresh_pressed_mouseover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -313,27 +323,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap refresh_pressed_mouseover1 {
-            get {
-                object obj = ResourceManager.GetObject("refresh_pressed_mouseover1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap refresh_pressed1 {
-            get {
-                object obj = ResourceManager.GetObject("refresh_pressed1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static System.Drawing.Bitmap refreshBtn {
+        public static System.Drawing.Bitmap refreshBtn {
             get {
                 object obj = ResourceManager.GetObject("refreshBtn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -343,7 +333,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Reset {
+        public static System.Drawing.Bitmap Reset {
             get {
                 object obj = ResourceManager.GetObject("Reset", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -353,7 +343,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Reset_Up {
+        public static System.Drawing.Bitmap Reset_Up {
             get {
                 object obj = ResourceManager.GetObject("Reset_Up", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -363,7 +353,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Select {
+        public static System.Drawing.Bitmap Select {
             get {
                 object obj = ResourceManager.GetObject("Select", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -373,7 +363,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Select_Up {
+        public static System.Drawing.Bitmap Select_Up {
             get {
                 object obj = ResourceManager.GetObject("Select_Up", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -383,7 +373,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Side_Close {
+        public static System.Drawing.Bitmap Side_Close {
             get {
                 object obj = ResourceManager.GetObject("Side_Close", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -393,7 +383,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Side_Close_Up {
+        public static System.Drawing.Bitmap Side_Close_Up {
             get {
                 object obj = ResourceManager.GetObject("Side_Close_Up", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -403,7 +393,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Side_Open {
+        public static System.Drawing.Bitmap Side_Open {
             get {
                 object obj = ResourceManager.GetObject("Side_Open", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -413,7 +403,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Side_Open_Up {
+        public static System.Drawing.Bitmap Side_Open_Up {
             get {
                 object obj = ResourceManager.GetObject("Side_Open_Up", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -423,7 +413,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap warn {
+        public static System.Drawing.Bitmap warn {
             get {
                 object obj = ResourceManager.GetObject("warn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -433,7 +423,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap warn2 {
+        public static System.Drawing.Bitmap warn2 {
             get {
                 object obj = ResourceManager.GetObject("warn2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -443,7 +433,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Window_Open {
+        public static System.Drawing.Bitmap Window_Open {
             get {
                 object obj = ResourceManager.GetObject("Window_Open", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -453,7 +443,7 @@ namespace CncPrj_WPF_Core.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap Window_Open_Up {
+        public static System.Drawing.Bitmap Window_Open_Up {
             get {
                 object obj = ResourceManager.GetObject("Window_Open_Up", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));

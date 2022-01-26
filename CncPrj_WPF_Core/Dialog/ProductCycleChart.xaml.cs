@@ -18,7 +18,6 @@ namespace CncPrj_WPF_Core
         private XyDataSeries<DateTime, Double> productLoad;
         private XyDataSeries<DateTime, Double> productPredict;
         private XyDataSeries<DateTime, Double> productMae;
-        HNHttp _hNHttp;
 
         public ProductCycleChart()
         {
@@ -26,8 +25,6 @@ namespace CncPrj_WPF_Core
             productLoad = new XyDataSeries<DateTime, double> { SeriesName = "Prodcut's Spindle Load" };
             productPredict = new XyDataSeries<DateTime, double> { SeriesName = "Prodcut's Predict Spindle Load" };
             productMae = new XyDataSeries<DateTime, double> { SeriesName = "Prodcut's Mae" };
-            _hNHttp = new HNHttp(ConfigurationManager.AppSettings.Get("WasUrl"), ConfigurationManager.AppSettings.Get("AccountDBURL"), ConfigurationManager.AppSettings.Get("AccountDB"));
-
         }
 
         //window close
@@ -36,19 +33,10 @@ namespace CncPrj_WPF_Core
             Close();
         }
 
-        //http conn
-        public void httpConn(string opcode, string sn)
-        {
-            string parseOPcode = opcode.Replace("-","_");
-            HttpOPCode oPCode = (HttpOPCode)Enum.Parse(typeof(HttpOPCode), parseOPcode);
-            List<HttpCycleInformaiton> cycleInfo = _hNHttp.GetCycleInformationList(oPCode, sn);
-            InputProdcutCycleChart(cycleInfo);
-            
-        }
-
         //draw Chart
         public void InputProdcutCycleChart(List<HttpCycleInformaiton> cycleInfo)
         {
+
             foreach (HttpCycleInformaiton item in cycleInfo)
             {
                 Debug.WriteLine(item);
