@@ -7,6 +7,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using static System.Text.Json.JsonElement;
 
 namespace HNInc.Communication.Library
 {
@@ -339,53 +340,51 @@ namespace HNInc.Communication.Library
                         // Open the stream using a StreamReader for easy access.
                         StreamReader reader = new StreamReader(dataStream);
                         string getResponse = reader.ReadToEnd();
-                        //split try catch 설정
-                        // 현재 오류 Mae가 비는 오류가 있음
-                        //string[] receiveDataArray = getResponse.ToString().Split(new string[] { "{", "}", "[", "]", ":", "\"", ",", "\n","\\"}, StringSplitOptions.RemoveEmptyEntries);
-                        //// 배열 null 혹은 개수 체크
-                        //foreach (var item in receiveDataArray)
-                        //{
-                        //    Debug.WriteLine(item);
-                        //}
-                        //if (receiveDataArray != null)
-                        //{
-                        //    for (int i = 0; i < receiveDataArray.Length; i = i + 15)
-                        //    {
-                        //        string opCode = receiveDataArray[i + 2];
-                        //        string serialNumber = receiveDataArray[i + 4];
-                        //        string accuracy = receiveDataArray[i + 6];
-                        //        string predict = Enum.GetName(typeof(HttpAbnormalProblems), Int32.Parse(receiveDataArray[i + 8]));
-                        //        string startTime = receiveDataArray[i + 10];
-                        //        string endTime = receiveDataArray[i + 12];
-                        //        string mae = receiveDataArray[i + 14];
-                        //        string requestResult = "Success";
-                        //        if (receiveDataArray[i + 8].Equals("0") && mae.Equals("abnormal"))
-                        //        {
-                        //            predict = "Abnormal data exists. Please check...";
-                        //        }
-                        //        productInformation = new HttpProductInformation(opCode,serialNumber,accuracy,predict,startTime,endTime,mae,requestResult);
-                        //        Debug.WriteLine(productInformation);
-                        //        productInformations.Add(productInformation);
-                        //    }
-                        //}
-                        //임시 방편
-                        string[] receiveDataArray = getResponse.ToString().Split(new string[] { "{", "}", "[", "]", ":", "\"", ",", "\n", "\\","mae", "abnormal","normal" }, StringSplitOptions.RemoveEmptyEntries);
-                        // 배열 null 혹은 개수 체크
-                        if (receiveDataArray != null)
+                        //배열로 처리 했던 것들 하단의 방식으로 변경 필요.
+                        JsonDocument jsonDocument= JsonDocument.Parse(getResponse);
+                        JsonElement jsonElement = jsonDocument.RootElement;
+                        foreach (Object objectData in jsonElement.EnumerateObject())
                         {
-                            for (int i = 0; i < receiveDataArray.Length; i = i + 13)
+                            string stringData = objectData.ToString();
+                            int index = stringData.IndexOf("{");
+                            string editStringData = stringData.Substring(index).Replace("\\","");
+                            string parsedData = editStringData.Substring(0, editStringData.Length-1);
+                            JsonDocument singleJsonDocument = JsonDocument.Parse(parsedData);
+                            JsonElement singleJsonElement = singleJsonDocument.RootElement;
+                            string opCode = singleJsonElement.GetProperty("op").GetString();
+                            string serialNumber = singleJsonElement.GetProperty("sn").GetString();
+                            string accuracy = singleJsonElement.GetProperty("acc").GetString();
+                            string temp = singleJsonElement.GetProperty("predict").GetString();
+                            string predict = Enum.GetName(typeof(HttpAbnormalProblems), Int32.Parse(temp));
+                            string startTime = singleJsonElement.GetProperty("startTime").GetString();
+                            string endTime = singleJsonElement.GetProperty("endTime").GetString();
+                            JsonElement maeJsonElement;
+                            string mae;
+                            bool successGetMae = singleJsonElement.TryGetProperty("mae", out maeJsonElement);
+                            if (successGetMae)
                             {
-                                string opCode = receiveDataArray[i + 2];
-                                string serialNumber = receiveDataArray[i + 4];
-                                string accuracy = receiveDataArray[i + 6];
-                                string predict = Enum.GetName(typeof(HttpAbnormalProblems), Int32.Parse(receiveDataArray[i + 8]));
-                                string startTime = receiveDataArray[i + 10];
-                                string endTime = receiveDataArray[i + 12];
-                                string requestResult = "Success";
-                                productInformation = new HttpProductInformation(opCode, serialNumber, accuracy, predict, startTime, endTime, requestResult);
-                                Debug.WriteLine(productInformation);
-                                productInformations.Add(productInformation);
+                               mae = maeJsonElement.GetString();
                             }
+                            else
+                            {
+                                mae = null;
+                            }
+                            string requestResult = "Success";
+                            if (mae != null)
+                            {
+                                if (temp.Equals("0") && mae.Equals("abnormal"))
+                                {
+                                    predict = "Abnormal data exists. Please check...";
+                                }
+                            }
+                            else
+                            {
+                                predict += ", but some mae has no data";
+                            }
+                            productInformation = new HttpProductInformation(opCode, serialNumber, accuracy, predict, startTime, endTime, mae, requestResult);
+                            Debug.WriteLine(productInformation);
+                            productInformations.Add(productInformation);
+
                         }
                     }
                     // Close the response.
