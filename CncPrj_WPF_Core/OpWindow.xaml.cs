@@ -866,15 +866,38 @@ namespace CncPrj_WPF_Core
         //porduct info 그리드 더블클릭 이벤트
         private void ProcessGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            string currentMethod = MethodBase.GetCurrentMethod().Name;
             if (ProcessGrid.SelectedItems.Count > 0)
             {
                 DataRowView dataRowView = (DataRowView)ProcessGrid.SelectedItem;
                 var opcode = dataRowView.Row.Field<string>("opcode");
-                var sn = dataRowView.Row.Field<string>("sn");
+                var startTime = dataRowView.Row.Field<string>("startTime");
+                var endTime = dataRowView.Row.Field<string>("endTime");
 
-                ProductCycleChart productCycleChart = new ProductCycleChart();
-                productCycleChart.httpConn(opcode, sn);
-                productCycleChart.ShowDialog();
+                string parseOPcode = opcode.Replace("-", "_");
+                HttpOPCode oPCode = (HttpOPCode)Enum.Parse(typeof(HttpOPCode), parseOPcode);
+                DateTime utcStartTime = DateTime.Parse(startTime).ToUniversalTime().AddSeconds(-5);
+                DateTime utcEndtTime = DateTime.Parse(endTime).ToUniversalTime().AddSeconds(+5);
+                List<HttpCycleInformaiton> cycleInfo = _hNHttp.GetCycleInformationList(oPCode, utcStartTime, utcEndtTime);
+
+                if (cycleInfo.Count != 0)
+                {
+                    if (cycleInfo[cycleInfo.Count - 1]._requestResult.Equals("Success"))
+                    {
+
+                        ProductCycleChart productCycleChart = new ProductCycleChart();
+                        productCycleChart.InputProdcutCycleChart(cycleInfo);
+                        productCycleChart.ShowDialog();
+                    }
+                    else
+                    {
+                        _alerts.CreateAlert(AlertCategory.Error, currentMethod, cycleInfo[cycleInfo.Count - 1]._requestResult);
+                    }
+                }
+                else
+                {
+                    _alerts.CreateAlert(AlertCategory.Error, currentMethod, "No Data");
+                }
             }
         }
 
