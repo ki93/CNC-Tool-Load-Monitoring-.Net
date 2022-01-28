@@ -14,6 +14,7 @@ using CncPrj_WPF_Core.Alert;
 using System.Reflection;
 using System.Diagnostics;
 using System.Configuration;
+using SciChart.Data.Model;
 
 namespace CncPrj_WPF_Core
 {
@@ -91,6 +92,12 @@ namespace CncPrj_WPF_Core
                 _hNSocketIO.ReceiveProductInformation();
                 _hNSocketIO.ProductInformationEvent += InputProductInformation;
             }
+            var pastTimeLoadSpindleYAxis = pastTimeLoadSpindleSciChartSurface.YAxis;
+            var pastTimeLoadSpindleMaeRange = new DoubleRange(0, 1);
+            pastTimeLoadSpindleYAxis.VisibleRangeChanged += (s, e) => pastTimeLoadSpindleYAxis.VisibleRange = pastTimeLoadSpindleMaeRange;
+            var pastTimeMaeYAxis = pastTimeMaeSciChartSurface.YAxis;
+            var pastTimeMaeRange = new DoubleRange(0, 1);
+            pastTimeMaeYAxis.VisibleRangeChanged += (s, e) => pastTimeMaeYAxis.VisibleRange = pastTimeMaeRange;
 
             ComboBoxItem historyChartGroupByItem = (ComboBoxItem)historyChartGroupByValue.SelectedItem;
             hitoryGroupByTime = (string)historyChartGroupByItem.Content;
@@ -551,6 +558,18 @@ namespace CncPrj_WPF_Core
                     {
                         Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                         {
+                            int spindleLoadsLength = spindleLoads.Count;
+
+                            DateTime dateTimeMin = DateTime.Parse(spindleLoads[0]._time).ToLocalTime();
+                            DateTime dateTimeMax = DateTime.Parse(spindleLoads[spindleLoadsLength-1]._time).ToLocalTime();
+
+                            var pastTimeLoadSpindleXAxis = pastTimeLoadSpindleSciChartSurface.XAxis;
+                            var pastTimeLoadSpindleMaerange = new DateRange(dateTimeMin, dateTimeMax);
+                            pastTimeLoadSpindleXAxis.VisibleRange = pastTimeLoadSpindleMaerange;
+                            var pastTimeMaeXAxis = pastTimeMaeSciChartSurface.XAxis;
+                            var pastTimeMaeRange = new DateRange(dateTimeMin, dateTimeMax);
+                            pastTimeMaeXAxis.VisibleRange = pastTimeMaeRange;
+
                             drawMainChart.HistoryChart(spindleLoads);
                             historyChartLoadBack.Visibility = Visibility.Hidden;
                             historyChartLoadImg.Visibility = Visibility.Hidden;
@@ -639,7 +658,6 @@ namespace CncPrj_WPF_Core
         //socket을 통해 받은 product Info
         public void InputProductInformation(string ProductInfo, object data)
         {
-            // drawMainChart스레드를 접근하기 위해서
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
             {
                 InputCycleTimeAverage();
