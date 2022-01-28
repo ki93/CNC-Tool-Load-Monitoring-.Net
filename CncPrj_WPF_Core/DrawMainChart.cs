@@ -88,12 +88,7 @@ namespace CncPrj_WPF_Core
                         historyScaleLoad.Append(currentHistoryDateTime, meanScaleLoad);
                         historyScalePredict.Append(currentHistoryDateTime, meanScalePredict);
                         historyMae.Append(currentHistoryDateTime, meanMae);
-                        var pastTimeLoadSpindleYAxis = opwindow.pastTimeLoadSpindleSciChartSurface.YAxis;
-                        var pastTimeLoadSpindleMaerange = new DoubleRange(0, 1);
-                        pastTimeLoadSpindleYAxis.VisibleRangeChanged += (s, e) => pastTimeLoadSpindleYAxis.VisibleRange = pastTimeLoadSpindleMaerange;
-                        var pastTimeMaeyAxis = opwindow.pastTimeMaeSciChartSurface.YAxis;
-                        var pastTimeMaerange = new DoubleRange(0, 1);
-                        pastTimeMaeyAxis.VisibleRangeChanged += (s,e) => pastTimeMaeyAxis.VisibleRange = pastTimeMaerange;
+                        
                         opwindow.PastLoadLineSeries.DataSeries = historyScaleLoad;
                         opwindow.PastPredictLoadLineSeries.DataSeries = historyScalePredict;
                         opwindow.PastMaeLineSeries.DataSeries = historyMae;
