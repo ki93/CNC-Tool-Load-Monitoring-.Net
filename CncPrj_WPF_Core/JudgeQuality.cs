@@ -148,6 +148,8 @@ namespace CncPrj_WPF_Core
                     opwindow.productQualityImg.Source = new BitmapImage(new Uri(imageFilePath, UriKind.Absolute));
                     opwindow.productResult.Content = $"{quality._predict}, {quality._accuracy}%";
                     opwindow.productQualityImg.Stretch = Stretch.Fill;
+                    _sn = quality._fileName.Split('.')[0];
+                    _result = $"{quality._predict}, {quality._accuracy}%";
                     opwindow.InputFFTImg(imageFilePath, _sn, _result);
 
                 }));
